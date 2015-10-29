@@ -1,8 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-mongoose.connect('mongodb://localhost/quizground');
-
 var schema = new Schema({
     creator: {
         id:             String,
@@ -10,11 +8,18 @@ var schema = new Schema({
         joinDate:       Date,
         avatar:         String
     },
-    created_at:         Date,
-    question:           String,
-    answer:             String,
+    createdAt:         Date,
+    question: {
+        type:       String,
+        required:   true
+    },
+    answer: {
+        type:       String,
+        required:   true
+    },
     type:               String,
     rating:             Number,
+    votes:              Number,
     options: [{
         content:        String,
         correct:        Boolean,
