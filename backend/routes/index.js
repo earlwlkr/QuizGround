@@ -1,3 +1,4 @@
 module.exports = {
-    quizzes: require('./quizzes')
+    quizzes: require('./quizzes'),
+    clients: require('./clients')
 };

@@ -16,7 +16,7 @@ function getQuizFromRequestBody(requestBody) {
 }
 
 // Routing for /quizzes
-router.route('/quizzes')
+router.route('/')
     // Get all quizzes.
     .get(function (req, res) {
         Quiz.find(function (err, results) {
@@ -40,7 +40,7 @@ router.route('/quizzes')
     });
 
 // Routing for /quizzes/:id
-router.route('/quizzes/:id')
+router.route('/:id')
     // Get quiz info by id.
     .get(function (req, res) {
         Quiz.findOne({_id: req.params.id}, function (err, quiz) {
