@@ -33,7 +33,7 @@ app.post('/oauth2/token', oauthServer.token);
 app.use('/api/quizzes', passport.authenticate('bearer', { session: false }), routes.quizzes);
 app.use('/api/clients', routes.clients);
 
-var server = app.listen(3000, function () {
+var server = app.listen(process.env.PORT || 3000, function () {
     var host = server.address().address,
         port = server.address().port;
 
