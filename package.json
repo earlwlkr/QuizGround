@@ -1,0 +1,33 @@
+{
+  "name": "QuizGround",
+  "version": "0.1.0",
+  "description": "Create and answer quizzes with ease",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/earlwlkr/QuizGround.git"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "5.0.0"
+  },
+  "author": "Huynh Nguyen <mike358015@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "express-session": "^1.12.0",
+    "mongodb": "^2.0.45",
+    "mongoose": "^4.2.3",
+    "oauth2orize": "^1.1.1",
+    "passport": "^0.3.0",
+    "passport-http": "^0.3.0",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
+    "passport-oauth2-client-password": "^0.1.2",
+    "socket.io": "^1.3.7"
+  }
+}
