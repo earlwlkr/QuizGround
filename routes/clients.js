@@ -3,31 +3,26 @@ var router = express.Router();
 
 var Client = require('../models/client');
 
-// Routing for /clients
-router.route('/')
-    // Get all quizzes.
-    .get(function (req, res) {
-        Client.find(function (err, results) {
-            if (err) {
-                res.send(err);
-            }
+function getClientFromRequestBody(requestBody) {
+    return {
+        name: requestBody.name,
+        secret: requestBody.secret,
+        userId: requestBody.userId
+    };
+}
 
-            res.json(results);
-        });
-    })
+router.route('/')
     // Create a client.
     .post(function (req, res) {
-        var client = new Client();
-        client.name = req.body.name;
-        client.secret = req.body.secret;
-        client.userId = req.body.userId;
+        var client = new Client(getClientFromRequestBody(req.body));
         client.save(function (err) {
             if (err) {
                 res.send(err);
             }
 
-            res.json({message: 'Client created!'});
+            res.json({message: 'Client created!', data: client});
         });
     });
+
 
 module.exports = router;
