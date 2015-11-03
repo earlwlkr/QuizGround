@@ -1,0 +1,23 @@
+{
+  "name": "QuizGround-client",
+  "version": "0.1.0",
+  "description": "Create and answer quizzes with ease",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/earlwlkr/QuizGround.git"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "5.0.0"
+  },
+  "author": "Huynh Nguyen <mike358015@gmail.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^0.8.5"
+  }
+}

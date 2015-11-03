@@ -1,0 +1,61 @@
+/* label color */
+.indigo .input-field label {
+    color: #FFF;
+}
+
+/* label focus color */
+.input-field input[type=text]:focus + label {
+    color: #FFF;
+}
+
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #FFF;
+    box-shadow: 0 1px 0 0 #FFF;
+}
+
+/* valid color */
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #FFF;
+    box-shadow: 0 1px 0 0 #FFF;
+}
+
+/* invalid color */
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #FFF;
+    box-shadow: 0 1px 0 0 #FFF;
+}
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #FFF;
+}
+
+.card-header {
+    top: 70%;
+    min-height: 300px;
+    background-color: indigo;
+}
+
+.card-header md-input-container input,
+.card-header md-input-container:not(.md-input-invalid).md-input-has-value label,
+.card-header md-input-container label,
+.card-header h1,
+.card-header span {
+    color: white;
+}
+
+.card-control {
+    right: 16px;
+    top: 10%;
+    position: absolute;
+    color: white;
+}
+
+.dialog-login {
+    width: 400px;
+}
+
+.dialog-signup {
+    width: 650px;
+}

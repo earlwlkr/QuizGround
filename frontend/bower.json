@@ -1,0 +1,25 @@
+{
+  "name": "QuizGround-client",
+  "version": "0.1.0",
+  "authors": [
+    "earlwlkr <mike358015@gmail.com>"
+  ],
+  "description": "Create and answer quizzes with ease",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "~0.11.2",
+    "angular-route": "~1.4.7",
+    "angular-messages": "~1.4.7",
+    "angular-cookies": "~1.4.7"
+  }
+}
