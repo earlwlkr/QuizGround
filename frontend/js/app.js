@@ -7,8 +7,8 @@ var quizGroundApp = angular.module('quizGroundApp', [
     'quizGroundControllers'
 ]);
 
-quizGroundApp.config(['$routeProvider', '$httpProvider',
-    function ($routeProvider, $httpProvider) {
+quizGroundApp.config(['$routeProvider', '$locationProvider',
+    function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'partials/quiz-list.html',
@@ -18,6 +18,7 @@ quizGroundApp.config(['$routeProvider', '$httpProvider',
                 redirectTo: '/'
             });
         //$httpProvider.interceptors.push('AuthInterceptorService');
+        $locationProvider.html5Mode(true);
     }]);
 
 //quizGroundApp.run(function ($http, AuthService) {
