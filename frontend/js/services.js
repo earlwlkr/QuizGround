@@ -4,66 +4,96 @@ var quizGroundServices = angular.module('quizGroundServices', [
     'ngCookies'
 ]);
 
+quizGroundServices.factory('QuizService', ['$http', 'AuthService',
+    function ($http, AuthService) {
+        var baseUrl = 'http://localhost:3000/api/quizzes',
+            QuizService = {};
+
+        QuizService.getAllQuizzes = function () {
+            return $http.get(baseUrl);
+        };
+
+        QuizService.createQuiz = function (quiz) {
+            return $http.post(baseUrl, quiz, AuthService.getBearerHeader());
+        };
+
+        return QuizService;
+    }]);
+
 quizGroundServices.factory('AuthService', ['$http', '$cookies',
     function ($http, $cookies) {
-        var loginUrl = 'http://localhost:3000/oauth2/token',
-            signupUrl = 'http://localhost:3000/api/users',
-            AccountService = {};
-        AccountService.token = $cookies.get('access_token');
-        AccountService.login = function (user) {
-            return $http.post(loginUrl, {
+        var logInUrl = 'http://localhost:3000/oauth2/token',
+            signUpUrl = 'http://localhost:3000/api/users',
+            AuthService = {};
+
+        AuthService.token = $cookies.get('access_token');
+
+        AuthService.getBearerHeader = function () {
+            if (AuthService.token) {
+                return {
+                    headers: {
+                        'Authorization': 'Bearer ' + AuthService.token
+                    }
+                };
+            }
+            return null;
+        }
+
+        AuthService.logIn = function (user) {
+            return $http.post(logInUrl, {
                 username:   user.username,
                 password:   user.password,
                 grant_type: 'password',
-                client_id:  AccountService.clientId
+                client_id:  AuthService.clientId
             });
         };
-        AccountService.signup = function (user) {
-            return $http.post(signupUrl, {
+
+        AuthService.signUp = function (user) {
+            return $http.post(signUpUrl, {
                 username:   user.username,
                 password:   user.password,
                 name:       user.name
             });
         };
-        AccountService.handleResponse = function (data) {
-            AccountService.token = data.access_token;
-            AccountService.expirationDate = new Date(Date.now() + data.expires_in * 1000);
-            AccountService.refreshToken = data.refresh_token;
-            $cookies.put('access_token', AccountService.token, { expires: AccountService.expirationDate });
 
+        AuthService.handleResponse = function (data) {
+            AuthService.token = data.access_token;
+            AuthService.expirationDate = new Date(Date.now() + data.expires_in * 1000);
+            AuthService.refreshToken = data.refresh_token;
+            $cookies.put('access_token', AuthService.token, { expires: AuthService.expirationDate });
         };
-        AccountService.refreshAccessToken = function () {
-            return $http.post(loginUrl, {
-                refresh_token:  AccountService.refreshToken,
+
+        AuthService.refreshAccessToken = function () {
+            return $http.post(logInUrl, {
+                refresh_token:  AuthService.refreshToken,
                 grant_type:     'refresh_token',
-                client_id:      AccountService.clientId
+                client_id:      AuthService.clientId
             }).then(function (response) {
-                AccountService.handleResponse(response.data);
+                AuthService.handleResponse(response.data);
             });
         };
 
-        return AccountService;
+        return AuthService;
     }]);
 
-quizGroundServices.factory('AuthInterceptorService', ['$q', 'AccountService',
-    function ($q, AccountService) {
+quizGroundServices.factory('AuthInterceptorService', ['$q', 'AuthService',
+    function ($q, AuthService) {
 
         var AuthInterceptorService = {};
 
         AuthInterceptorService.request = function (config) {
-
             config.headers = config.headers || {};
 
-            if (AccountService.token) {
-                config.headers.Authorization = 'Bearer ' + AccountService.token;
+            if (AuthService.token) {
+                config.headers.Authorization = 'Bearer ' + AuthService.token;
             }
 
             return config;
         };
 
         AuthInterceptorService.responseError = function (rejection) {
-            if (rejection.status === 401 && AccountService.refreshToken) {
-                AccountService.refreshAccessToken();
+            if (rejection.status === 401 && AuthService.refreshToken) {
+                AuthService.refreshAccessToken();
             }
             return $q.reject(rejection);
         };
