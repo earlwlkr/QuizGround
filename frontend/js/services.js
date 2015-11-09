@@ -22,8 +22,8 @@ quizGroundServices.factory('QuizService', ['$http', 'AuthService',
 
 quizGroundServices.factory('AuthService', ['$http', '$cookies',
     function ($http, $cookies) {
-        var logInUrl = 'http://localhost:3000/oauth2/token',
-            signUpUrl = 'http://localhost:3000/api/users',
+        var loginUrl = 'http://localhost:3000/oauth2/token',
+            signupUrl = 'http://localhost:3000/api/users',
             AuthService = {};
 
         AuthService.token = $cookies.get('access_token');
@@ -37,10 +37,10 @@ quizGroundServices.factory('AuthService', ['$http', '$cookies',
                 };
             }
             return null;
-        }
+        };
 
-        AuthService.logIn = function (user) {
-            return $http.post(logInUrl, {
+        AuthService.login = function (user) {
+            return $http.post(loginUrl, {
                 username:   user.username,
                 password:   user.password,
                 grant_type: 'password',
@@ -48,8 +48,8 @@ quizGroundServices.factory('AuthService', ['$http', '$cookies',
             });
         };
 
-        AuthService.signUp = function (user) {
-            return $http.post(signUpUrl, {
+        AuthService.signup = function (user) {
+            return $http.post(signupUrl, {
                 username:   user.username,
                 password:   user.password,
                 name:       user.name
@@ -64,7 +64,7 @@ quizGroundServices.factory('AuthService', ['$http', '$cookies',
         };
 
         AuthService.refreshAccessToken = function () {
-            return $http.post(logInUrl, {
+            return $http.post(loginUrl, {
                 refresh_token:  AuthService.refreshToken,
                 grant_type:     'refresh_token',
                 client_id:      AuthService.clientId
