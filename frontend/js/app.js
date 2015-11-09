@@ -14,11 +14,15 @@ quizGroundApp.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'partials/quiz-list.html',
                 controller: 'QuizListController'
             })
+            .when('/quiz/edit', {
+                templateUrl: 'partials/quiz-edit.html',
+                controller: 'QuizEditController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
         //$httpProvider.interceptors.push('AuthInterceptorService');
-        $locationProvider.html5Mode(true);
+        //$locationProvider.html5Mode(true);
     }]);
 
 //quizGroundApp.run(function ($http, AuthService) {

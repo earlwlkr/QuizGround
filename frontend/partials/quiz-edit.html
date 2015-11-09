@@ -1,0 +1,38 @@
+<md-content class="md-padding">
+    <md-card>
+        <md-card-content class="card-header">
+            <h1>Create</h1>
+        </md-card-content>
+
+        <md-divider></md-divider>
+
+        <md-card-content>
+            <form name="headerFields">
+                <div layout>
+                    <md-input-container flex="80">
+                        <label>Question</label>
+                        <input ng-model="quiz.question" name="question" required>
+                        <div ng-messages="headerFields.question.$error" ng-if="headerFields.question.$dirty" role="alert" multiple>
+                            <div ng-message="required">This field is required.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <div layout>
+                    <md-input-container flex="80">
+                        <label>Answer</label>
+                        <input ng-model="quiz.answer" name="answer" required>
+                        <div ng-messages="headerFields.answer.$error" ng-if="headerFields.answer.$dirty" role="alert" multiple>
+                            <div ng-message="required">This field is required.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </form>
+        </md-card-content>
+
+        <div class="md-actions" layout="row" layout-align="end center">
+            <md-button ng-click="save(quiz)" class="md-primary">Save</md-button>
+            <md-button href="index.html">Cancel</md-button>
+        </div>
+    </md-card>
+</md-content>
