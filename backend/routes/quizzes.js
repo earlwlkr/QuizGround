@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
+var oauth2 = require('../oauth2');
 
 var Quiz = require('../models/quiz');
 
 function getQuizFromRequestBody(requestBody) {
     var quiz = requestBody;
     // Convert to correct Date format
-    if (quiz.created_at) {
-        quiz.created_at = new Date(quiz.created_at);
+    if (quiz.createdAt) {
+        quiz.createdAt = new Date(quiz.createdAt);
     }
     if (quiz.creator && quiz.creator.joinDate) {
         quiz.creator.joinDate = new Date(quiz.creator.joinDate);
@@ -28,7 +29,7 @@ router.route('/')
         });
     })
     // Create a quiz.
-    .post(function (req, res) {
+    .post(oauth2.isAuthenticated, function (req, res) {
         var quiz = new Quiz(getQuizFromRequestBody(req.body));
         quiz.save(function (err) {
             if (err) {
@@ -51,7 +52,7 @@ router.route('/:id')
         });
     })
     // Update quiz info.
-    .put(function (req, res) {
+    .put(oauth2.isAuthenticated, function (req, res) {
         Quiz.findOneAndUpdate(
             {_id: req.params.id},
             getQuizFromRequestBody(req.body),
@@ -64,7 +65,7 @@ router.route('/:id')
         );
     })
     // Delete quiz.
-    .delete(function (req, res) {
+    .delete(oauth2.isAuthenticated, function (req, res) {
         Quiz.findOneAndRemove({_id: req.params.id}, function (err) {
             if (err) {
                 res.send(err);

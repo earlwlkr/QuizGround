@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var routes = require('./routes');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var oauthServer = require('./oauth2');
+var oauth2 = require('./oauth2');
 require('./auth');
 
 app.use(bodyParser.json());
@@ -27,9 +27,9 @@ mongoose.connect('mongodb://localhost/quizground');
 
 
 
-app.post('/oauth2/token', oauthServer.token);
+app.post('/oauth2/token', oauth2.token);
 
-app.use('/api/quizzes', passport.authenticate('bearer', { session: false }), routes.quizzes);
+app.use('/api/quizzes', routes.quizzes);
 app.use('/api/clients', routes.clients);
 app.use('/api/users', routes.users);
 

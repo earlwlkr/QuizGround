@@ -111,8 +111,11 @@ server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken
 // exchange middleware will be invoked to handle the request.  Clients must
 // authenticate when making requests to this endpoint.
 
-exports.token = [
-    passport.authenticate('basic', { session: false }),
-    server.token(),
-    server.errorHandler()
-];
+module.exports = {
+    token: [
+        passport.authenticate('basic', {session: false}),
+        server.token(),
+        server.errorHandler()
+    ],
+    isAuthenticated: passport.authenticate('bearer', { session: false })
+};
