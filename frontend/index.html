@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="quizGroundApp">
+<html ng-app="app">
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -10,13 +10,13 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="app.css" />
 
   <base href="/index.html">
 </head>
 <body>
-  <div ng-controller="MainController">
-    <div>
+  <div>
+    <div ng-controller="MainController">
       <md-content>
         <md-toolbar>
           <div class="md-toolbar-tools">
@@ -42,9 +42,13 @@
   <script src="bower_components/angular-aria/angular-aria.js"></script>
   <script src="bower_components/angular-material/angular-material.js"></script>
 
-  <script src="js/app.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/services.js"></script>
+  <script src="app.js"></script>
+  <script src="components/controllers.js"></script>
+  <script src="components/services.js"></script>
+  <script src="components/authentication/authentication.controller.js"></script>
+  <script src="components/authentication/authentication.service.js"></script>
+  <script src="components/quiz-edit/quiz-edit.controller.js"></script>
+  <script src="components/quiz-list/quiz-list.controller.js"></script>
 
 </body>
 </html>
