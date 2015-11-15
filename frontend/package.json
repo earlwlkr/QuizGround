@@ -17,7 +17,9 @@
   },
   "author": "Huynh Nguyen <mike358015@gmail.com>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "bower": "^1.6.5"
+  },
   "devDependencies": {
     "http-server": "^0.8.5"
   }
