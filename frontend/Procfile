@@ -1,1 +1,1 @@
-web: frontend install && http-server
+web: bower install && http-server
