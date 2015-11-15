@@ -8,7 +8,7 @@
     "url": "git://github.com/earlwlkr/QuizGround.git"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "http-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
