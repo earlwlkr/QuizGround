@@ -27,7 +27,10 @@ app.use(function (req, res, next) {
     }
 });
 
-mongoose.connect('mongodb://localhost/quizground');
+var mongoUri = process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL ||
+    'mongodb://localhost/quizground';
+mongoose.connect(mongoUri);
 
 
 app.post('/oauth2/token', oauth2.token);
