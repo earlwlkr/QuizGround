@@ -28,6 +28,6 @@ quizGroundApp.config(['$routeProvider', '$locationProvider',
     }]);
 
 quizGroundApp.run(function ($http, AuthenticationService) {
-    AuthenticationService.clientId = '5640ad8141b3965c08d35c9a';
-    $http.defaults.headers.common.Authorization = 'Basic NTY0MGFkODE0MWIzOTY1YzA4ZDM1YzlhOnZlcnkgc2VjdXJl==';
+    AuthenticationService.clientId = '5648048f62bd961100878525';
+    $http.defaults.headers.common.Authorization = 'Basic NTY0ODA0OGY2MmJkOTYxMTAwODc4NTI1OnZlcnkgc2VjdXJl==';
 });
