@@ -4,7 +4,7 @@ var quizGroundServices = angular.module('app');
 
 quizGroundServices.factory('QuizService', ['$http', 'AuthenticationService',
     function ($http, AuthenticationService) {
-        var baseUrl = 'http://localhost:3000/api/quizzes',
+        var baseUrl = 'http://afternoon-forest-3536.herokuapp.com/api/quizzes',
             QuizService = {};
 
         QuizService.getAllQuizzes = function () {

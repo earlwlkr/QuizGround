@@ -5,8 +5,8 @@
         .factory('AuthenticationService', AuthenticationService);
 
     function AuthenticationService($http, $cookies) {
-        var loginUrl = 'http://localhost:3000/oauth2/token',
-            signupUrl = 'http://localhost:3000/api/users',
+        var loginUrl = 'http://afternoon-forest-3536.herokuapp.com/oauth2/token',
+            signupUrl = 'http://afternoon-forest-3536.herokuapp.com/api/users',
             AuthenticationService = {};
 
         AuthenticationService.token = $cookies.get('access_token');
