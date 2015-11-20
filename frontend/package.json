@@ -8,9 +8,8 @@
     "url": "git://github.com/earlwlkr/QuizGround.git"
   },
   "scripts": {
-    "start": "./node_modules/http-server/bin/http-server",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "start": "http-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
     "node": "5.0.0"
@@ -18,10 +17,15 @@
   "author": "Huynh Nguyen <mike358015@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "bower": "^1.6.5",
-    "http-server": "^0.8.5"
+    "angular": "^1.4.7",
+    "angular-animate": "^1.4.7",
+    "angular-aria": "^1.4.7",
+    "angular-cookies": "~1.4.7",
+    "angular-material": "~0.11.2",
+    "angular-messages": "~1.4.7",
+    "angular-route": "~1.4.7"
   },
   "devDependencies": {
-
+    "http-server": "^0.8.5"
   }
 }
