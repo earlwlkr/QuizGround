@@ -54,6 +54,9 @@
                     $scope.loginError = 'Đã có lỗi xảy ra khi đăng ký tài khoản.';
                 });
         };
+        $scope.googleLogIn = function () {
+            console.log('test');
+        };
     }
 
 }());

@@ -3,7 +3,8 @@ var passport        = require('passport'),
     BearerStrategy  = require('passport-http-bearer').Strategy,
     User            = require('./models/user'),
     Client          = require('./models/client'),
-    AccessToken     = require('./models/access-token');
+    AccessToken     = require('./models/access-token'),
+    GoogleStrategy  = require('passport-google-oauth').OAuth2Strategy;
 
 
 passport.serializeUser(function (user, done) {
@@ -44,6 +45,18 @@ passport.use(new BearerStrategy(
                     done(null, user, info);
                 });
             }
+        });
+    }
+));
+
+passport.use(new GoogleStrategy({
+        clientID: '1038678345021-2j1edq24554geekqvmqhgntvas7trpoc.apps.googleusercontent.com',
+        clientSecret: 'UQejnlRb9QpnmBFC7htFk2fP',
+        callbackURL: 'http://quiz-ground.herokuapp.com/'
+    },
+    function(accessToken, refreshToken, profile, done) {
+        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+            return done(err, user);
         });
     }
 ));

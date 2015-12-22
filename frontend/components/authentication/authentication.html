@@ -1,4 +1,4 @@
-<md-content flex="200" layout-padding class="dialog-login" ng-class="{'dialog-signup' : !isLogin}">
+<md-content flex="100" layout-padding class="dialog-login" ng-class="{'dialog-signup' : !isLogin}">
 
     <h1 ng-show="isLogin">Login</h1>
     <h1 ng-hide="isLogin">Sign Up</h1>
@@ -65,6 +65,13 @@
 
         <md-button ng-hide="loading" ng-class="{'md-raised md-primary' : !isLogin}" ng-click="signup()">
             Sign Up
+        </md-button>
+
+        <md-divider></md-divider>
+
+        <md-button ng-click="googleLogIn()" class="md-warn">
+            <i class="fa fa-google-plus"></i>
+            Login with Google
         </md-button>
 
         <md-progress-circular ng-show="loading" md-mode="indeterminate"></md-progress-circular>
