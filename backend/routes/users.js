@@ -2,13 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 var User = require('../models/user');
-var Client = require('../models/client');
 
 function getUserFromRequestBody(requestBody) {
     return {
         firstName:  requestBody.firstName,
         lastName:   requestBody.lastName,
-        email:   requestBody.email,
+        email:      requestBody.email,
         password:   requestBody.password
     };
 }
@@ -28,19 +27,11 @@ router.route('/')
     // Create a user.
     .post(function (req, res) {
         var user = new User(getUserFromRequestBody(req.body));
-        User.findOne({ email: user.email }, function (err, existingUser) {
+        User.create(user, true, function (err, createdUser) {
             if (err) {
-                return res.send(err);
+                return res.json(err);
             }
-            if (existingUser) {
-                return res.json({error: true, message: 'Tên đăng nhập này đã tồn tại!'});
-            }
-            user.save(function (err) {
-                if (err) {
-                    res.send(err);
-                }
-                res.json({message: 'User created!', data: user});
-            });
+            res.json({message: 'User created!', data: createdUser});
         });
     });
 

@@ -32,6 +32,26 @@ function generateAccessToken(userId, clientId) {
     });
 }
 
+function saveToken(userId, clientId, done) {
+    var accessToken = generateAccessToken(userId, clientId);
+    accessToken.save(function (err) {
+        if (err) {
+            return done(err);
+        }
+        var refreshToken = new RefreshToken({
+            userId: userId,
+            clientId: clientId,
+            refreshToken: utils.uid(64)
+        });
+        refreshToken.save(function (err) {
+            if (err) {
+                return done(err);
+            }
+            return done(null, accessToken.accessToken, refreshToken.refreshToken, {expires_in: expiresIn});
+        });
+    });
+}
+
 /**
  * Exchange user id and password for access tokens.
  *
@@ -54,24 +74,7 @@ server.exchange(oauth2orize.exchange.password(function (client, email, password,
         if (!client) {
             return done(null, false);
         }
-
-        var accessToken = generateAccessToken(user._id, client._id);
-        accessToken.save(function (err) {
-            if (err) {
-                return done(err);
-            }
-            var refreshToken = new RefreshToken({
-                userId: user._id,
-                clientId: client._id,
-                refreshToken: utils.uid(64)
-            });
-            refreshToken.save(function (err) {
-                if (err) {
-                    return done(err);
-                }
-                return done(null, accessToken.accessToken, refreshToken.refreshToken, {expires_in: expiresIn});
-            });
-        });
+        return saveToken(user._id, client._id, done);
     });
 }));
 
@@ -117,5 +120,6 @@ module.exports = {
         server.token(),
         server.errorHandler()
     ],
+    saveToken: saveToken,
     isAuthenticated: passport.authenticate('bearer', {session: false})
 };

@@ -8,7 +8,7 @@ var oauth2 = require('./oauth2');
 require('./auth');
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(require('express-session')({
     secret: 'quizground secret',
     resave: false,
@@ -32,19 +32,25 @@ var mongoUri = process.env.MONGOLAB_URI ||
     'mongodb://localhost/quizground';
 mongoose.connect(mongoUri);
 
-
 app.post('/oauth2/token', oauth2.token);
-
-// Redirect the user to Google for authentication.  When complete, Google
-// will redirect the user back to the application at /auth/google/return
-app.get('/auth/google', passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
-
-// Google will redirect the user to this URL after authentication.  Finish
-// the process by verifying the assertion. If valid, the user will be
-// logged in.  Otherauthentication has failed.
-app.get('/auth/google/callback',
-  passport.authenticate('google', { successRedirect: '/',
-                                    failureRedirect: '/login' }));
+app.post('/oauth2/google', function (req, res) {
+    User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password
+    }, false, function (err, user) {
+        if (err) {
+            return res.json(err);
+        }
+        oauth2.saveToken(user._id, req.body.client_id, function (err, accessToken, refreshToken, expiresIn) {
+            if (err) {
+                return res.json(err);
+            }
+            return res.json(null, accessToken, refreshToken, {expires_in: expiresIn.expires_in});
+        });
+    });
+});
 
 app.use('/api/quizzes', routes.quizzes);
 app.use('/api/clients', routes.clients);
