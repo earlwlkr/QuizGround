@@ -1,10 +1,10 @@
-var oauth2orize     = require('oauth2orize'),
-    passport        = require('passport'),
-    User            = require('./models/user'),
-    Client          = require('./models/client'),
-    AccessToken     = require('./models/access-token'),
-    RefreshToken    = require('./models/refresh-token'),
-    utils           = require('./utils');
+var oauth2orize = require('oauth2orize'),
+    passport = require('passport'),
+    User = require('./models/user'),
+    Client = require('./models/client'),
+    AccessToken = require('./models/access-token'),
+    RefreshToken = require('./models/refresh-token'),
+    utils = require('./utils');
 
 // create OAuth 2.0 server
 var server = oauth2orize.createServer();
@@ -25,9 +25,9 @@ server.deserializeClient(function (id, done) {
 
 function generateAccessToken(userId, clientId) {
     return new AccessToken({
-        userId:         userId,
-        clientId:       clientId,
-        accessToken:    utils.uid(64),
+        userId: userId,
+        clientId: clientId,
+        accessToken: utils.uid(64),
         expirationDate: new Date(Date.now() + expiresIn * 1000)
     });
 }
@@ -39,9 +39,9 @@ function generateAccessToken(userId, clientId) {
  * from the token request for verification. If these values are validated, the
  * application issues an access token on behalf of the user who authorized the code.
  */
-server.exchange(oauth2orize.exchange.password(function (client, username, password, scope, done) {
+server.exchange(oauth2orize.exchange.password(function (client, email, password, scope, done) {
     // Validate the user
-    User.findOne({ username: username }, function (err, user) {
+    User.findOne({email: email}, function (err, user) {
         if (err) {
             return done(err);
         }
@@ -61,9 +61,9 @@ server.exchange(oauth2orize.exchange.password(function (client, username, passwo
                 return done(err);
             }
             var refreshToken = new RefreshToken({
-                userId:         user._id,
-                clientId:       client._id,
-                refreshToken:   utils.uid(64)
+                userId: user._id,
+                clientId: client._id,
+                refreshToken: utils.uid(64)
             });
             refreshToken.save(function (err) {
                 if (err) {
@@ -83,7 +83,7 @@ server.exchange(oauth2orize.exchange.password(function (client, username, passwo
  * token on behalf of the client who authorized the code
  */
 server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken, scope, done) {
-    RefreshToken.findOne({ refreshToken: refreshToken }, function (err, token) {
+    RefreshToken.findOne({refreshToken: refreshToken}, function (err, token) {
         if (err) {
             return done(err);
         }
@@ -117,5 +117,5 @@ module.exports = {
         server.token(),
         server.errorHandler()
     ],
-    isAuthenticated: passport.authenticate('bearer', { session: false })
+    isAuthenticated: passport.authenticate('bearer', {session: false})
 };

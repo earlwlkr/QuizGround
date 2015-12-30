@@ -8,7 +8,7 @@ function getUserFromRequestBody(requestBody) {
     return {
         firstName:  requestBody.firstName,
         lastName:   requestBody.lastName,
-        username:   requestBody.username,
+        email:   requestBody.email,
         password:   requestBody.password
     };
 }
@@ -28,7 +28,7 @@ router.route('/')
     // Create a user.
     .post(function (req, res) {
         var user = new User(getUserFromRequestBody(req.body));
-        User.findOne({ username: user.username }, function (err, existingUser) {
+        User.findOne({ email: user.email }, function (err, existingUser) {
             if (err) {
                 return res.send(err);
             }

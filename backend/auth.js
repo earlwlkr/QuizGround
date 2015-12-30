@@ -3,8 +3,7 @@ var passport        = require('passport'),
     BearerStrategy  = require('passport-http-bearer').Strategy,
     User            = require('./models/user'),
     Client          = require('./models/client'),
-    AccessToken     = require('./models/access-token'),
-    GoogleStrategy  = require('passport-google-oauth').OAuth2Strategy;
+    AccessToken     = require('./models/access-token');
 
 
 passport.serializeUser(function (user, done) {
@@ -18,8 +17,8 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(new BasicStrategy(
-    function (username, password, done) {
-        Client.findById(username, function (err, client) {
+    function (email, password, done) {
+        Client.findById(email, function (err, client) {
             if (err) { return done(err); }
             if (!client) { return done(null, false); }
             if (client.secret !== password) { return done(null, false); }
@@ -45,18 +44,6 @@ passport.use(new BearerStrategy(
                     done(null, user, info);
                 });
             }
-        });
-    }
-));
-
-passport.use(new GoogleStrategy({
-        clientID: '1038678345021-2j1edq24554geekqvmqhgntvas7trpoc.apps.googleusercontent.com',
-        clientSecret: 'UQejnlRb9QpnmBFC7htFk2fP',
-        callbackURL: 'http://quiz-ground.herokuapp.com/'
-    },
-    function(accessToken, refreshToken, profile, done) {
-        User.findOrCreate({ googleId: profile.id }, function (err, user) {
-            return done(err, user);
         });
     }
 ));
