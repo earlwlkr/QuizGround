@@ -10,7 +10,7 @@ var quizGroundApp = angular.module('app', [
 ]);
 
 quizGroundApp.constant('ServerInfo', {
-   baseUrl: 'http://localhost:3000'
+   baseUrl: 'http://afternoon-forest-3536.herokuapp.com'
 });
 
 quizGroundApp.config(['$routeProvider', '$locationProvider',
