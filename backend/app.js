@@ -5,6 +5,7 @@ var routes = require('./routes');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var oauth2 = require('./oauth2');
+var User = require('./models/user');
 require('./auth');
 
 app.use(bodyParser.json());
@@ -34,21 +35,44 @@ mongoose.connect(mongoUri);
 
 app.post('/oauth2/token', oauth2.token);
 app.post('/oauth2/google', function (req, res) {
-    User.create({
+    var user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
-    }, false, function (err, user) {
+    });
+    User.findOne({ email: req.body.email }, function (err, existingUser) {
         if (err) {
             return res.json(err);
         }
-        oauth2.saveToken(user._id, req.body.client_id, function (err, accessToken, refreshToken, expiresIn) {
-            if (err) {
-                return res.json(err);
-            }
-            return res.json(null, accessToken, refreshToken, {expires_in: expiresIn.expires_in});
-        });
+        if (existingUser) {
+            oauth2.saveToken(existingUser._id, req.body.client_id, function (err, accessToken, refreshToken, expiresIn) {
+                if (err) {
+                    return res.json(err);
+                }
+                res.json({
+                    access_token: accessToken,
+                    refresh_token: refreshToken,
+                    expires_in: expiresIn.expires_in
+                });
+            });
+        } else {
+            user.save(function (err) {
+                if (err) {
+                    return res.json(err);
+                }
+                oauth2.saveToken(user._id, req.body.client_id, function (err, accessToken, refreshToken, expiresIn) {
+                    if (err) {
+                        return res.json(err);
+                    }
+                    res.json({
+                        access_token: accessToken,
+                        refresh_token: refreshToken,
+                        expires_in: expiresIn.expires_in
+                    });
+                });
+            });
+        }
     });
 });
 
