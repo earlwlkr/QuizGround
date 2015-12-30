@@ -4,9 +4,10 @@
     angular.module('app')
         .factory('AuthenticationService', AuthenticationService);
 
-    function AuthenticationService($http, $cookies) {
-        var loginUrl = 'http://afternoon-forest-3536.herokuapp.com/oauth2/token',
-            signupUrl = 'http://afternoon-forest-3536.herokuapp.com/api/users',
+    function AuthenticationService($http, $cookies, ServerInfo) {
+        var loginUrl = ServerInfo.baseUrl + '/oauth2/token',
+            signupUrl = ServerInfo.baseUrl + '/api/users',
+            googleLoginUrl = ServerInfo.baseUrl + '/oauth2/google',
             AuthenticationService = {};
 
         AuthenticationService.token = $cookies.get('access_token');
@@ -24,7 +25,7 @@
 
         AuthenticationService.login = function (user) {
             return $http.post(loginUrl, {
-                username:   user.username,
+                username:   user.email,
                 password:   user.password,
                 grant_type: 'password',
                 client_id:  AuthenticationService.clientId
@@ -33,9 +34,19 @@
 
         AuthenticationService.signup = function (user) {
             return $http.post(signupUrl, {
-                username:   user.username,
+                email:      user.email,
                 password:   user.password,
-                name:       user.name
+                firstName:  user.firstName,
+                lastName:   user.lastName
+            });
+        };
+
+        AuthenticationService.googleLogin = function (email, firstName, lastName) {
+            return $http.post(googleLoginUrl, {
+                email:      email,
+                firstName:  firstName,
+                lastName:   lastName,
+                client_id:  AuthenticationService.clientId
             });
         };
 

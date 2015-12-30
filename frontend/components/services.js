@@ -2,9 +2,9 @@
 
 var quizGroundServices = angular.module('app');
 
-quizGroundServices.factory('QuizService', ['$http', 'AuthenticationService',
-    function ($http, AuthenticationService) {
-        var baseUrl = 'http://afternoon-forest-3536.herokuapp.com/api/quizzes',
+quizGroundServices.factory('QuizService', ['$http', 'AuthenticationService', 'ServerInfo',
+    function ($http, AuthenticationService, ServerInfo) {
+        var baseUrl = ServerInfo.baseUrl + '/api/quizzes',
             QuizService = {};
 
         QuizService.getAllQuizzes = function () {
@@ -26,16 +26,16 @@ quizGroundServices.factory('AuthInterceptorService', ['$q', 'AuthenticationServi
         AuthInterceptorService.request = function (config) {
             config.headers = config.headers || {};
 
-            if (AuthService.token) {
-                config.headers.Authorization = 'Bearer ' + AuthService.token;
+            if (AuthenticationService.token) {
+                config.headers.Authorization = 'Bearer ' + AuthenticationService.token;
             }
 
             return config;
         };
 
         AuthInterceptorService.responseError = function (rejection) {
-            if (rejection.status === 401 && AuthService.refreshToken) {
-                AuthService.refreshAccessToken();
+            if (rejection.status === 401 && AuthenticationService.refreshToken) {
+                AuthenticationService.refreshAccessToken();
             }
             return $q.reject(rejection);
         };

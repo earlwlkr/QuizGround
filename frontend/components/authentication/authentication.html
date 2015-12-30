@@ -1,80 +1,108 @@
-<md-content flex="100" layout-padding class="dialog-login" ng-class="{'dialog-signup' : !isLogin}">
+<md-dialog aria-label="Login">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Login</h2>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="max-width:800px;max-height:810px; ">
+            <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
+                <md-tab label="Log In">
+                    <md-content class="md-padding">
+                        <div>
+                            <md-input-container flex="80">
+                                <label>Email</label>
+                                <input ng-model="user.email" name="email" required>
+                                <div ng-messages="headerFields.email.$error" ng-if="headerFields.email.$dirty"
+                                     role="alert" multiple>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div>
+                            <md-input-container flex="80">
+                                <label>Password</label>
+                                <input type="password" ng-model="user.password" name="password" required>
+                                <div ng-messages="headerFields.password.$error" ng-if="headerFields.password.$dirty"
+                                     role="alert" multiple>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Sign Up">
+                    <md-content class="md-padding">
+                        <div layout="row">
+                            <md-input-container flex="80">
+                                <label>Email</label>
+                                <input ng-model="user.email" name="email" required>
+                                <div ng-messages="headerFields.email.$error" ng-if="headerFields.password.$dirty"
+                                     role="alert" multiple>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
 
-    <h1 ng-show="isLogin">Login</h1>
-    <h1 ng-hide="isLogin">Sign Up</h1>
-    <md-divider></md-divider>
+                        <div layout="row">
+                            <md-input-container flex="50">
+                                <label>Password</label>
+                                <input type="password" ng-model="user.password" name="password" required>
+                                <div ng-messages="headerFields.password.$error" ng-if="headerFields.password.$dirty"
+                                     role="alert" multiple>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container flex="50">
+                                <label>Confirm Password</label>
+                                <input type="password" ng-model="user.confirmPassword" name="confirmPassword" required>
+                                <div ng-messages="headerFields.confirmPassword.$error"
+                                     ng-if="headerFields.confirmPassword.$dirty" role="alert" multiple>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
 
-    <form name="headerFields">
-        <div>
-            <md-input-container flex="80">
-                <label>Username</label>
-                <input ng-model="user.username" name="username" required>
-                <div ng-messages="headerFields.username.$error" ng-if="headerFields.username.$dirty" role="alert" multiple>
-                    <div ng-message="required">This field is required.</div>
-                </div>
-            </md-input-container>
-        </div>
+                        <div layout="row">
+                            <md-input-container flex="50">
+                                <label>First Name</label>
+                                <input ng-model="user.firstName" name="firstName" required>
+                                <div ng-messages="headerFields.firstName.$error" ng-if="headerFields.firstName.$dirty"
+                                     role="alert" multiple>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container flex="50">
+                                <label>Last Name</label>
+                                <input ng-model="user.lastName" name="lastName" required>
+                                <div ng-messages="headerFields.lastName.$error" ng-if="headerFields.lastName.$dirty"
+                                     role="alert" multiple>
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <div layout-padding>
+                <span>{{ loginError }}</span>
+            </div>
+            <md-button ng-click="selectedIndex === 0 ? login() : signup()" ng-hide="loading">
+                <span>{{ selectedIndex === 0 ? 'Login' : 'Sign Up' }}</span>
+            </md-button>
+            <md-progress-circular ng-show="loading" md-mode="indeterminate"></md-progress-circular>
+            <div id="g-signin2"></div>
 
-        <div>
-            <md-input-container flex="80">
-                <label>Password</label>
-                <input type="password" ng-model="user.password" name="password" required>
-                <div ng-messages="headerFields.password.$error" ng-if="headerFields.password.$dirty" role="alert" multiple>
-                    <div ng-message="required">This field is required.</div>
-                </div>
-            </md-input-container>
-        </div>
-
-        <div ng-hide="isLogin">
-            <md-input-container flex="80">
-                <label>Confirm Password</label>
-                <input type="password" ng-model="user.confirmPassword" name="confirmPassword" required>
-                <div ng-messages="headerFields.confirmPassword.$error" ng-if="headerFields.confirmPassword.$dirty" role="alert" multiple>
-                    <div ng-message="required">This field is required.</div>
-                </div>
-            </md-input-container>
-        </div>
-
-        <div ng-hide="isLogin">
-            <md-input-container flex="80">
-                <label>First Name</label>
-                <input ng-model="user.firstName" name="firstName" required>
-                <div ng-messages="headerFields.firstName.$error" ng-if="headerFields.firstName.$dirty" role="alert" multiple>
-                    <div ng-message="required">This field is required.</div>
-                </div>
-            </md-input-container>
-        </div>
-
-        <div ng-hide="isLogin">
-            <md-input-container flex="80">
-                <label>Last Name</label>
-                <input ng-model="user.lastName" name="lastName" required>
-                <div ng-messages="headerFields.lastName.$error" ng-if="headerFields.lastName.$dirty" role="alert" multiple>
-                    <div ng-message="required">This field is required.</div>
-                </div>
-            </md-input-container>
-        </div>
-
-        <div layout-padding>
-            <span>{{ loginError }}</span>
-        </div>
-
-        <md-button ng-hide="loading" ng-class="{'md-raised md-primary' : isLogin}" ng-click="login()">
-            Login
-        </md-button>
-
-        <md-button ng-hide="loading" ng-class="{'md-raised md-primary' : !isLogin}" ng-click="signup()">
-            Sign Up
-        </md-button>
-
-        <md-divider></md-divider>
-
-        <md-button ng-click="googleLogIn()" class="md-warn">
-            <i class="fa fa-google-plus"></i>
-            Login with Google
-        </md-button>
-
-        <md-progress-circular ng-show="loading" md-mode="indeterminate"></md-progress-circular>
-
+            <md-button class="md-warn" id="googleSignInButton">
+                <i class="fa fa-google-plus"></i>
+                Login with Google
+            </md-button>
+        </md-dialog-actions>
     </form>
-</md-content>
+</md-dialog>
+

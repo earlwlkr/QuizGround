@@ -9,6 +9,10 @@ var quizGroundApp = angular.module('app', [
     'ngCookies'
 ]);
 
+quizGroundApp.constant('ServerInfo', {
+   baseUrl: 'http://localhost:3000'
+});
+
 quizGroundApp.config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
         $routeProvider
@@ -27,7 +31,8 @@ quizGroundApp.config(['$routeProvider', '$locationProvider',
         //$locationProvider.html5Mode(true);
     }]);
 
-quizGroundApp.run(function ($http, AuthenticationService) {
+quizGroundApp.run(function ($http, $rootScope, AuthenticationService, $templateCache) {
     AuthenticationService.clientId = '5648048f62bd961100878525';
     $http.defaults.headers.common.Authorization = 'Basic NTY0ODA0OGY2MmJkOTYxMTAwODc4NTI1OnZlcnkgc2VjdXJl==';
+    $templateCache.removeAll();
 });
