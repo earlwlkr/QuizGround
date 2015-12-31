@@ -9,11 +9,7 @@ var User = require('./models/user');
 require('./auth');
 
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
-
-io.on('connection', function (socket) {
-    console.log('a user connected');
-});
+var socket = require('./socket')(http);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -83,7 +79,7 @@ app.post('/oauth2/google', function (req, res) {
     });
 });
 
-app.use('/api/quizzes', routes.quizzes);
+app.use('/api/quizzes', routes.quizzes(socket));
 app.use('/api/clients', routes.clients);
 app.use('/api/users', routes.users);
 
