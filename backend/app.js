@@ -8,6 +8,13 @@ var oauth2 = require('./oauth2');
 var User = require('./models/user');
 require('./auth');
 
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+io.on('connection', function (socket) {
+    console.log('a user connected');
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(require('express-session')({
@@ -41,7 +48,7 @@ app.post('/oauth2/google', function (req, res) {
         email: req.body.email,
         password: req.body.password
     });
-    User.findOne({ email: req.body.email }, function (err, existingUser) {
+    User.findOne({email: req.body.email}, function (err, existingUser) {
         if (err) {
             return res.json(err);
         }
@@ -80,8 +87,7 @@ app.use('/api/quizzes', routes.quizzes);
 app.use('/api/clients', routes.clients);
 app.use('/api/users', routes.users);
 
-var server = app.listen(process.env.PORT || 3000, function () {
-    var port = server.address().port;
-
+var port = process.env.PORT || 3000;
+http.listen(port, function () {
     console.log('App listening on port %s', port);
 });
