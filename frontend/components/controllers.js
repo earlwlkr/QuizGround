@@ -6,7 +6,7 @@
 
     function MainController($rootScope, $location, $scope, $mdDialog, AuthenticationService) {
         $scope.logout = function () {
-            if ($scope.isLoggedIn) {
+            if (AuthenticationService.isLoggedIn) {
                 AuthenticationService.token = null;
             }
         };

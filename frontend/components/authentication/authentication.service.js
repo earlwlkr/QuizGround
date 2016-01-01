@@ -8,6 +8,7 @@
         var loginUrl = ServerInfo.baseUrl + '/oauth2/token',
             signupUrl = ServerInfo.baseUrl + '/api/users',
             googleLoginUrl = ServerInfo.baseUrl + '/oauth2/google',
+            userInfoUrl = ServerInfo.baseUrl + '/api/users/',
             AuthenticationService = {};
 
         AuthenticationService.token = $cookies.get('access_token');
@@ -55,6 +56,13 @@
             AuthenticationService.expirationDate = new Date(Date.now() + data.expires_in * 1000);
             AuthenticationService.refreshToken = data.refresh_token;
             $cookies.put('access_token', AuthenticationService.token, { expires: AuthenticationService.expirationDate });
+            AuthenticationService.isLoggedIn = true;
+
+            $http.get(userInfoUrl + data.access_token, AuthenticationService.getBearerHeader())
+                .then(function (response) {
+                    AuthenticationService.currentUser = response;
+                }, function () {
+                });
         };
 
         AuthenticationService.refreshAccessToken = function () {
