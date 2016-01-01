@@ -17,7 +17,7 @@ router.route('/')
         var client = new Client(getClientFromRequestBody(req.body));
         client.save(function (err) {
             if (err) {
-                res.send(err);
+                return res.send(err);
             }
 
             res.json({message: 'Client created!', data: client});

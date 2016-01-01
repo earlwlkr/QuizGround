@@ -12,7 +12,7 @@ router.route('/')
     .get(function (req, res) {
         User.find(function (err, results) {
             if (err) {
-                res.send(err);
+                return res.status(400).send(err);
             }
 
             res.json(results);
@@ -23,7 +23,7 @@ router.route('/')
         var user = User.createFromRequest(req);
         User.create(user, true, function (err, createdUser) {
             if (err) {
-                return res.json(err);
+                return res.status(400).json(err);
             }
             res.json({message: 'User created!', data: createdUser});
         });
@@ -33,13 +33,14 @@ router.route('/:id')
     // Get user info by id.
     .get(oauth2.isAuthenticated, function (req, res) {
         AccessToken.findOne({accessToken: req.params.id}, function (err, token) {
-            if (err)
-                res.send(err);
+            if (err) {
+                return res.status(400).send(err);
+            }
 
             var userId = token.userId;
             User.findById(userId, function (err, user) {
                 if (err) {
-                    res.send(err);
+                    return res.status(400).send(err);
                 }
 
                 res.json(user);
@@ -53,7 +54,7 @@ router.route('/:id')
             User.createFromRequest(req),
             function (err) {
                 if (err)
-                    res.send(err);
+                    return res.status(400).send(err);
                 res.json({message: 'User modified!'});
             }
         );
@@ -62,7 +63,7 @@ router.route('/:id')
     .delete(function (req, res) {
         User.findOneAndRemove({_id: req.params.id}, function (err) {
             if (err)
-                res.send(err);
+                return res.status(400).send(err);
             res.json({message: 'User deleted!'});
         });
     });

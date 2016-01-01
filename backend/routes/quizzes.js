@@ -24,7 +24,7 @@ module.exports = function (io) {
         .get(function (req, res) {
             Quiz.find(function (err, results) {
                 if (err) {
-                    res.send(err);
+                    return res.status(400).send(err);
                 }
 
                 res.json(results);
@@ -35,7 +35,7 @@ module.exports = function (io) {
             var quiz = new Quiz(getQuizFromRequestBody(req.body));
             quiz.save(function (err) {
                 if (err) {
-                    res.send(err);
+                    return res.status(400).send(err);
                 }
                 var resultQuiz = {
                     _id: quiz._id,
@@ -53,7 +53,7 @@ module.exports = function (io) {
         .get(function (req, res) {
             Quiz.findOne({_id: req.params.id}, function (err, quiz) {
                 if (err) {
-                    res.send(err);
+                    return res.status(400).send(err);
                 }
                 res.json(quiz);
             });
@@ -65,7 +65,7 @@ module.exports = function (io) {
                 getQuizFromRequestBody(req.body),
                 function (err) {
                     if (err) {
-                        res.send(err);
+                        return res.status(400).send(err);
                     }
                     res.json({message: 'Quiz modified!'});
                 }
@@ -75,7 +75,7 @@ module.exports = function (io) {
         .delete(oauth2.isAuthenticated, function (req, res) {
             Quiz.findOneAndRemove({_id: req.params.id}, function (err) {
                 if (err) {
-                    res.send(err);
+                    return res.status(400).send(err);
                 }
                 res.json({message: 'Quiz deleted!'});
             });

@@ -41,12 +41,12 @@ app.post('/oauth2/google', function (req, res) {
     var user = User.createFromRequest(req);
     User.findOne({email: user.email}, function (err, existingUser) {
         if (err) {
-            return res.json(err);
+            return res.status(400).json(err);
         }
         if (existingUser) {
             oauth2.saveToken(existingUser._id, req.body.client_id, function (err, accessToken, refreshToken, expiresIn) {
                 if (err) {
-                    return res.json(err);
+                    return res.status(400).json(err);
                 }
                 res.json({
                     access_token: accessToken,
@@ -57,11 +57,11 @@ app.post('/oauth2/google', function (req, res) {
         } else {
             user.save(function (err) {
                 if (err) {
-                    return res.json(err);
+                    return res.status(400).json(err);
                 }
                 oauth2.saveToken(user._id, req.body.client_id, function (err, accessToken, refreshToken, expiresIn) {
                     if (err) {
-                        return res.json(err);
+                        return res.status(500).json(err);
                     }
                     res.json({
                         access_token: accessToken,
