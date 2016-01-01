@@ -25,7 +25,9 @@
                         <span>Quiz Ground</span>
                     </h2>
                     <span flex></span>
+                    {{ user.firstName }}
                     <md-button ng-hide="isLoggedIn" ng-click="showLoginSignUpDialog()">Login</md-button>
+
                     <md-button ng-show="isLoggedIn" ng-click="logout()">Logout</md-button>
                 </div>
             </md-toolbar>

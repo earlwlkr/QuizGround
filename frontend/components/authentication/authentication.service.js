@@ -11,7 +11,11 @@
             userInfoUrl = ServerInfo.baseUrl + '/api/users/',
             AuthenticationService = {};
 
-        AuthenticationService.token = $cookies.get('access_token');
+        var observerCallbacks = [];
+
+        AuthenticationService.registerObserverCallback = function (callback) {
+            observerCallbacks.push(callback);
+        };
 
         AuthenticationService.getBearerHeader = function () {
             if (AuthenticationService.token) {
@@ -26,28 +30,28 @@
 
         AuthenticationService.login = function (user) {
             return $http.post(loginUrl, {
-                username:   user.email,
-                password:   user.password,
+                username: user.email,
+                password: user.password,
                 grant_type: 'password',
-                client_id:  AuthenticationService.clientId
+                client_id: AuthenticationService.clientId
             });
         };
 
         AuthenticationService.signup = function (user) {
             return $http.post(signupUrl, {
-                email:      user.email,
-                password:   user.password,
-                firstName:  user.firstName,
-                lastName:   user.lastName
+                email: user.email,
+                password: user.password,
+                firstName: user.firstName,
+                lastName: user.lastName
             });
         };
 
         AuthenticationService.googleLogin = function (email, firstName, lastName) {
             return $http.post(googleLoginUrl, {
-                email:      email,
-                firstName:  firstName,
-                lastName:   lastName,
-                client_id:  AuthenticationService.clientId
+                email: email,
+                firstName: firstName,
+                lastName: lastName,
+                client_id: AuthenticationService.clientId
             });
         };
 
@@ -55,25 +59,42 @@
             AuthenticationService.token = data.access_token;
             AuthenticationService.expirationDate = new Date(Date.now() + data.expires_in * 1000);
             AuthenticationService.refreshToken = data.refresh_token;
-            $cookies.put('access_token', AuthenticationService.token, { expires: AuthenticationService.expirationDate });
+            $cookies.put('access_token', AuthenticationService.token, {expires: AuthenticationService.expirationDate});
             AuthenticationService.isLoggedIn = true;
 
-            $http.get(userInfoUrl + data.access_token, AuthenticationService.getBearerHeader())
-                .then(function (response) {
-                    AuthenticationService.currentUser = response;
-                }, function () {
-                });
+            getUserInfo();
         };
 
         AuthenticationService.refreshAccessToken = function () {
             return $http.post(loginUrl, {
-                refresh_token:  AuthenticationService.refreshToken,
-                grant_type:     'refresh_token',
-                client_id:      AuthenticationService.clientId
+                refresh_token: AuthenticationService.refreshToken,
+                grant_type: 'refresh_token',
+                client_id: AuthenticationService.clientId
             }).then(function (response) {
                 AuthenticationService.handleResponse(response.data);
             });
         };
+
+        // Helpers
+        function getUserInfo() {
+            if (!AuthenticationService.token) return;
+
+            $http.get(userInfoUrl + AuthenticationService.token, AuthenticationService.getBearerHeader())
+                .then(function (response) {
+                    AuthenticationService.currentUser = response.data;
+                    notifyObservers();
+                }, function () {
+                });
+        }
+
+        function notifyObservers() {
+            angular.forEach(observerCallbacks, function (callback) {
+                callback();
+            });
+        }
+
+        AuthenticationService.token = $cookies.get('access_token');
+        getUserInfo();
 
         return AuthenticationService;
     }

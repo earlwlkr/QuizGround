@@ -5,11 +5,22 @@
         .controller('MainController', MainController);
 
     function MainController($rootScope, $location, $scope, $mdDialog, AuthenticationService) {
+
+        function updateCurrentUserInfo() {
+            $scope.user = AuthenticationService.currentUser;
+            $scope.isLoggedIn = true;
+        }
+
+        AuthenticationService.registerObserverCallback(updateCurrentUserInfo);
+
         $scope.logout = function () {
-            if (AuthenticationService.isLoggedIn) {
+            if ($scope.isLoggedIn) {
                 AuthenticationService.token = null;
+                $scope.isLoggedIn = false;
+                $scope.user = null;
             }
         };
+
         $scope.showLoginSignUpDialog = function () {
             $mdDialog.show({
                 controller: 'AuthenticationController',
@@ -18,6 +29,7 @@
                 clickOutsideToClose: true
             });
         };
+
         var history = [];
 
         $rootScope.$on('$routeChangeSuccess', function() {
