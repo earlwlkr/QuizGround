@@ -38,13 +38,8 @@ mongoose.connect(mongoUri);
 
 app.post('/oauth2/token', oauth2.token);
 app.post('/oauth2/google', function (req, res) {
-    var user = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: req.body.password
-    });
-    User.findOne({email: req.body.email}, function (err, existingUser) {
+    var user = User.createFromRequest(req);
+    User.findOne({email: user.email}, function (err, existingUser) {
         if (err) {
             return res.json(err);
         }

@@ -17,11 +17,11 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(new BasicStrategy(
-    function (email, password, done) {
-        Client.findById(email, function (err, client) {
+    function (id, secret, done) {
+        Client.findById(id, function (err, client) {
             if (err) { return done(err); }
             if (!client) { return done(null, false); }
-            if (client.secret !== password) { return done(null, false); }
+            if (client.secret !== secret) { return done(null, false); }
             return done(null, client);
         });
     }

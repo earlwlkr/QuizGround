@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 var schema = new Schema({
     creator: {
         id:             String,
-        name:           String,
+        firstName:      String,
+        lastNameName:   String,
         joinDate:       Date,
         avatar:         String
     },

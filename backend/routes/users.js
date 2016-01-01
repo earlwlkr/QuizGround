@@ -2,15 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 var User = require('../models/user');
+var AccessToken = require('../models/access-token');
+var oauth2 = require('../oauth2');
 
-function getUserFromRequestBody(requestBody) {
-    return {
-        firstName:  requestBody.firstName,
-        lastName:   requestBody.lastName,
-        email:      requestBody.email,
-        password:   requestBody.password
-    };
-}
 
 // Routing for /users
 router.route('/')
@@ -26,7 +20,7 @@ router.route('/')
     })
     // Create a user.
     .post(function (req, res) {
-        var user = new User(getUserFromRequestBody(req.body));
+        var user = User.createFromRequest(req);
         User.create(user, true, function (err, createdUser) {
             if (err) {
                 return res.json(err);
@@ -37,18 +31,26 @@ router.route('/')
 
 router.route('/:id')
     // Get user info by id.
-    .get(function (req, res) {
-        User.findOne({_id: req.params.id}, function (err, user) {
+    .get(oauth2.isAuthenticated, function (req, res) {
+        AccessToken.findOne({accessToken: req.params.id}, function (err, token) {
             if (err)
                 res.send(err);
-            res.json(user);
+
+            var userId = token.userId;
+            User.findById(userId, function (err, user) {
+                if (err) {
+                    res.send(err);
+                }
+
+                res.json(user);
+            });
         });
     })
     // Update user info.
     .put(function (req, res) {
         User.findOneAndUpdate(
             {_id: req.params.id},
-            getUserFromRequestBody(req.body),
+            User.createFromRequest(req),
             function (err) {
                 if (err)
                     res.send(err);

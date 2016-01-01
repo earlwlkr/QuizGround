@@ -9,7 +9,9 @@ var schema = new Schema({
         index: { unique: true }
     },
     firstName:  String,
-    lastName:   String
+    lastName:   String,
+    joinDate:   Date,
+    avatar:     String
 });
 
 schema.static('create', function (user, errorOnDuplicate, callback) {
@@ -29,6 +31,16 @@ schema.static('create', function (user, errorOnDuplicate, callback) {
             }
             return callback(null, user);
         });
+    });
+});
+
+schema.static('createFromRequest', function (request) {
+    return new this({
+        firstName:  request.body.firstName,
+        lastName:   request.body.lastName,
+        email:      request.body.email,
+        password:   request.body.password,
+        joinDate:   new Date()
     });
 });
 
