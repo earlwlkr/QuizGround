@@ -28,7 +28,7 @@ module.exports = function (io) {
     router.route('/')
         // Get all quizzes.
         .get(function (req, res) {
-            Quiz.find(function (err, results) {
+            Quiz.find({}).sort({createdAt: -1}).exec(function (err, results) {
                 if (err) {
                     return res.status(400).send(err);
                 }

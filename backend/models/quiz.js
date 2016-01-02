@@ -22,8 +22,7 @@ var schema = new Schema({
     choices: [{
         content:        String,
         correct:        Boolean,
-        imageSource:    String,
-        type:           String
+        imageSource:    String
     }],
     comments: [{
         content:        String,
