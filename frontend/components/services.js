@@ -4,6 +4,7 @@ var quizGroundServices = angular.module('app');
 
 quizGroundServices.factory('QuizService', function ($http, AuthenticationService, ServerInfo) {
     var baseUrl = ServerInfo.baseUrl + '/api/quizzes',
+        submitUrl = ServerInfo.baseUrl + '/api/quizzes/',
         QuizService = {};
 
     QuizService.getAllQuizzes = function () {
@@ -18,6 +19,10 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
         }
 
         return $http.post(baseUrl, quiz, AuthenticationService.getBearerHeader());
+    };
+
+    QuizService.submitQuiz = function (quiz) {
+        return $http.post(submitUrl + quiz._id, quiz, AuthenticationService.getBearerHeader());
     };
 
     return QuizService;

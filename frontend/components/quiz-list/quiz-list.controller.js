@@ -4,7 +4,7 @@
     angular.module('app')
         .controller('QuizListController', QuizListController);
 
-    function QuizListController($scope, QuizService, socket) {
+    function QuizListController($scope, $mdToast, QuizService, socket) {
         socket.on('quizzes:new', function (data) {
             $scope.quizzes.splice(0, 0, data);
         });
@@ -22,7 +22,19 @@
         };
 
         $scope.submitAnswer = function (quiz) {
-
+            QuizService.submitQuiz(quiz).then(function (res) {
+               if (res.data === false) {
+                   showToast('Wrong answer!');
+               }
+            });
         };
+
+        function showToast(msg) {
+            var toast = $mdToast.simple()
+                .textContent(msg)
+                .position('top right')
+                .action('OK');
+            $mdToast.show(toast);
+        }
     }
 }());

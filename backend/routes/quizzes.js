@@ -69,6 +69,32 @@ module.exports = function (io) {
                 res.json(quiz);
             });
         })
+        .post(oauth2.isAuthenticated, function (req, res) {
+            Quiz.findOne({_id: req.params.id}, function (err, quiz) {
+                if (err) {
+                    return res.status(400).send(err);
+                }
+                if (!quiz) {
+                    return res.status(400).send(err);
+                }
+
+                if (quiz.choices && quiz.choices.length > 0) {
+                    if (quiz.choices.length !== req.body.choices.length) {
+                        return res.send(false);
+                    }
+                    for (var i = 0; i < quiz.choices.length; i++) {
+                        if (quiz.choices[i] !== req.body.choices[i].userChoice) {
+                            return res.send(false);
+                        }
+                    }
+                } else {
+                    if (quiz.answer !== req.body.userAnswer) {
+                        return res.send(false);
+                    }
+                }
+                res.send(true);
+            });
+        })
         // Update quiz info.
         .put(oauth2.isAuthenticated, function (req, res) {
             getQuizFromRequestBody((req.body), function (err, quiz) {
