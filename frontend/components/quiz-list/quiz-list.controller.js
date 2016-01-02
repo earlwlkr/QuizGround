@@ -13,10 +13,10 @@
         });
 
         $scope.updateQuizSubmitButtonStatus = function (quiz) {
-            $scope.showSubmitButton = false;
+            quiz.showSubmitButton = false;
             angular.forEach(quiz.choices, function (value) {
                if (value.userChoice) {
-                   $scope.showSubmitButton = true;
+                   quiz.showSubmitButton = true;
                }
             });
         };
