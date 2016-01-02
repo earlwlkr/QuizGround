@@ -8,8 +8,8 @@
 
         <md-card-content>
             <form name="headerFields">
-                <div layout>
-                    <md-input-container flex="80">
+                <div>
+                    <md-input-container>
                         <label>Question</label>
                         <input ng-model="quiz.question" name="question" required>
                         <div ng-messages="headerFields.question.$error" ng-if="headerFields.question.$dirty" role="alert" multiple>
@@ -17,9 +17,11 @@
                         </div>
                     </md-input-container>
                 </div>
-
-                <div layout>
-                    <md-input-container flex="80">
+                <md-switch ng-model="quiz.isMultiChoice" aria-label="Switch 1">
+                    Multiple-choice
+                </md-switch>
+                <div ng-hide="quiz.isMultiChoice">
+                    <md-input-container flex="100">
                         <label>Answer</label>
                         <input ng-model="quiz.answer" name="answer" required>
                         <div ng-messages="headerFields.answer.$error" ng-if="headerFields.answer.$dirty" role="alert" multiple>
@@ -27,6 +29,21 @@
                         </div>
                     </md-input-container>
                 </div>
+
+                <div ng-show="quiz.isMultiChoice" layout="row" layout-align="start center" layout-padding>
+                    <md-button class="md-primary" ng-click="addChoice()">Add choice</md-button>
+                </div>
+                <md-list ng-show="quiz.isMultiChoice" flex="40">
+                    <md-list-item ng-repeat="choice in quiz.choices">
+                        <md-input-container flex="80">
+                            <label>Content</label>
+                            <input ng-model="choice.content" name="content">
+                        </md-input-container>
+                        <md-checkbox class="md-secondary" ng-model="choice.correct"></md-checkbox>
+                    </md-list-item>
+                </md-list>
+                <upload-image ng-model="quizImage"></upload-image>
+                <md-progress-linear md-mode="determinate" ng-show="quizImageUploadProgress" value="{{quizImageUploadProgress}}"></md-progress-linear>
             </form>
         </md-card-content>
 

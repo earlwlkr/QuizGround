@@ -12,10 +12,12 @@ function getQuizFromRequestBody(requestBody) {
     } else {
         quiz.createdAt = new Date();
     }
+
     if (quiz.creator && quiz.creator.joinDate) {
         quiz.creator.joinDate = new Date(quiz.creator.joinDate);
     }
-    return requestBody;
+
+    return quiz;
 }
 
 module.exports = function (io) {

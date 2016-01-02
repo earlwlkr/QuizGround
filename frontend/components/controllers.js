@@ -21,14 +21,7 @@
             }
         };
 
-        $scope.showLoginSignUpDialog = function () {
-            $mdDialog.show({
-                controller: 'AuthenticationController',
-                templateUrl: '/components/authentication/authentication.html',
-                parent: angular.element(document.body),
-                clickOutsideToClose: true
-            });
-        };
+        $rootScope.showLoginSignUpDialog = showLoginSignUpDialog;
 
         var history = [];
 
@@ -40,6 +33,15 @@
             var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
             $location.path(prevUrl);
         };
+
+        function showLoginSignUpDialog() {
+            $mdDialog.show({
+                controller: 'AuthenticationController',
+                templateUrl: '/components/authentication/authentication.html',
+                parent: angular.element(document.body),
+                clickOutsideToClose: true
+            });
+        }
     }
 
 })();

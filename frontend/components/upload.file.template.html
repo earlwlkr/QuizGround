@@ -1,0 +1,14 @@
+<div layout="row" layout-align="start center" layout-padding>
+    <img ngf-src="ngModel" class="img-preview" />
+    <div id="fileInput"
+         ngf-select ng-model="ngModel" name="file" ngf-pattern="'image/*'"
+         ngf-accept="'image/*'" ngf-max-size="1MB" ng-hide="true">
+        Select
+    </div>
+    <md-button class="md-primary" ng-click="removeQuizImage()" ng-show="ngModel != null">Remove Image</md-button>
+    <md-button id="uploadButton"
+               class="md-primary"
+               aria-label="attach_file">
+        Choose file
+    </md-button>
+</div>

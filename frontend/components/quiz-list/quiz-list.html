@@ -2,20 +2,27 @@
     <md-button class="md-fab md-primary" aria-label="Create new quiz" href="index.html#/quiz/edit">
         <md-icon>add</md-icon>
     </md-button>
-    <md-list>
-        <md-list-item ng-repeat="quiz in quizzes" class="secondary-button-padding">
-            <md-card flex="100" layout-padding>
-                <md-card-content>
-                    <div class="md-list-item-text">
-                        <h2>{{ quiz.question }}</h2>
-                        <md-input-container>
-                            <label>Answer</label>
-                            <input ng-model="quiz.answer" name="answer">
-                        </md-input-container>
-                    </div>
-                    <md-button class="md-secondary" style="margin:6px 8px;" ng-click="">More Info</md-button>
-                </md-card-content>
-            </md-card>
-        </md-list-item>
-    </md-list>
+    <div>
+        <md-list>
+            <md-list-item class="md-3-line" ng-repeat="quiz in quizzes" class="secondary-button-padding">
+                <md-card flex="70" layout-padding>
+                    
+                    <md-card-content layout="row" layout-align="space-between">
+                        <div class="md-list-item-text">
+                            <h2>{{ quiz.question }}</h2>
+                            <div layout="row">
+                                <img ng-src="{{ quiz.imageSource }}" mg-show="quiz.imageSource" class="md-media-xl card-media quiz-image" />
+                            </div>
+
+                            <md-input-container>
+                                <label>Answer</label>
+                                <input ng-model="quiz.userAnswer" name="answer">
+                                <md-button ng-show="quiz.userAnswer.length > 0" ng-click="submitAnswer(quiz)">Submit</md-button>
+                            </md-input-container>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </md-list-item>
+        </md-list>
+    </div>
 </md-content>

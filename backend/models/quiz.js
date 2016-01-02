@@ -14,25 +14,25 @@ var schema = new Schema({
         type:       String,
         required:   true
     },
-    answer: {
-        type:       String,
-        required:   true
-    },
+    answer:             String,
+    imageSource:        String,
     type:               String,
     rating:             Number,
     votes:              Number,
-    options: [{
+    choices: [{
         content:        String,
         correct:        Boolean,
+        imageSource:    String,
         type:           String
     }],
     comments: [{
         content:        String,
         creator: {
             id:         String,
-            name:       String,
-            joinDate:   Date,
-            avatar:     String
+            firstName:      String,
+            lastNameName:   String,
+            joinDate:       Date,
+            avatar:         String
         }
     }]
 });

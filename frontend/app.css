@@ -2,3 +2,17 @@
     background-color: indigo;
     color: white;
 }
+
+.img-preview {
+    border: dashed grey 2px;
+}
+
+.quiz-image {
+    background: #fff;
+    border-radius: 2px;
+    display: block;
+    float: left;
+    margin: 1rem;
+    position: relative;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}

@@ -6,7 +6,8 @@ var quizGroundApp = angular.module('app', [
     'ngRoute',
     'ngMaterial',
     'ngMessages',
-    'ngCookies'
+    'ngCookies',
+    'ngFileUpload'
 ]);
 
 quizGroundApp.constant('ServerInfo', {
