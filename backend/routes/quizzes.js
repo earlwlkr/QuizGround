@@ -83,7 +83,7 @@ module.exports = function (io) {
                         return res.send(false);
                     }
                     for (var i = 0; i < quiz.choices.length; i++) {
-                        if (quiz.choices[i] !== req.body.choices[i].userChoice) {
+                        if (quiz.choices[i].correct !== req.body.choices[i].userChoice) {
                             return res.send(false);
                         }
                     }
