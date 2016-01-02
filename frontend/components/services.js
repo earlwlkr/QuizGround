@@ -11,6 +11,12 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
     };
 
     QuizService.createQuiz = function (quiz) {
+        if (AuthenticationService.currentUser) {
+            quiz.creator = {
+                id: AuthenticationService.currentUser._id
+            };
+        }
+
         return $http.post(baseUrl, quiz, AuthenticationService.getBearerHeader());
     };
 

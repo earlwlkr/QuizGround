@@ -3,8 +3,9 @@ var router = express.Router();
 var oauth2 = require('../oauth2');
 
 var Quiz = require('../models/quiz');
+var User = require('../models/user');
 
-function getQuizFromRequestBody(requestBody) {
+function getQuizFromRequestBody(requestBody, done) {
     var quiz = requestBody;
     // Convert to correct Date format
     if (quiz.createdAt) {
@@ -13,11 +14,14 @@ function getQuizFromRequestBody(requestBody) {
         quiz.createdAt = new Date();
     }
 
-    if (quiz.creator && quiz.creator.joinDate) {
-        quiz.creator.joinDate = new Date(quiz.creator.joinDate);
-    }
+    User.findById(quiz.creator.id, function (err, creator) {
+        if (err) {
+            return done(err, null);
+        }
 
-    return quiz;
+        quiz.creator = creator;
+        return done(null, new Quiz(quiz));
+    });
 }
 
 module.exports = function (io) {
@@ -34,18 +38,23 @@ module.exports = function (io) {
         })
         // Create a quiz.
         .post(oauth2.isAuthenticated, function (req, res) {
-            var quiz = new Quiz(getQuizFromRequestBody(req.body));
-            quiz.save(function (err) {
+            getQuizFromRequestBody((req.body), function (err, quiz) {
                 if (err) {
                     return res.status(400).send(err);
                 }
-                var resultQuiz = {
-                    _id: quiz._id,
-                    question: quiz.question,
-                    created_at: quiz.createdAt
-                };
-                io.emit('quizzes:new', resultQuiz);
-                res.json({message: 'Quiz created!'});
+
+                quiz.save(function (err) {
+                    if (err) {
+                        return res.status(400).send(err);
+                    }
+                    var resultQuiz = {
+                        _id: quiz._id,
+                        question: quiz.question,
+                        created_at: quiz.createdAt
+                    };
+                    io.emit('quizzes:new', resultQuiz);
+                    res.json({message: 'Quiz created!'});
+                });
             });
         });
 
@@ -62,16 +71,23 @@ module.exports = function (io) {
         })
         // Update quiz info.
         .put(oauth2.isAuthenticated, function (req, res) {
-            Quiz.findOneAndUpdate(
-                {_id: req.params.id},
-                getQuizFromRequestBody(req.body),
-                function (err) {
-                    if (err) {
-                        return res.status(400).send(err);
-                    }
-                    res.json({message: 'Quiz modified!'});
+            getQuizFromRequestBody((req.body), function (err, quiz) {
+                if (err) {
+                    return res.status(400).send(err);
                 }
-            );
+
+                Quiz.findOneAndUpdate(
+                    {_id: req.params.id},
+                    quiz,
+                    function (err) {
+                        if (err) {
+                            return res.status(400).send(err);
+                        }
+                        res.json({message: 'Quiz modified!'});
+                    }
+                );
+            });
+
         })
         // Delete quiz.
         .delete(oauth2.isAuthenticated, function (req, res) {

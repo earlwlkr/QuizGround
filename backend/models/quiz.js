@@ -5,7 +5,7 @@ var schema = new Schema({
     creator: {
         id:             String,
         firstName:      String,
-        lastNameName:   String,
+        lastName:       String,
         joinDate:       Date,
         avatar:         String
     },
