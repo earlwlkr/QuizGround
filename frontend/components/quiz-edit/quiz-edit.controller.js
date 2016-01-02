@@ -42,9 +42,14 @@
         function validateQuiz(quiz) {
             if (!quiz.question) {
                 showToast('Please specify the quiz question!');
-                return false;
+                return null;
             }
             if (quiz.isMultiChoice) {
+                quiz.answer = '';
+                if (quiz.choices.length < 2) {
+                    showToast('There must be at least two choices!');
+                    return null;
+                }
                 var hasCorrectChoice = false;
                 angular.forEach(quiz.choices, function (v, k) {
                     if (v.correct) {
@@ -53,15 +58,15 @@
                 });
                 if (!hasCorrectChoice) {
                     showToast('There must be at least one correct answer!');
-                    return false;
+                    return null;
                 }
             } else {
                 if (!quiz.answer) {
                     showToast('You must input the correct answer of this quiz!');
-                    return false;
+                    return null;
                 }
             }
-            return true;
+            return quiz;
         }
 
         function createQuiz(quiz) {

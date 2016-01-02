@@ -12,6 +12,15 @@
             $scope.quizzes = response.data;
         });
 
+        $scope.updateQuizSubmitButtonStatus = function (quiz) {
+            $scope.showSubmitButton = false;
+            angular.forEach(quiz.choices, function (value) {
+               if (value.userChoice) {
+                   $scope.showSubmitButton = true;
+               }
+            });
+        };
+
         $scope.submitAnswer = function (quiz) {
 
         };
