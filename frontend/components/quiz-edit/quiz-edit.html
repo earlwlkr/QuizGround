@@ -33,17 +33,20 @@
                 <div ng-show="quiz.isMultiChoice" layout="row" layout-align="start center" layout-padding>
                     <md-button class="md-primary" ng-click="addChoice()">Add choice</md-button>
                 </div>
-                <md-list ng-show="quiz.isMultiChoice" flex="40">
+                <md-list ng-show="quiz.isMultiChoice">
                     <md-list-item ng-repeat="choice in quiz.choices">
-                        <md-icon ng-click="removeChoice(choice.index)">clear</md-icon>
-                        <md-input-container>
-                            <label>Content</label>
-                            <input ng-model="choice.content" name="content">
-                        </md-input-container>
+                        <div flex="80" layout="row">
+                            <md-icon ng-click="removeChoice(choice.index)">clear</md-icon>
+                            <md-input-container flex-gt-xs flex="80">
+                                <label>Content</label>
+                                <input ng-model="choice.content" name="content">
+                            </md-input-container>
+                        </div>
+                        <upload-image ng-model="choice.anwserImage"></upload-image>
                         <md-checkbox class="md-secondary" ng-model="choice.correct"></md-checkbox>
                     </md-list-item>
                 </md-list>
-                <upload-image ng-model="quizImage"></upload-image>
+                <upload-image id="choice.index" ng-model="quizImage"></upload-image>
                 <md-progress-linear md-mode="determinate" ng-show="quizImageUploadProgress" value="{{quizImageUploadProgress}}"></md-progress-linear>
             </form>
         </md-card-content>
