@@ -34,6 +34,10 @@ quizGroundApp.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'components/quiz-edit/quiz-edit.html',
                 controller: 'QuizEditController'
             })
+            .when('/profile', {
+                templateUrl: 'components/profile/profile.html',
+                controller: 'ProfileController'
+            })
             .otherwise({
                 redirectTo: '/'
             });

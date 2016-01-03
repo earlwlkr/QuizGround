@@ -42,6 +42,10 @@
                 clickOutsideToClose: true
             });
         }
+
+        $scope.goToProfile = function() {
+            $location.path('/profile');
+        }
     }
 
 })();
