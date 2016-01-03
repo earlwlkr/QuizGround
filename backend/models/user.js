@@ -12,7 +12,8 @@ var schema = new Schema({
     firstName: String,
     lastName: String,
     joinDate: Date,
-    avatar: String
+    avatar: String,
+    birthDay: Date
 });
 
 schema.static('create', function (user, errorOnDuplicate, callback) {
@@ -45,8 +46,30 @@ schema.static('createFromRequest', function (request) {
             + request.body.firstName.replace(' ', '')
             + '@'
             + request.body.lastName.replace(' ', '') + '.png',
-        joinDate: new Date()
+        joinDate: new Date(),
+        birthDay: new Date(request.body.birthDay)
     });
+});
+
+schema.static('updateFromRequest', function (request) {
+    var user = {};
+    if (request.body.firstName) {
+        user.firstName = request.body.firstName;
+    }
+    if (request.body.lastName) {
+        user.lastName = request.body.lastName;
+    }
+    if (request.body.password) {
+        user.password = request.body.password;
+    }
+    if (request.body.avatar) {
+        user.avatar = request.body.avatar;
+    }
+    if (request.body.birthDay) {
+        user.birthDay = request.body.birthDay;
+    }
+    console.log(user);
+    return user;
 });
 
 module.exports = mongoose.model('User', schema);

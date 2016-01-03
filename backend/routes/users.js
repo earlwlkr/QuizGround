@@ -51,7 +51,7 @@ router.route('/:id')
     .put(function (req, res) {
         User.findOneAndUpdate(
             {_id: req.params.id},
-            User.createFromRequest(req),
+            User.updateFromRequest(req),
             function (err) {
                 if (err)
                     return res.status(400).send(err);
