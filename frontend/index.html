@@ -25,16 +25,14 @@
                         <a href="/#/"><span>Quiz Ground</span></a>
                     </h2>
                     <span flex></span>
-                    <div layout="row" layout-align="space-between">
+                    <div layout="row">
                         <md-button ng-show="isLoggedIn" ng-click="goToProfile()">
-                        <img ng-src="{{ user.avatar }}" width="60px" height="60px" class="md-user-avatar" title="user avatar"/>
-                        {{ user.firstName + ' ' + user.score }}
-                    </md-button>
+                            <img ng-src="{{ user.avatar }}" class="toolbar-avatar" title="user avatar"/>
+                            {{ user.firstName + ' ' + user.score }}
+                        </md-button>
                     </div>
-                    
-                    
-                    <md-button ng-hide="isLoggedIn" ng-click="showLoginSignUpDialog()">Login</md-button>
 
+                    <md-button ng-hide="isLoggedIn" ng-click="showLoginSignUpDialog()">Login</md-button>
                     <md-button ng-show="isLoggedIn" ng-click="logout()">Logout</md-button>
                 </div>
             </md-toolbar>

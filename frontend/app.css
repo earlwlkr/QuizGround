@@ -1,5 +1,5 @@
 .card-header {
-    background-color: indigo;
+    background-color: #0091ea;
     color: white;
 }
 
@@ -15,4 +15,17 @@
     margin: 1rem;
     position: relative;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+md-card-title {
+    background: #0091ea;
+    color: white;
+}
+
+.toolbar-avatar{
+    display: inline;
+    vertical-align: middle;
+    width: 44px;
+    height: 44px;
+    border: solid 1px black;
 }

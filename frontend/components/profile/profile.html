@@ -1,45 +1,66 @@
 <md-content class="md-padding">
-<md-card>
-    <md-card-title>
-        <md-card-title-text>
-            <span class="md-headline">{{ user.firstName + ' ' + user.lastName }}</span>
-            <span class="md-subhead"><b>Join Date:</b> {{ user.joinDate | date: 'dd-MM-yyyy' }}</span>
-            <md-card-content>
-                <md-content class="autoScroll">
-                    <div layout="row">
-                        <div flex="50">{{user.email}}</div>
-                        <div flex="50">{{user.score}}</div>
-                    </div>
-                    <div layout="row">
-                        <md-input-container class="md-icon-float" flex-gt-sm>
-                          <!-- Use floating label instead of placeholder -->
-                          <label>First Name</label>
-                          <input ng-model="user.firstName" type="text" ng-disabled="!isEdit">
-                        </md-input-container>
-                        <md-input-container class="md-icon-float" flex-gt-sm>
-                          <!-- Use floating label instead of placeholder -->
-                          <label>Last Name</label>
-                          <input ng-model="user.lastName" type="text" ng-disabled="!isEdit">
-                        </md-input-container>
-                    </div>
-                    <md-datepicker ng-model="user.birthDay" md-placeholder="Birthday" ng-disabled="!isEdit">
-                    </md-datepicker>
-                </md-content>
-            </md-card-content>
-            <md-card-title-media>
-            <div class="md-media-lg card-media">
-                <img ng-hide="isEdit" ng-src="{{ user.avatar }}" width="60px" height="60px" class="md-user-avatar" title="user avatar"/>
-                <div>
-                    <upload-image ng-show="isEdit" ng-model="userImage"></upload-image>
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{ user.firstName + ' ' + user.lastName }}</span>
+                <span class="md-subhead"><b>Join Date:</b> {{ user.joinDate | date: 'dd-MM-yyyy' }}</span>
+
+                <md-switch ng-model="isEdit">
+                    Edit
+                </md-switch>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content layout-padding>
+            <md-content>
+                <div layout="row">
+                    <md-input-container flex="30">
+                        <label><b>Email</b></label>
+                        <span>{{user.email}}</span>
+                        <input ng-model="user.email" type="text" ng-show="false">
+                    </md-input-container>
+                    <md-input-container flex="30">
+                        <label><b>Score</b></label>
+                        <span>{{user.score}}</span>
+                        <input ng-model="user.score" type="text" ng-show="false">
+                    </md-input-container>
                 </div>
-            </div>
-        </md-card-title-media>
-        </md-card-title-text>
-    </md-card-title>
-    <md-card-actions layout="row" >
-        <md-button ng-hide="isEdit" ng-click="edit()">Edit</md-button>
-        <md-button ng-show="isEdit" ng-click="update(user)">Ok</md-button>
-        <md-button ng-show="isEdit" ng-click="cancel()">Cancel</md-button>
-    </md-card-actions>
-</md-card>
+                <div flex></div>
+                <div layout="row">
+                    <md-input-container flex="30">
+                        <label><b>First Name</b></label>
+                        <span ng-hide="isEdit">{{user.firstName}}</span>
+                        <input ng-model="user.firstName" type="text" ng-show="isEdit">
+                    </md-input-container>
+                    <md-input-container flex="30">
+                        <label><b>Last Name</b></label>
+                        <span ng-hide="isEdit">{{user.lastName}}</span>
+                        <input ng-model="user.lastName" type="text" ng-show="isEdit">
+                    </md-input-container>
+                    <md-input-container flex="30" ng-hide="isEdit">
+                        <label><b>Birthday</b></label>
+                        <span ng-hide="isEdit">{{ user.birthDay | date: 'dd-MM-yyyy' }}</span>
+                        <input ng-model="user.birthDay" type="text" ng-show="false">
+                    </md-input-container>
+                    <div flex="30" ng-show="isEdit">
+                        <label><b>Birthday</b></label>
+                        <md-datepicker ng-model="user.birthDay" ng-show="isEdit">
+                            Birthday
+                        </md-datepicker>
+                    </div>
+                </div>
+                <div flex></div>
+                <div class="md-media-lg card-media">
+                    <img ng-hide="isEdit" ng-src="{{ user.avatar }}" width="60px" height="60px"
+                         class="md-user-avatar" title="user avatar"/>
+                    <div>
+                        <upload-image ng-show="isEdit" ng-model="userImage"></upload-image>
+                    </div>
+                </div>
+            </md-content>
+        </md-card-content>
+        <md-card-actions layout="row">
+            <md-button ng-show="isEdit" ng-click="update(user)" class="md-primary">Ok</md-button>
+            <md-button ng-show="isEdit" ng-click="cancel()">Cancel</md-button>
+        </md-card-actions>
+    </md-card>
 </md-content>

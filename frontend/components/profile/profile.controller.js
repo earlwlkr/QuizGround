@@ -57,7 +57,8 @@
 		        password: user.password,
 		        avatar: user.avatar,
 		        joinDate: user.joinDate,
-		        birthDay: user.birthDay
+		        birthDay: user.birthDay,
+                score: user.score
 		    };
         }
 
