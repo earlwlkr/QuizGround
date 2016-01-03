@@ -73,6 +73,7 @@
                     return null;
                 }
             } else {
+                quiz.choices = [];
                 if (!quiz.answer) {
                     showToast('You must input the correct answer of this quiz!');
                     return null;
