@@ -1,13 +1,14 @@
+<md-content class="md-padding">
 <md-card>
     <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">{{ user.firstName + ' ' + user.lastName }}</span>
-        <!-- <span class="md-subhead">Large</span> -->
-    </md-card-title-text>
-    <md-card-title-media>
-        <div class="md-media-lg card-media">
-            <img ng-src="{{ user.avatar }}" width="60px" height="60px" class="md-user-avatar" title="user avatar"/>
-        </div>
+        <md-card-title-text>
+            <span class="md-headline">{{ user.firstName + ' ' + user.lastName }}</span>
+            <span class="md-subhead"><b>Join Date:</b> {{ user.joinDate | date: 'dd-MM-yyyy' }}</span>
+        </md-card-title-text>
+        <md-card-title-media>
+            <div class="md-media-lg card-media">
+                <img ng-src="{{ user.avatar }}" width="60px" height="60px" class="md-user-avatar" title="user avatar"/>
+            </div>
         </md-card-title-media>
     </md-card-title>
     <md-card-actions layout="row" layout-align="end center">
@@ -15,3 +16,4 @@
         <md-button>Action 2</md-button>
     </md-card-actions>
 </md-card>
+</md-content>

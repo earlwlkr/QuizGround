@@ -6,7 +6,7 @@
 
     function ProfileController($scope, AuthenticationService) {
         $scope.user = AuthenticationService.currentUser;
-
+        console.log('user', $scope.user);
         
     }
 
