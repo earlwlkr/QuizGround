@@ -5,44 +5,38 @@
             <span class="md-headline">{{ user.firstName + ' ' + user.lastName }}</span>
             <span class="md-subhead"><b>Join Date:</b> {{ user.joinDate | date: 'dd-MM-yyyy' }}</span>
             <md-card-content>
-            <md-content class="autoScroll">
-            <div layout-gt-sm="row">
-                <div class="md-icon-float" flex="50">{{user.email}}</div>
-                <div class="md-icon-float" flex="50">{{user.score}}</div>
-            </div>
-            <div layout-gt-sm="row">
-                <md-input-container class="md-icon-float" flex-gt-sm>
-                  <!-- Use floating label instead of placeholder -->
-                  <label>First Name</label>
-                  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-                  <input ng-model="user.firstName" type="text" ng-disabled="!isEdit">
-                </md-input-container>
-                <md-input-container class="md-icon-float" flex-gt-sm>
-                  <!-- Use floating label instead of placeholder -->
-                  <label>Last Name</label>
-                  <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-                  <input ng-model="user.lastName" type="text" ng-disabled="!isEdit">
-                </md-input-container>
-            </div>
-            <md-datepicker ng-model="user.birthDay" md-placeholder="Birthday" ng-disabled="!isEdit">
-            </md-datepicker>
-                <!-- <md-input-container md-no-float class="md-block">
-                  <md-icon md-svg-src="img/icons/ic_phone_24px.svg"></md-icon>
-                  <input ng-model="user.phone" type="text" placeholder="Phone Number">
-                </md-input-container>
-                <md-input-container class="md-block">
-                  Use floating placeholder instead of label
-                  <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
-                  <input ng-model="user.email" type="email" placeholder="Email (required)" ng-required="true">
-                </md-input-container> -->
-            </md-content>
-        </md-card-content>
-        </md-card-title-text>
-        <md-card-title-media>
+                <md-content class="autoScroll">
+                    <div layout-gt-sm="row">
+                        <div class="md-icon-float" flex="50">{{user.email}}</div>
+                        <div class="md-icon-float" flex="50">{{user.score}}</div>
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-icon-float" flex-gt-sm>
+                          <!-- Use floating label instead of placeholder -->
+                          <label>First Name</label>
+                          <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
+                          <input ng-model="user.firstName" type="text" ng-disabled="!isEdit">
+                        </md-input-container>
+                        <md-input-container class="md-icon-float" flex-gt-sm>
+                          <!-- Use floating label instead of placeholder -->
+                          <label>Last Name</label>
+                          <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
+                          <input ng-model="user.lastName" type="text" ng-disabled="!isEdit">
+                        </md-input-container>
+                    </div>
+                    <md-datepicker ng-model="user.birthDay" md-placeholder="Birthday" ng-disabled="!isEdit">
+                    </md-datepicker>
+                </md-content>
+            </md-card-content>
+            <md-card-title-media>
             <div class="md-media-lg card-media">
-                <img ng-src="{{ user.avatar }}" width="60px" height="60px" class="md-user-avatar" title="user avatar"/>
+                <img ng-hide="isEdit" ng-src="{{ user.avatar }}" width="60px" height="60px" class="md-user-avatar" title="user avatar"/>
+                <div>
+                    <upload-image ng-show="isEdit" ng-model="userImage"></upload-image>
+                </div>
             </div>
         </md-card-title-media>
+        </md-card-title-text>
     </md-card-title>
     <md-card-actions layout="row" >
         <md-button ng-hide="isEdit" ng-click="edit()">Edit</md-button>

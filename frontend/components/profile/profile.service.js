@@ -8,26 +8,14 @@
         var updateUrl = ServerInfo.baseUrl + '/api/users/',
             ProfileService = {};
 
-        var observerCallbacks = [];
-
-        ProfileService.registerObserverCallback = function (callback) {
-            observerCallbacks.push(callback);
-        };
-
         ProfileService.updateInfo = function (user) {
             return $http.put(updateUrl + user._id, {
                 firstName: user.firstName,
                 lastName: user.lastName,
-                birthDay: user.birthDay
+                birthDay: user.birthDay,
+                avatar: user.avatar
             }, AuthenticationService.getBearerHeader());
         };
-
-        function notifyObservers() {
-            angular.forEach(observerCallbacks, function (callback) {
-                callback();
-            });
-        }
-
 
         return ProfileService;
     }
