@@ -35,7 +35,8 @@
                 </div>
                 <md-list ng-show="quiz.isMultiChoice" flex="40">
                     <md-list-item ng-repeat="choice in quiz.choices">
-                        <md-input-container flex="80">
+                        <md-icon ng-click="removeChoice(choice.index)">clear</md-icon>
+                        <md-input-container>
                             <label>Content</label>
                             <input ng-model="choice.content" name="content">
                         </md-input-container>
