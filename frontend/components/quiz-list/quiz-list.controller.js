@@ -4,7 +4,7 @@
     angular.module('app')
         .controller('QuizListController', QuizListController);
 
-    function QuizListController($scope, $mdToast, QuizService, socket) {
+    function QuizListController($scope, $mdToast, QuizService, AuthenticationService, socket) {
         socket.on('quizzes:new', function (data) {
             $scope.quizzes.splice(0, 0, data);
         });
@@ -25,6 +25,9 @@
             QuizService.submitQuiz(quiz).then(function (res) {
                if (res.data === false) {
                    showToast('Wrong answer!');
+               } else {
+                   showToast('Right answer!');
+                    AuthenticationService.getUserInfo();
                }
             });
         };

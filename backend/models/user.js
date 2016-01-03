@@ -47,7 +47,8 @@ schema.static('createFromRequest', function (request) {
             + '@'
             + request.body.lastName.replace(' ', '') + '.png',
         joinDate: new Date(),
-        birthDay: new Date(request.body.birthDay)
+        birthDay: new Date(request.body.birthDay),
+        score: 0
     });
 });
 

@@ -22,6 +22,8 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
     };
 
     QuizService.submitQuiz = function (quiz) {
+        quiz.userId = AuthenticationService.currentUser._id;
+        console.log(quiz);
         return $http.post(submitUrl + quiz._id, quiz, AuthenticationService.getBearerHeader());
     };
 

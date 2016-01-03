@@ -92,7 +92,26 @@ module.exports = function (io) {
                         return res.send(false);
                     }
                 }
-                res.send(true);
+
+                User.findOne({_id: req.body.userId}, function (err, user) {
+                    if (err) {
+                        return res.status(400).send(err);
+                    }
+                    if (!user) {
+                        return res.status(400).send(err);
+                    }
+
+                    user.score++;
+                    User.findOneAndUpdate(
+                        {_id: user._id},
+                        user,
+                        function (err) {
+                            if (err)
+                                return res.status(400).send(err);
+                            return res.send(true);
+                        }
+                    );
+                });
             });
         })
         // Update quiz info.

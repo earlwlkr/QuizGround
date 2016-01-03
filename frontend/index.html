@@ -28,7 +28,7 @@
                     <div layout="row" layout-align="space-between">
                         <md-button ng-show="isLoggedIn" ng-click="goToProfile()">
                         <img ng-src="{{ user.avatar }}" width="60px" height="60px" class="md-user-avatar" title="user avatar"/>
-                        {{ user.firstName }}
+                        {{ user.firstName + ' ' + user.score }}
                     </md-button>
                     </div>
                     

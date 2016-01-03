@@ -75,6 +75,10 @@
             });
         };
 
+        AuthenticationService.getUserInfo = function () {
+            getUserInfo();
+        };
+
         // Helpers
         function getUserInfo() {
             if (!AuthenticationService.token) return;
