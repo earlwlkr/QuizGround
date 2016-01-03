@@ -6,21 +6,19 @@
             <span class="md-subhead"><b>Join Date:</b> {{ user.joinDate | date: 'dd-MM-yyyy' }}</span>
             <md-card-content>
                 <md-content class="autoScroll">
-                    <div layout-gt-sm="row">
-                        <div class="md-icon-float" flex="50">{{user.email}}</div>
-                        <div class="md-icon-float" flex="50">{{user.score}}</div>
+                    <div layout="row">
+                        <div flex="50">{{user.email}}</div>
+                        <div flex="50">{{user.score}}</div>
                     </div>
-                    <div layout-gt-sm="row">
+                    <div layout="row">
                         <md-input-container class="md-icon-float" flex-gt-sm>
                           <!-- Use floating label instead of placeholder -->
                           <label>First Name</label>
-                          <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
                           <input ng-model="user.firstName" type="text" ng-disabled="!isEdit">
                         </md-input-container>
                         <md-input-container class="md-icon-float" flex-gt-sm>
                           <!-- Use floating label instead of placeholder -->
                           <label>Last Name</label>
-                          <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
                           <input ng-model="user.lastName" type="text" ng-disabled="!isEdit">
                         </md-input-container>
                     </div>

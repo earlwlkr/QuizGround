@@ -6,7 +6,10 @@
 
     function QuizEditController($scope, $mdToast, $rootScope, QuizService, AuthenticationService, Upload) {
         $scope.quiz = {
-            choices: []
+            choices: [{
+                content: 'Choice 1',
+                correct: false
+            }]
         };
 
         $scope.save = function (quiz) {
@@ -34,19 +37,10 @@
             }
         };
 
-        function updateOrders() {
-            for (var i = 0, l = $scope.quiz.choices.length; i < l; i++) {
-                $scope.quiz.choices[i].index = i;
-                if ($scope.quiz.choices[i].content.indexOf('Choice ') !== -1) {
-                    $scope.quiz.choices[i].content = 'Choice ' + (i + 1);
-                }
-            }
-        }
-
         $scope.addChoice = function () {
             $scope.quiz.choices.push({
                 content: 'Choice ' + ($scope.quiz.choices.length + 1), 
-                correct: false,
+                correct: false
             });
             updateOrders();
         };
@@ -120,6 +114,15 @@
                 .position('top right')
                 .action('OK');
             $mdToast.show(toast);
+        }
+
+        function updateOrders() {
+            for (var i = 0, l = $scope.quiz.choices.length; i < l; i++) {
+                $scope.quiz.choices[i].index = i;
+                if ($scope.quiz.choices[i].content.indexOf('Choice ') !== -1) {
+                    $scope.quiz.choices[i].content = 'Choice ' + (i + 1);
+                }
+            }
         }
     }
 

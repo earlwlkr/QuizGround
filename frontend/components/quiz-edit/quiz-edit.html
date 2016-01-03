@@ -8,8 +8,8 @@
 
         <md-card-content>
             <form name="headerFields">
-                <div>
-                    <md-input-container>
+                <div layout="row">
+                    <md-input-container flex="60">
                         <label>Question</label>
                         <input ng-model="quiz.question" name="question" required>
                         <div ng-messages="headerFields.question.$error" ng-if="headerFields.question.$dirty" role="alert" multiple>
@@ -17,15 +17,16 @@
                         </div>
                     </md-input-container>
                 </div>
-                <md-switch ng-model="quiz.isMultiChoice" aria-label="Switch 1">
+                <md-switch ng-model="quiz.isMultiChoice">
                     Multiple-choice
                 </md-switch>
-                <div ng-hide="quiz.isMultiChoice">
-                    <md-input-container flex="100">
+                <div ng-hide="quiz.isMultiChoice" layout="row">
+                    <md-input-container flex="60">
                         <label>Answer</label>
-                        <input ng-model="quiz.answer" name="answer" required>
+                        <input ng-model="quiz.answer" md-maxlength="30" name="answer" required>
                         <div ng-messages="headerFields.answer.$error" ng-if="headerFields.answer.$dirty" role="alert" multiple>
                             <div ng-message="required">This field is required.</div>
+                            <div ng-message="md-maxlength">The answer has to be less than 30 characters long.</div>
                         </div>
                     </md-input-container>
                 </div>
@@ -33,15 +34,15 @@
                 <div ng-show="quiz.isMultiChoice" layout="row" layout-align="start center" layout-padding>
                     <md-button class="md-primary" ng-click="addChoice()">Add choice</md-button>
                 </div>
-                <md-list ng-show="quiz.isMultiChoice" flex="40">
-                    <md-list-item ng-repeat="choice in quiz.choices">
-                        <md-icon ng-click="removeChoice(choice.index)">clear</md-icon>
-                        <md-input-container>
+                <md-list ng-show="quiz.isMultiChoice" flex="70">
+                    <div ng-repeat="choice in quiz.choices" layout="row">
+                        <md-checkbox ng-model="choice.correct"></md-checkbox>
+                        <md-input-container flex="80">
                             <label>Content</label>
                             <input ng-model="choice.content" name="content">
                         </md-input-container>
-                        <md-checkbox class="md-secondary" ng-model="choice.correct"></md-checkbox>
-                    </md-list-item>
+                        <md-icon class="md-secondary" ng-click="removeChoice(choice.index)" flex="5">clear</md-icon>
+                    </div>
                 </md-list>
                 <upload-image ng-model="quizImage"></upload-image>
                 <md-progress-linear md-mode="determinate" ng-show="quizImageUploadProgress" value="{{quizImageUploadProgress}}"></md-progress-linear>
