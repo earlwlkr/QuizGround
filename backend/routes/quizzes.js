@@ -28,7 +28,13 @@ module.exports = function (io) {
     router.route('/')
         // Get all quizzes.
         .get(function (req, res) {
-            Quiz.find({}).sort({createdAt: -1}).exec(function (err, results) {
+            var params = {};
+
+            if (req.query.categories) {
+                params.categories = req.query.categories;
+            }
+
+            Quiz.find(params).sort({createdAt: -1}).exec(function (err, results) {
                 if (err) {
                     return res.status(400).send(err);
                 }
