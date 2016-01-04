@@ -3,5 +3,6 @@ module.exports = {
         return require('./quizzes')(io);
     },
     clients: require('./clients'),
-    users: require('./users')
+    users: require('./users'),
+    categories: require('./categories')()
 };

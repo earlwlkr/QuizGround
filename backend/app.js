@@ -77,6 +77,7 @@ app.post('/oauth2/google', function (req, res) {
 app.use('/api/quizzes', routes.quizzes(socket));
 app.use('/api/clients', routes.clients);
 app.use('/api/users', routes.users);
+app.use('/api/categories', routes.categories);
 
 var port = process.env.PORT || 3000;
 http.listen(port, function () {

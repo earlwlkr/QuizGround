@@ -17,9 +17,13 @@
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-md-card-title {
+md-card-title, md-card-header {
     background: #0091ea;
     color: white;
+}
+
+md-card md-card-header md-card-header-text .md-subhead {
+    color: rgba(255,255,255,0.64);
 }
 
 .toolbar-avatar{
