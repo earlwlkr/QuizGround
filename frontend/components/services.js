@@ -5,10 +5,15 @@ var quizGroundServices = angular.module('app');
 quizGroundServices.factory('QuizService', function ($http, AuthenticationService, ServerInfo) {
     var baseUrl = ServerInfo.baseUrl + '/api/quizzes',
         submitUrl = ServerInfo.baseUrl + '/api/quizzes/',
+        categoriesUrl = ServerInfo.baseUrl + '/api/categories/',
         QuizService = {};
 
     QuizService.getAllQuizzes = function () {
         return $http.get(baseUrl);
+    };
+
+    QuizService.getAllCategories = function () {
+        return $http.get(categoriesUrl);
     };
 
     QuizService.createQuiz = function (quiz) {

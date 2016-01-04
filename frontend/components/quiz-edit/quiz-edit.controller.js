@@ -12,6 +12,10 @@
             }]
         };
 
+        QuizService.getAllCategories().then(function (response) {
+            $scope.defaultCategories = response.data;
+        });
+
         $scope.save = function (quiz) {
             if (!AuthenticationService.currentUser) {
                 showLoginNotificationToast();

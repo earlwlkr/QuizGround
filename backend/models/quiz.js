@@ -16,7 +16,7 @@ var schema = new Schema({
     },
     answer:             String,
     imageSource:        String,
-    type:               String,
+    categories:         [String],
     rating:             Number,
     votes:              Number,
     choices: [{
