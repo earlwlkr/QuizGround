@@ -7,7 +7,9 @@ var quizGroundApp = angular.module('app', [
     'ngMaterial',
     'ngMessages',
     'ngCookies',
-    'ngFileUpload'
+    'ngFileUpload',
+    'ngAnimate',
+    'md.chips.select'
 ]);
 
 quizGroundApp.constant('ServerInfo', {

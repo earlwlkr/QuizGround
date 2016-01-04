@@ -23,6 +23,10 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
             };
         }
 
+        quiz.categories = quiz.categories.map(function (item) {
+            return item.title;
+        });
+
         return $http.post(baseUrl, quiz, AuthenticationService.getBearerHeader());
     };
 

@@ -9,11 +9,18 @@
             choices: [{
                 content: 'Choice 1',
                 correct: false
-            }]
+            }],
+            categories: []
         };
 
         QuizService.getAllCategories().then(function (response) {
-            $scope.defaultCategories = response.data;
+            var categories = response.data;
+            var i = 0;
+            $scope.defaultCategories = categories.map(function (item) {
+                return {
+                    title: item
+                };
+            });
         });
 
         $scope.save = function (quiz) {
@@ -43,7 +50,7 @@
 
         $scope.addChoice = function () {
             $scope.quiz.choices.push({
-                content: 'Choice ' + ($scope.quiz.choices.length + 1), 
+                content: 'Choice ' + ($scope.quiz.choices.length + 1),
                 correct: false
             });
             updateOrders();
@@ -52,6 +59,10 @@
         $scope.removeChoice = function (index) {
             $scope.quiz.choices.splice(index, 1);
             updateOrders();
+        };
+
+        $scope.addCategory = function (category) {
+            $scope.quiz.categories.push(category);
         };
 
         // Helpers
