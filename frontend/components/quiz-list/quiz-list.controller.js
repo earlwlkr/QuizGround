@@ -15,20 +15,22 @@
         $scope.updateQuizSubmitButtonStatus = function (quiz) {
             quiz.showSubmitButton = false;
             angular.forEach(quiz.choices, function (value) {
-               if (value.userChoice) {
-                   quiz.showSubmitButton = true;
-               }
+                if (value.userChoice) {
+                    quiz.showSubmitButton = true;
+                }
             });
         };
 
         $scope.submitAnswer = function (quiz) {
             QuizService.submitQuiz(quiz).then(function (res) {
-               if (res.data === false) {
-                   showToast('Wrong answer!');
-               } else {
-                   showToast('Right answer!');
+                if (res.data.error) {
+                    showToast(res.data.message);
+                } else if (res.data === false) {
+                    showToast('Wrong answer!');
+                } else {
+                    showToast('Right answer!');
                     AuthenticationService.getUserInfo();
-               }
+                }
             });
         };
 

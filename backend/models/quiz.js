@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var schema = new Schema({
     creator: {
-        id:             String,
+        _id:            String,
         firstName:      String,
         lastName:       String,
         joinDate:       Date,

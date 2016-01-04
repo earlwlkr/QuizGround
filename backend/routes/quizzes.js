@@ -83,6 +83,9 @@ module.exports = function (io) {
                 if (!quiz) {
                     return res.status(400).send(err);
                 }
+                if (quiz.creator._id === req.body.userId) {
+                    return res.json({error: true, message: 'You cannot answer your own quiz!'});
+                }
 
                 if (quiz.choices && quiz.choices.length > 0) {
                     if (quiz.choices.length !== req.body.choices.length) {
