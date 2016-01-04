@@ -4,7 +4,7 @@
     angular.module('app')
         .controller('QuizListController', QuizListController);
 
-    function QuizListController($scope, $mdToast, QuizService, AuthenticationService, socket) {
+    function QuizListController($scope, $mdToast, $timeout, $mdSidenav, QuizService, AuthenticationService, socket) {
         socket.on('quizzes:new', function (data) {
             $scope.quizzes.splice(0, 0, data);
         });
@@ -40,6 +40,49 @@
                 .position('top right')
                 .action('OK');
             $mdToast.show(toast);
+        };
+
+        // Get categories
+        $scope.categories = null;
+        QuizService.getAllCategories().then(function (response) {
+            $scope.categories = response.data;
+        });
+
+        // Show side nav
+        $scope.toggleRight = buildToggler('right');
+        $scope.isOpenRight = function(){
+          return $mdSidenav('right').isOpen();
+        };
+        /**
+         * Supplies a function that will continue to operate until the
+         * time is up.
+         */
+        function debounce(func, wait, context) {
+          var timer;
+          return function debounced() {
+            var context = $scope,
+                args = Array.prototype.slice.call(arguments);
+            $timeout.cancel(timer);
+            timer = $timeout(function() {
+              timer = undefined;
+              func.apply(context, args);
+            }, wait || 10);
+          };
+        };
+
+        function buildToggler(navID) {
+          return function() {
+            $mdSidenav(navID)
+              .toggle();
+          }
+        };
+
+        $scope.close = function () {
+          $mdSidenav('right').close();
+        };
+
+        $scope.selectCategory = function (category) {
+          console.log(category);
         }
     }
 }());

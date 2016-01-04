@@ -1,11 +1,31 @@
 <md-content flex layout-padding>
     <md-button class="md-fab md-primary" style="top:90%;left:90%;position:fixed" aria-label="Create new quiz"
                href="index.html#/quiz/edit">
-        <md-tooltip md-direction="left">
+        <md-tooltip md-direction="right">
             Add Quiz
         </md-tooltip>
         <md-icon>add</md-icon>
     </md-button>
+    <md-button class="md-fab md-primary" style="top:90%;left:85%;position:fixed" aria-label="Choose a category"
+               href="" ng-click="toggleRight()"
+            ng-hide="isOpenRight()">
+        <md-tooltip md-direction="left">
+            Categories
+        </md-tooltip>
+        <md-icon>dashboard</md-icon>
+    </md-button>
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+        <md-toolbar class="md-theme-light">
+            <h1 class="md-toolbar-tools">Menu</h1>
+        </md-toolbar>
+        <md-content layout-padding>
+                <label>Categories</label>
+                    <div></div>
+                <md-select ng-model="category" placeholder="Select a category">
+                    <md-option ng-click="selectCategory(category)" ng-value="category" ng-repeat="category in categories">{{ category }}</md-option>
+                </md-select>
+        </md-content>
+    </md-sidenav>
     <div>
         <md-list>
             <md-list-item class="md-3-line" ng-repeat="quiz in quizzes" class="secondary-button-padding">
