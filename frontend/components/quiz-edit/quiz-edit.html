@@ -46,7 +46,12 @@
                         <md-icon class="md-secondary" ng-click="removeChoice(choice.index)" flex="5">clear</md-icon>
                     </div>
                 </md-list>
-                <md-chips-select ng-if="defaultCategories" ng-model="quiz.categories" select-items="defaultCategories"></md-chips-select>
+                <div layout="row" layout-align="start center" layout-padding>
+                    <label>Categories</label>
+                    <div></div>
+                    <md-chips-select ng-if="defaultCategories" ng-model="quiz.categories" select-items="defaultCategories"></md-chips-select>
+                </div>
+
                 <md-progress-linear md-mode="determinate" ng-show="quizImageUploadProgress"
                                     value="{{quizImageUploadProgress}}"></md-progress-linear>
             </form>
