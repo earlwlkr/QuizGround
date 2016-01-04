@@ -13,7 +13,7 @@ var quizGroundApp = angular.module('app', [
 ]);
 
 quizGroundApp.constant('ServerInfo', {
-   baseUrl: 'http://afternoon-forest-3536.herokuapp.com'
+   baseUrl: 'http://localhost:3000'//'http://afternoon-forest-3536.herokuapp.com'
 }).constant('Environment', {
     dev: {
         clientId: '568667b903324e6033783c9a',
