@@ -20,6 +20,8 @@ module.exports = function () {
                     results.push($(this).text().trim());
                 });
 
+                results.splice(0, 1);
+                results.splice(-5, 5);
                 return res.send(results);
             });
         });
