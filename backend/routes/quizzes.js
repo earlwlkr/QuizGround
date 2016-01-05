@@ -31,7 +31,9 @@ module.exports = function (io) {
             var params = {};
 
             if (req.query.categories) {
-                params.categories = req.query.categories;
+                if (req.query.categories !== 'Tất cả') {
+                    params.categories = req.query.categories;
+                }
             }
 
             Quiz.find(params).sort({createdAt: -1}).exec(function (err, results) {

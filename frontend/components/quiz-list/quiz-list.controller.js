@@ -42,26 +42,12 @@
             $mdToast.show(toast);
         }
 
-        // Get categories
-        $scope.search = {
-            categories: []
-        };
-        $scope.categories = null;
         QuizService.getAllCategories().then(function (response) {
             $scope.categories = response.data;
         });
 
         $scope.selectCategory = function (category) {
-            var index = $scope.search.categories.indexOf(category);
-            if (index > -1) {
-                $scope.search.categories.splice(index, 1);
-            } else
-                $scope.search.categories.push(category);
-            //console.log($scope.search.categories);
-        };
-
-        $scope.search = function () {
-            QuizService.getAllQuizzes(JSON.stringify($scope.search.categories)).then(function (response) {
+            QuizService.getAllQuizzes(category).then(function (response) {
                 $scope.quizzes = response.data;
             });
         };

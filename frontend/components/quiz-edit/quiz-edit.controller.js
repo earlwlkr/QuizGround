@@ -15,7 +15,7 @@
 
         QuizService.getAllCategories().then(function (response) {
             var categories = response.data;
-            var i = 0;
+            categories.splice(0, 1);
             $scope.defaultCategories = categories.map(function (item) {
                 return {
                     title: item

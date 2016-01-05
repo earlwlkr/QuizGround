@@ -14,13 +14,13 @@ module.exports = function () {
                 }
 
                 var $ = cheerio.load(html);
-                var results = [];
+                var results = ['Tất cả'];
 
                 $('li', '#menu_web').each(function(i, element) {
                     results.push($(this).text().trim());
                 });
 
-                results.splice(0, 1);
+                results.splice(1, 1);
                 results.splice(-5, 5);
                 return res.send(results);
             });

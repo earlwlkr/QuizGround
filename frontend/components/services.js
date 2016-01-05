@@ -13,7 +13,7 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
         if (category) {
             url += '?categories=' + category;
         }
-        return $http.get(baseUrl);
+        return $http.get(url);
     };
 
     QuizService.getAllCategories = function () {
