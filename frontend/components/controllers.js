@@ -15,7 +15,7 @@
 
         $scope.logout = function () {
             if ($scope.isLoggedIn) {
-                AuthenticationService.token = null;
+                AuthenticationService.logout();
                 $scope.isLoggedIn = false;
                 $scope.user = null;
             }

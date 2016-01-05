@@ -46,6 +46,11 @@
             });
         };
 
+        AuthenticationService.logout = function () {
+            AuthenticationService.token = null;
+            $cookies.remove('access_token');
+        };
+
         AuthenticationService.googleLogin = function (email, firstName, lastName) {
             return $http.post(googleLoginUrl, {
                 email: email,

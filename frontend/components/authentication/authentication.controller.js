@@ -5,7 +5,6 @@
         .controller('AuthenticationController', AuthenticationController);
 
     function AuthenticationController($scope, $mdDialog, $timeout, AuthenticationService) {
-        $scope.isLogin = true;
         $scope.selectedIndex = 0;
         initClient();
 
@@ -29,7 +28,6 @@
 
         var onSuccess = function (user) {
             var profile = user.getBasicProfile();
-            console.log(profile);
             console.log('Signed in as ' + profile.getName());
             $scope.loading = true;
             var nameSplits = profile.getName().split(' ', 2);
@@ -76,18 +74,10 @@
         }
 
         $scope.login = function () {
-            if (!$scope.isLogin) {
-                $scope.isLogin = true;
-                return;
-            }
             $scope.loading = true;
             login();
         };
         $scope.signup = function () {
-            if ($scope.isLogin) {
-                $scope.isLogin = false;
-                return;
-            }
             if ($scope.user.password !== $scope.user.confirmPassword) {
                 $scope.loginError = 'Passwords don\'t match.';
                 return;
