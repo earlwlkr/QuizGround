@@ -1,6 +1,6 @@
 <div layout="row">
     <section flex="30">
-        <md-sidenav class="md-sidenav-left" style="background: #26C6DA;" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
             <md-toolbar class="md-theme-light-blue">
                 <h1 class="md-toolbar-tools">Categories</h1>
             </md-toolbar>
@@ -13,7 +13,11 @@
             </md-content>
         </md-sidenav>
     </section>
-    <md-content layout="row" flex="100" layout-padding>
+    <md-content flex="100" layout-padding>
+        <div layout="row" layout-sm="column" layout-align="space-around">
+            <md-progress-circular ng-show="loading" md-mode="indeterminate" md-diameter="120"></md-progress-circular>
+        </div>
+
         <md-button class="md-fab md-primary" style="top:90%;left:93%;position:fixed" aria-label="Create new quiz"
                    href="index.html#/quiz/edit">
             <md-tooltip md-direction="top">

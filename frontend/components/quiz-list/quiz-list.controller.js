@@ -47,8 +47,12 @@
         });
 
         $scope.selectCategory = function (category) {
+            $scope.quizzes = [];
+            $scope.loading = true;
+
             QuizService.getAllQuizzes(category).then(function (response) {
                 $scope.quizzes = response.data;
+                $scope.loading = false;
             });
         };
     }
