@@ -1,83 +1,74 @@
-<md-content flex layout-padding>
-    <md-button class="md-fab md-primary" style="top:90%;left:93%;position:fixed" aria-label="Create new quiz"
-               href="index.html#/quiz/edit">
-        <md-tooltip md-direction="top">
-            Add Quiz
-        </md-tooltip>
-        <md-icon>add</md-icon>
-    </md-button>
-    <md-button class="md-fab md-primary" style="top:90%;left:88%;position:fixed" aria-label="Choose a category"
-               href="" ng-click="toggleRight()"
-            ng-hide="isOpenRight()">
-        <md-tooltip md-direction="top">
-            Categories
-        </md-tooltip>
-        <md-icon>dashboard</md-icon>
-    </md-button>
-    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" style="position: fixed">
-        <md-toolbar class="md-theme-light">
-            <h1 class="md-toolbar-tools">Menu</h1>
-        </md-toolbar>
-        <md-content layout-padding>
-            <form>
-                <!-- <md-select ng-model="category" placeholder="Select a category">
-                    <md-option ng-click="selectCategory(category)" ng-value="category" ng-repeat="category in categories">{{ category }}</md-option>
-                </md-select> -->
-                <label>Categoires</label>
-                <md-list class="secondary-button-padding">
-                    <md-list-item ng-repeat="category in categories">
-                        <md-checkbox ng-click="selectCategory(category)"></md-checkbox>
-                        <p>{{category}}</p>
+<div layout="row">
+    <section flex="30">
+        <md-sidenav class="md-sidenav-left" style="background: #26C6DA;" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+            <md-toolbar class="md-theme-light-blue">
+                <h1 class="md-toolbar-tools">Categories</h1>
+            </md-toolbar>
+            <md-content layout-padding style="background: #84ffff;">
+                <md-list >
+                    <md-list-item ng-repeat="category in categories" ng-click="selectCategory(category)">
+                        {{ category }}
                     </md-list-item>
                 </md-list>
-            </form>
-            <md-button ng-click="search()" class="md-primary">Search</md-button>
-        </md-content>
-    </md-sidenav>
-    <div>
-        <md-list>
-            <md-list-item class="md-3-line" ng-repeat="quiz in quizzes" class="secondary-button-padding">
-                <md-card flex="70">
-                    <md-card-header>
-                        <md-card-avatar>
-                            <img ng-src="{{ quiz.creator.avatar }}" class="md-user-avatar" title="user avatar"/>
-                        </md-card-avatar>
-                        <md-card-header-text>
-                            <span class="md-title">{{ quiz.creator.firstName + ' ' + quiz.creator.lastName }}</span>
-                            <span class="md-subhead">{{ quiz.createdAt | date: 'dd-MM-yyyy' }}</span>
-                        </md-card-header-text>
-                    </md-card-header>
-                    <md-card-content layout="row" layout-align="space-between">
-                        <div class="md-list-item-text">
-                            <h2>{{ quiz.question }}</h2>
-                            <div layout="row">
-                                <img ng-src="{{ quiz.imageSource }}" mg-show="quiz.imageSource != null"
-                                     class="card-media quiz-image"/>
+            </md-content>
+        </md-sidenav>
+    </section>
+    <md-content layout="row" flex="100" layout-padding>
+        <md-button class="md-fab md-primary" style="top:90%;left:93%;position:fixed" aria-label="Create new quiz"
+                   href="index.html#/quiz/edit">
+            <md-tooltip md-direction="top">
+                Add Quiz
+            </md-tooltip>
+            <md-icon>add</md-icon>
+        </md-button>
+
+        <div flex="95">
+            <md-list>
+                <md-list-item class="md-3-line" ng-repeat="quiz in quizzes" class="secondary-button-padding">
+                    <md-card flex="70">
+                        <md-card-header>
+                            <md-card-avatar>
+                                <img ng-src="{{ quiz.creator.avatar }}" class="md-user-avatar" title="user avatar"/>
+                            </md-card-avatar>
+                            <md-card-header-text>
+                                <span class="md-title">{{ quiz.creator.firstName + ' ' + quiz.creator.lastName }}</span>
+                                <span class="md-subhead">{{ quiz.createdAt | date: 'dd-MM-yyyy' }}</span>
+                            </md-card-header-text>
+                        </md-card-header>
+                        <md-card-content layout="row" layout-align="space-between">
+                            <div class="md-list-item-text">
+                                <h2>{{ quiz.question }}</h2>
+                                <div layout="row">
+                                    <img ng-src="{{ quiz.imageSource }}" mg-show="quiz.imageSource != null"
+                                         class="card-media quiz-image"/>
+                                </div>
+                                <md-input-container ng-hide="quiz.choices.length">
+                                    <label>Answer</label>
+                                    <input ng-model="quiz.userAnswer" name="answer">
+                                </md-input-container>
+                                <md-list>
+                                    </md-checkbox>
+                                    <md-list-item ng-repeat="choice in quiz.choices" layout="row"
+                                                  layout-wrap>
+                                        <div class="md-item-text" flex="50">
+                                            <md-checkbox ng-model="choice.userChoice"
+                                                         ng-change="updateQuizSubmitButtonStatus(quiz)">
+                                                {{ choice.content }}
+                                            </md-checkbox>
+                                        </div>
+                                    </md-list-item>
+                                </md-list>
                             </div>
-                            <md-input-container ng-hide="quiz.choices.length">
-                                <label>Answer</label>
-                                <input ng-model="quiz.userAnswer" name="answer">
-                            </md-input-container>
-                            <md-list>
-                                </md-checkbox>
-                                <md-list-item ng-repeat="choice in quiz.choices" layout="row"
-                                              layout-wrap>
-                                    <div class="md-item-text" flex="50">
-                                        <md-checkbox ng-model="choice.userChoice" ng-change="updateQuizSubmitButtonStatus(quiz)">
-                                            {{ choice.content }}
-                                        </md-checkbox>
-                                    </div>
-                                </md-list-item>
-                            </md-list>
-                        </div>
-                    </md-card-content>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button class="md-raised md-accent" ng-show="quiz.userAnswer.length > 0 || quiz.showSubmitButton"
-                                   ng-click="submitAnswer(quiz)">Submit
-                        </md-button>
-                    </md-card-actions>
-                </md-card>
-            </md-list-item>
-        </md-list>
-    </div>
-</md-content>
+                        </md-card-content>
+                        <md-card-actions layout="row" layout-align="end center">
+                            <md-button class="md-raised md-accent"
+                                       ng-show="quiz.userAnswer.length > 0 || quiz.showSubmitButton"
+                                       ng-click="submitAnswer(quiz)">Submit
+                            </md-button>
+                        </md-card-actions>
+                    </md-card>
+                </md-list-item>
+            </md-list>
+        </div>
+    </md-content>
+</div>

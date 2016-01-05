@@ -4,7 +4,7 @@
     angular.module('app')
         .controller('QuizListController', QuizListController);
 
-    function QuizListController($scope, $mdToast, $timeout, $mdSidenav, QuizService, AuthenticationService, socket) {
+    function QuizListController($scope, $mdToast, QuizService, AuthenticationService, socket) {
         socket.on('quizzes:new', function (data) {
             $scope.quizzes.splice(0, 0, data);
         });
@@ -40,63 +40,30 @@
                 .position('top right')
                 .action('OK');
             $mdToast.show(toast);
-        };
+        }
 
         // Get categories
         $scope.search = {
-          categories: []
+            categories: []
         };
         $scope.categories = null;
         QuizService.getAllCategories().then(function (response) {
             $scope.categories = response.data;
         });
 
-        // Show side nav
-        $scope.toggleRight = buildToggler('right');
-        $scope.isOpenRight = function(){
-          return $mdSidenav('right').isOpen();
-        };
-        /**
-         * Supplies a function that will continue to operate until the
-         * time is up.
-         */
-        function debounce(func, wait, context) {
-          var timer;
-          return function debounced() {
-            var context = $scope,
-                args = Array.prototype.slice.call(arguments);
-            $timeout.cancel(timer);
-            timer = $timeout(function() {
-              timer = undefined;
-              func.apply(context, args);
-            }, wait || 10);
-          };
-        };
-
-        function buildToggler(navID) {
-          return function() {
-            $mdSidenav(navID)
-              .toggle();
-          }
-        };
-
-        $scope.close = function () {
-          $mdSidenav('right').close();
-        };
-
         $scope.selectCategory = function (category) {
-          var index = $scope.search.categories.indexOf(category);
-          if (index > -1) {
-            $scope.search.categories.splice(index,1);
-          } else
-            $scope.search.categories.push(category);
-          //console.log($scope.search.categories);
+            var index = $scope.search.categories.indexOf(category);
+            if (index > -1) {
+                $scope.search.categories.splice(index, 1);
+            } else
+                $scope.search.categories.push(category);
+            //console.log($scope.search.categories);
         };
 
         $scope.search = function () {
-          QuizService.getAllQuizzes(JSON.stringify($scope.search.categories)).then(function (response) {
-            $scope.quizzes = response.data;
-          }); 
+            QuizService.getAllQuizzes(JSON.stringify($scope.search.categories)).then(function (response) {
+                $scope.quizzes = response.data;
+            });
         };
     }
 }());
