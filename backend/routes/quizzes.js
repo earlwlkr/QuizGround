@@ -58,12 +58,7 @@ module.exports = function (io) {
                     if (err) {
                         return res.status(400).send(err);
                     }
-                    var resultQuiz = {
-                        _id: quiz._id,
-                        question: quiz.question,
-                        created_at: quiz.createdAt
-                    };
-                    io.emit('quizzes:new', resultQuiz);
+                    io.emit('quizzes:new', quiz);
                     res.json({message: 'Quiz created!'});
                 });
             });
