@@ -62,6 +62,11 @@
             $mdDialog.cancel();
         };
         function login() {
+            if (!$scope.user || !$scope.user.email || !$scope.user.password) {
+                $scope.loading = false;
+                $scope.loginError = 'Please enter email and password.';
+                return;
+            }
             AuthenticationService.login($scope.user)
                 .then(function (response) {
                     $scope.loading = false;

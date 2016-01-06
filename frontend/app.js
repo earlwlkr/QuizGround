@@ -9,7 +9,8 @@ var quizGroundApp = angular.module('app', [
     'ngCookies',
     'ngFileUpload',
     'ngAnimate',
-    'md.chips.select'
+    'md.chips.select',
+    'angulike'
 ]);
 
 quizGroundApp.constant('ServerInfo', {
@@ -55,4 +56,5 @@ quizGroundApp.run(function ($http, $rootScope, AuthenticationService, $templateC
     AuthenticationService.clientId = Environment.production.clientId;
     $http.defaults.headers.common.Authorization = Environment.production.header;
     $templateCache.removeAll();
+    $rootScope.facebookAppId = '[FacebookAppId]';
 });

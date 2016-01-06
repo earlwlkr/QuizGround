@@ -17,7 +17,11 @@
         });
 
         QuizService.getAllQuizzes().then(function (response) {
-            $scope.quizzes = response.data;
+            $scope.quizzes = response.data.map(function (item) {
+                item.url = 'http://quiz-ground.herokuapp.com/#/quiz-detail/' + item._id;
+                item.tweet = 'Try this quiz on QuizGround!';
+                return item;
+            });
         });
 
         QuizService.getAllCategories().then(function (response) {

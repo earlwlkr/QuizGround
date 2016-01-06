@@ -4,7 +4,7 @@
     angular.module('app')
         .controller('QuizDetailController', QuizDetailController);
 
-    function QuizDetailController($routeParams, $scope, $mdToast,
+    function QuizDetailController($routeParams, $scope, $mdToast, $rootScope,
                                   QuizService, CommentService, AuthenticationService, socket) {
 
         socket.on('comments:new', function (comment) {
@@ -22,6 +22,10 @@
         });
 
         $scope.submitAnswer = function (quiz) {
+            if (!AuthenticationService.currentUser) {
+                showLoginNotificationToast();
+                return;
+            }
             QuizService.submitQuiz(quiz).then(function (res) {
                 if (res.data.error) {
                     showToast(res.data.message);
@@ -44,6 +48,10 @@
         };
 
         $scope.submitComment = function () {
+            if (!AuthenticationService.currentUser) {
+                showLoginNotificationToast();
+                return;
+            }
             CommentService.submitComment($scope.quiz._id, $scope.commentContent).then(function (res) {
                 $scope.commentContent = '';
                 showToast(res.data.message);
@@ -61,6 +69,19 @@
                 showToast('Deleted successfully');
             });
         };
+
+        function showLoginNotificationToast() {
+            $rootScope.showLoginSignUpDialog();
+            showToast('Please log in before commenting!');
+        }
+
+        function showToast(msg) {
+            var toast = $mdToast.simple()
+                .textContent(msg)
+                .position('top right')
+                .action('OK');
+            $mdToast.show(toast);
+        }
 
         function showToast(msg) {
             var toast = $mdToast.simple()
