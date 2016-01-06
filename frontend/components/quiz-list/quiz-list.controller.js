@@ -92,15 +92,6 @@
             $mdToast.show(toast);
         }
 
-        $scope.share = function() {
-            /*FB.ui({
-                method: 'share',
-                href: 'https://developers.facebook.com/docs/',
-            }, function(response){
-                console.log(response.error_message);
-            });*/
-        };
-
         function showLoginNotificationToast() {
             $rootScope.showLoginSignUpDialog();
             showToast('Please log in before vote quiz!');

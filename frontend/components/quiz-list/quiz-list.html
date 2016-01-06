@@ -53,8 +53,11 @@
                         <md-card-content layout="row" layout-align="space-between">
                             <div class="md-list-item-text">
                                 <div layout="row">
-                                    <h2>{{ quiz.question }}</h2>
-                                    <div google-plus="quiz.url"></div>
+                                    <div layout="column" flex="80">
+                                        <h2>{{ quiz.question }}</h2>
+
+                                        <div google-plus="quiz.url"></div>
+                                    </div>
                                 </div>
                                 <div layout="row">
                                     <img ng-src="{{ quiz.imageSource }}" mg-show="quiz.imageSource != null"

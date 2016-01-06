@@ -9,6 +9,7 @@
 	        restrict: 'A',
 	        templateUrl: 'components/star-rating/star-rating.html',
 	        scope: {
+                ngModel: '=',
 	            ratingValue: '=',
 	            max: '=',
 	            onRatingSelected: '&'
@@ -19,6 +20,9 @@
 	function startRatingLink (scope, elem, attrs) {
         if (scope.max == undefined) {
             scope.max = 5;
+        }
+        if (scope.ratingValue == undefined) {
+            scope.ratingValue = scope.ngModel;
         }
         var updateStars = function () {
             scope.stars = [];
