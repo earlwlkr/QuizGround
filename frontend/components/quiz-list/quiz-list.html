@@ -74,11 +74,25 @@
                                 </md-list>
                             </div>
                         </md-card-content>
+
                         <md-card-actions layout="row">
                             <md-button ng-href="/#/quiz-detail/{{quiz._id}}">
                                 {{quiz.comments.length}} comments
                             </md-button>
-                            <md-button class="md-raised md-accent" flex="20" layout-align="end end"
+
+                            <md-card-icon-actions>
+                                <md-button class="md-raised" layout-align="start" ng-click="thumbUp(quiz)">
+                                    Upvote <label ng-hide="quiz.votes == null"> | {{quiz.votes}}</label>
+                                </md-button>
+
+                                <md-button class="md-raised" layout-align="end" ng-click="thumbDown(quiz)">
+                                    Downvote
+                                </md-button>
+                                <md-button class="md-icon-button" ng-click="share()">
+                                    <md-icon>share</md-icon>
+                                </md-button>
+                            </md-card-icon-actions>
+                            <md-button class="md-raised md-accent"
                                        ng-show="quiz.userAnswer.length > 0 || quiz.showSubmitButton"
                                        ng-click="submitAnswer(quiz)">Submit
                             </md-button>

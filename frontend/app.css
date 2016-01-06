@@ -41,3 +41,8 @@ md-card md-card-header md-card-header-text .md-subhead {
     left: auto;
     position: fixed;
 }
+
+.votes {
+    display: table-cell;
+    vertical-align: middle;
+}

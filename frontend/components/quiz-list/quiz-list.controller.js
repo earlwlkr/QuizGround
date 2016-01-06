@@ -69,5 +69,42 @@
                 .action('OK');
             $mdToast.show(toast);
         }
+
+        $scope.thumbDown = function(quiz) {
+            if (!AuthenticationService.currentUser) {
+                showLoginNotificationToast();
+                return;
+            }
+
+            if (quiz.votes == null)
+                quiz.votes = 0;
+            quiz.votes = quiz.votes - 1;
+            QuizService.votes(quiz);
+        };
+
+        $scope.thumbUp = function(quiz) {
+            if (!AuthenticationService.currentUser) {
+                showLoginNotificationToast();
+                return;
+            }
+            if (quiz.votes == null)
+                quiz.votes = 0;
+            quiz.votes = quiz.votes + 1;
+            QuizService.votes(quiz);
+        };
+
+        $scope.share = function() {
+            /*FB.ui({
+                method: 'share',
+                href: 'https://developers.facebook.com/docs/',
+            }, function(response){
+                console.log(response.error_message);
+            });*/
+        };
+
+        function showLoginNotificationToast() {
+            $rootScope.showLoginSignUpDialog();
+            showToast('Please log in before vote quiz!');
+        }
     }
 }());
