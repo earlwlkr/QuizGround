@@ -92,8 +92,7 @@
                                 {{quiz.comments.length}} comments
                             </md-button>
 
-                            <div star-rating rating-value="quiz.rating" max="rating.max"
-                                 ng-class="{'disabled': userVotes.indexOf(quiz._id) > -1}"
+                            <div star-rating rating-value="quiz.rating" max="5"
                                  on-rating-selected="rateQuiz(quiz, rating)"></div>
 
                             <md-button class="md-raised md-accent"
