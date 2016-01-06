@@ -89,7 +89,7 @@ module.exports = function (io) {
 
                 quiz.votes += !voted;
                 if (item) {
-                    quiz.rating -= item.rating;
+                    quiz.rating = (quiz.rating * quiz.votes) - item.rating;
                     item.rating = rating;
                     item.createdAt = new Date();
                 } else {
