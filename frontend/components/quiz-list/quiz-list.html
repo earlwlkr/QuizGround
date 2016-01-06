@@ -42,7 +42,7 @@
                                     <span class="md-subhead">{{ quiz.createdAt | date: 'dd-MM-yyyy' }}</span>
                                 </div>
                                 <div flex>
-                                    <md-icon style="color: white;"
+                                    <md-icon style="color: white;cursor: pointer;"
                                              ng-show="user.isAdmin || quiz.creator._id == user._id"
                                              ng-click="deleteQuiz(quiz)">clear
                                     </md-icon>
@@ -74,8 +74,11 @@
                                 </md-list>
                             </div>
                         </md-card-content>
-                        <md-card-actions layout="row" layout-align="end center">
-                            <md-button class="md-raised md-accent"
+                        <md-card-actions layout="row">
+                            <md-button ng-href="/#/quiz-detail/{{quiz._id}}">
+                                {{quiz.comments.length}} comments
+                            </md-button>
+                            <md-button class="md-raised md-accent" flex="20" layout-align="end end"
                                        ng-show="quiz.userAnswer.length > 0 || quiz.showSubmitButton"
                                        ng-click="submitAnswer(quiz)">Submit
                             </md-button>

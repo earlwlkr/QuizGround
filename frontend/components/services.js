@@ -48,11 +48,31 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
 
     QuizService.submitQuiz = function (quiz) {
         quiz.userId = AuthenticationService.currentUser._id;
-        console.log(quiz);
         return $http.post(submitUrl + quiz._id, quiz, AuthenticationService.getBearerHeader());
     };
 
+    QuizService.getQuizDetail = function (quizId) {
+        return $http.get(submitUrl + quizId);
+    };
+
     return QuizService;
+});
+
+quizGroundServices.factory('CommentService', function ($http, AuthenticationService, ServerInfo) {
+    var commentsUrl = ServerInfo.baseUrl + '/api/comments/',
+        CommentService = {};
+
+    CommentService.submitComment = function (quizId, content) {
+        var comment = {
+            content: content,
+            creator: {
+                _id: AuthenticationService.currentUser._id
+            }
+        };
+        return $http.post(commentsUrl + quizId, comment, AuthenticationService.getBearerHeader());
+    };
+
+    return CommentService;
 });
 
 quizGroundServices.factory('socket', function ($rootScope, ServerInfo) {

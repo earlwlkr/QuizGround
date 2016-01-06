@@ -1,0 +1,68 @@
+<div layout="row">
+    <md-card flex="70">
+        <md-card-header>
+            <h2>{{ quiz.question }}</h2>
+        </md-card-header>
+        <md-card-content layout="row" layout-align="space-between">
+            <div class="md-list-item-text" layout="row">
+                <div layout="row" flex="20">
+                    <img ng-src="{{ quiz.imageSource }}" mg-show="quiz.imageSource != null"
+                         class="card-media quiz-image"/>
+                </div>
+                <md-input-container ng-if="!quiz.choices.length">
+                    <label>Answer</label>
+                    <input ng-model="quiz.userAnswer" name="answer">
+                </md-input-container>
+                <md-list flex="80">
+                    </md-checkbox>
+                    <md-list-item ng-repeat="choice in quiz.choices" layout="row"
+                                  layout-wrap>
+                        <div class="md-item-text" flex="50">
+                            <md-checkbox ng-model="choice.userChoice"
+                                         ng-change="updateQuizSubmitButtonStatus(quiz)">
+                                {{ choice.content }}
+                            </md-checkbox>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button class="md-raised md-accent"
+                       ng-show="quiz.userAnswer.length > 0 || quiz.showSubmitButton"
+                       ng-click="submitAnswer(quiz)">Submit
+            </md-button>
+        </md-card-actions>
+    </md-card>
+    <md-card flex>
+        <md-card-header>
+            <h2>Comments</h2>
+        </md-card-header>
+        <md-card-content>
+            <form name="commentField">
+                <md-input-container>
+                    <label>Comment</label>
+                    <input ng-model="commentContent" md-maxlength="30" name="commentContent" />
+                    <div ng-messages="commentField.commentContent.$error" ng-if="commentField.commentContent.$dirty" role="alert"
+                         multiple>
+                        <div ng-message="required">This field is required.</div>
+                        <div ng-message="md-maxlength">The answer has to be less than 30 characters long.</div>
+                    </div>
+                </md-input-container>
+                <md-button ng-show="commentContent.length > 0" ng-click="submitComment()">Submit</md-button>
+            </form>
+            <md-list>
+                <md-list-item class="md-3-line" ng-repeat="comment in quiz.comments">
+                    <img ng-src="{{comment.creator.avatar}}"
+                         class="md-avatar"
+                         alt="{{comment.creator.firstName + ' ' + comment.creator.lastName}}"/>
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ comment.creator.firstName + ' ' + comment.creator.lastName }}</h3>
+                        <h4>{{ comment.createdAt | date: 'hh:mm dd/MM/yyyy' }}</h4>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-card-content>
+    </md-card>
+</div>
