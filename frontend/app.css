@@ -47,9 +47,11 @@ md-card md-card-header md-card-header-text .md-subhead {
     margin: 0;
     padding: 0;
 }
+
 ul.rating {
     display: inline-block;
 }
+
 .rating li {
     list-style-type: none;
     display: inline-block;
@@ -59,9 +61,12 @@ ul.rating {
     cursor: pointer;
     font-size:20px;
 }
+
 .rating .filled {
     color: orangered;
 }
+
 .clear{
-  margin-top:20px;
+    margin-top:20px;
+    color: yellow;
 }

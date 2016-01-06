@@ -25,11 +25,13 @@ var schema = new Schema({
         imageSource:    String
     }],
     comments: [{
+        _id:            Schema.Types.ObjectId,
         content:        String,
+        createdAt:      Date,
         creator: {
-            id:         String,
+            _id:            String,
             firstName:      String,
-            lastNameName:   String,
+            lastName:       String,
             joinDate:       Date,
             avatar:         String
         }

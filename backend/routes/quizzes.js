@@ -69,7 +69,7 @@ module.exports = function (io) {
         });
 
     // Routing for /quizzes/:id
-    router.route('/:id/:userId')
+    router.route('/:id')
         // Get quiz info by id.
         .get(function (req, res) {
             Quiz.findOne({_id: req.params.id}, function (err, quiz) {
@@ -146,7 +146,10 @@ module.exports = function (io) {
                 );
             });
 
-        })
+        });
+
+    // Routing for /quizzes/:id
+    router.route('/:id/:userId')
         // Delete quiz.
         .delete(oauth2.isAuthenticated, function (req, res) {
             Quiz.findOne({_id: req.params.id}, function (err, quiz) {

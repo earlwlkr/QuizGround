@@ -33,7 +33,7 @@
                     <div layout="row">
                         <md-button ng-show="isLoggedIn" ng-click="goToProfile(user._id)">
                             <img ng-src="{{ user.avatar }}" class="toolbar-avatar" title="user avatar"/>
-                            {{ user.firstName + ' ' + user.score }}
+                            <span ng-class="{'admin-title': user.isAdmin}">{{ user.firstName + ' ' + user.score }}</span>
                         </md-button>
                     </div>
 
@@ -64,6 +64,7 @@
 <script src="components/authentication/authentication.service.js"></script>
 <script src="components/quiz-edit/quiz-edit.controller.js"></script>
 <script src="components/quiz-list/quiz-list.controller.js"></script>
+<script src="components/quiz-detail/quiz-detail.controller.js"></script>
 <script src="components/profile/profile.controller.js"></script>
 <script src="components/profile/profile.service.js"></script>
 <script src="components/upload-image/upload-image.directive.js"></script>
