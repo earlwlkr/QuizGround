@@ -12,7 +12,7 @@
             }],
             categories: [],
             rating: 5,
-            votes: 0
+            votes: 1
         };
 
         QuizService.getAllCategories().then(function (response) {
