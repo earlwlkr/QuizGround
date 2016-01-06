@@ -7,15 +7,14 @@
     function QuizDetailController($routeParams, $scope, $mdToast, $rootScope,
                                   QuizService, CommentService, AuthenticationService, socket) {
 
-        socket.on('comments:new', function (comment) {
-            if (comment.quizId === $scope.quiz._id) {
-                $scope.quiz.comments.splice(0, 0, comment);
-            }
-        });
+        function updateCurrentUserInfo() {
+            $scope.user = AuthenticationService.currentUser;
+            $scope.isLoggedIn = true;
+        }
 
-        socket.on('comments:delete', function (id) {
+        AuthenticationService.registerObserverCallback(updateCurrentUserInfo);
 
-        });
+        $scope.user = AuthenticationService.currentUser;
 
         socket.on('quizzes:update', function (quiz) {
             if ($scope.quiz._id == quiz._id) {
@@ -61,32 +60,38 @@
             CommentService.submitComment($scope.quiz._id, $scope.commentContent).then(function (res) {
                 $scope.commentContent = '';
                 showToast(res.data.message);
+            }, function (res) {
+                showToast(res.data);
             });
         };
 
         $scope.deleteComment = function (commentId) {
-            CommentService.deleteComment(commentId).then(function (res) {
+            if (!AuthenticationService.currentUser) {
+                showLoginNotificationToast();
+                return;
+            }
+            CommentService.deleteComment($scope.quiz._id, commentId).then(function (res) {
                 showToast('Comment deleted!');
+            }, function (res) {
+                showToast(res.data);
             });
         };
 
         $scope.deleteQuiz = function (quiz) {
+            if (!AuthenticationService.currentUser) {
+                showLoginNotificationToast();
+                return;
+            }
             QuizService.deleteQuiz(quiz).then(function (response) {
                 showToast('Deleted successfully');
+            }, function (res) {
+                showToast(res.data);
             });
         };
 
         function showLoginNotificationToast() {
             $rootScope.showLoginSignUpDialog();
-            showToast('Please log in before commenting!');
-        }
-
-        function showToast(msg) {
-            var toast = $mdToast.simple()
-                .textContent(msg)
-                .position('top right')
-                .action('OK');
-            $mdToast.show(toast);
+            showToast('Please log in before doing this!');
         }
 
         function showToast(msg) {

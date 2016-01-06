@@ -63,9 +63,6 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
         }, AuthenticationService.getBearerHeader());
     };
 
-    QuizService.rating = function (quiz) {
-        return $http.put(submitUrl + quiz._id, quiz, AuthenticationService.getBearerHeader());
-    }
     return QuizService;
 });
 
@@ -81,6 +78,10 @@ quizGroundServices.factory('CommentService', function ($http, AuthenticationServ
             }
         };
         return $http.post(commentsUrl + quizId, comment, AuthenticationService.getBearerHeader());
+    };
+
+    CommentService.deleteComment = function (quizId, commentId) {
+        return $http.delete(commentsUrl + quizId + '/' + commentId + '/' + AuthenticationService.currentUser._id, AuthenticationService.getBearerHeader());
     };
 
     return CommentService;

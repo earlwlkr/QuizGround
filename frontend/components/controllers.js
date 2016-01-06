@@ -4,7 +4,7 @@
     angular.module('app')
         .controller('MainController', MainController);
 
-    function MainController($rootScope, $location, $scope, $mdDialog, AuthenticationService) {
+    function MainController($rootScope, $location, $mdToast, $scope, $mdDialog, AuthenticationService) {
 
         function updateCurrentUserInfo() {
             $rootScope.user = AuthenticationService.currentUser;
@@ -22,6 +22,7 @@
         };
 
         $rootScope.showLoginSignUpDialog = showLoginSignUpDialog;
+        $rootScope.showLoginNotificationToast = showLoginNotificationToast;
 
         var history = [];
 
@@ -43,8 +44,21 @@
             });
         }
 
+        function showLoginNotificationToast() {
+            $rootScope.showLoginSignUpDialog();
+            showToast('Please log in before doing this!');
+        }
+
         $rootScope.goToProfile = function(userId) {
             $location.path('/profile/' + userId);
         };
+
+        function showToast(msg) {
+            var toast = $mdToast.simple()
+                .textContent(msg)
+                .position('top right')
+                .action('OK');
+            $mdToast.show(toast);
+        }
     }
 })();

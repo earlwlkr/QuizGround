@@ -6,6 +6,19 @@
 
     function ProfileController($scope, $location, $mdToast, $routeParams,
                                AuthenticationService, ProfileService, QuizService, Upload) {
+        function updateCurrentUserInfo() {
+            if (AuthenticationService.currentUser) {
+                $scope.canEdit = !(AuthenticationService.currentUser._id !== $scope.user._id
+                && !AuthenticationService.currentUser.isAdmin);
+            } else {
+                $scope.canEdit = false;
+            }
+            if (!$scope.canEdit) {
+                $scope.isEdit = false;
+            }
+        }
+
+        AuthenticationService.registerObserverCallback(updateCurrentUserInfo);
 
         if (!AuthenticationService.currentUser) {
             $location.path('/');

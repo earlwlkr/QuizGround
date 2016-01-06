@@ -48,7 +48,9 @@
 
         AuthenticationService.logout = function () {
             AuthenticationService.token = null;
+            AuthenticationService.currentUser = null;
             $cookies.remove('access_token');
+            notifyObservers();
         };
 
         AuthenticationService.googleLogin = function (email, firstName, lastName) {

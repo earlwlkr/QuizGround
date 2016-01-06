@@ -39,7 +39,7 @@
             <h2>Comments</h2>
         </md-card-header>
         <md-card-content>
-            <form name="commentField">
+            <form name="commentField" ng-show="user">
                 <md-input-container>
                     <label>Comment</label>
                     <input ng-model="commentContent" md-maxlength="30" name="commentContent" />
@@ -49,17 +49,26 @@
                         <div ng-message="md-maxlength">The answer has to be less than 30 characters long.</div>
                     </div>
                 </md-input-container>
-                <md-button ng-show="commentContent.length > 0" ng-click="submitComment()">Submit</md-button>
+                <md-button class="md-raised md-primary" ng-show="commentContent.length > 0" ng-click="submitComment()">Submit</md-button>
             </form>
             <md-list>
-                <md-list-item class="md-3-line" ng-repeat="comment in quiz.comments">
-                    <img ng-src="{{comment.creator.avatar}}"
-                         class="md-avatar"
-                         alt="{{comment.creator.firstName + ' ' + comment.creator.lastName}}"/>
-                    <div class="md-list-item-text" layout="column">
-                        <h3>{{ comment.creator.firstName + ' ' + comment.creator.lastName }}</h3>
-                        <h4>{{ comment.createdAt | date: 'hh:mm dd/MM/yyyy' }}</h4>
-                        <p>{{ comment.content }}</p>
+                <md-list-item class="md-3-line" ng-repeat="comment in quiz.comments" layout="row">
+                    <div flex="90" layout="row">
+                        <img ng-src="{{comment.creator.avatar}}"
+                             class="md-avatar"
+                             alt="{{comment.creator.firstName + ' ' + comment.creator.lastName}}"/>
+                        <div class="md-list-item-text" layout="column" flex="80">
+                            <h3>{{ comment.creator.firstName + ' ' + comment.creator.lastName }}</h3>
+                            <h4>{{ comment.createdAt | date: 'hh:mm dd/MM/yyyy' }}</h4>
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    </div>
+
+                    <div flex>
+                        <md-icon style="cursor: pointer;"
+                                 ng-show="user.isAdmin || comment.creator._id == user._id"
+                                 ng-click="deleteComment(comment._id)">clear
+                        </md-icon>
                     </div>
                 </md-list-item>
             </md-list>

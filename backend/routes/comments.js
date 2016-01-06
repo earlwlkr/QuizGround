@@ -32,7 +32,6 @@ module.exports = function (io) {
                     quiz.save();
 
                     comment.quizId = quiz._id;
-                    io.emit('comments:new', comment);
                     io.emit('quizzes:update', quiz);
                     return res.json({message: 'Comment saved!'});
                 });
@@ -50,16 +49,28 @@ module.exports = function (io) {
                     return res.status(400).send('Quiz not found!');
                 }
 
+                var index = -1;
+                for (var i = 0; i < quiz.comments.length; i++) {
+                    if (quiz.comments[i]._id.toString() === req.params.commentId) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index === -1) {
+                    return res.status(400).send('Comment not found!');
+                }
+
                 User.findOne({_id: req.params.userId}, function (err, user) {
                     if (err) {
                         return res.status(400).send(err);
                     }
-                    if (!user.isAdmin && user._id != quiz.creator._id) {
-                        return res.status(401).json({message: 'You can\'t delete this quiz!'});
+                    if (!user.isAdmin && user._id != quiz.comments[index].creator._id) {
+                        return res.status(401).send('You can\'t delete this comment!');
                     }
 
-                    quiz.remove();
-                    io.emit('quizzes:delete', quiz._id);
+                    quiz.comments.splice(index, 1);
+                    quiz.save();
+                    io.emit('quizzes:update', quiz);
                     res.json({message: 'Quiz deleted!'});
                 });
 
