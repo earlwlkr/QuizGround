@@ -4,23 +4,43 @@
     angular.module('app')
         .controller('ProfileController', ProfileController);
 
-    function ProfileController($scope, $location, $mdToast, AuthenticationService, ProfileService, QuizService, Upload) {
-        $scope.user = copyUser(AuthenticationService.currentUser);
-        if (!$scope.user) {
+    function ProfileController($scope, $location, $mdToast, $routeParams,
+                               AuthenticationService, ProfileService, QuizService, Upload) {
+
+        if (!AuthenticationService.currentUser) {
             $location.path('/');
+        }
+
+        if ($routeParams.userId !== AuthenticationService.currentUser._id) {
+            AuthenticationService.getUserInfo($routeParams.userId)
+                .then(function (response) {
+                    $scope.user = response.data;
+                    if (AuthenticationService.currentUser.isAdmin) {
+                        $scope.canEdit = true;
+                    } else {
+                        $scope.canEdit = false;
+                    }
+
+                    if (!$scope.user) {
+                        $location.path('/');
+                    } else {
+                        $scope.user.birthDay = new Date($scope.user.birthDay);
+                    }
+                });
         } else {
-            $scope.user.birthDay = new Date($scope.user.birthDay);
+            $scope.user = copyUser(AuthenticationService.currentUser);
+            $scope.canEdit = true;
+
+            if (!$scope.user) {
+                $location.path('/');
+            } else {
+                $scope.user.birthDay = new Date($scope.user.birthDay);
+            }
         }
 
         QuizService.getAllQuizzes(null, $scope.user._id).then(function (res) {
             $scope.quizzes = res.data;
         });
-
-        $scope.isEdit = false;
-
-        $scope.edit = function () {
-            $scope.isEdit = true;
-        };
 
         $scope.update = function (user) {
             if ($scope.userImage) {
@@ -78,5 +98,4 @@
             });
         }
     }
-
 }());

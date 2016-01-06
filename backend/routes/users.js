@@ -6,6 +6,19 @@ var Quiz = require('../models/quiz');
 var AccessToken = require('../models/access-token');
 var oauth2 = require('../oauth2');
 
+function getUserPublicInfo(user) {
+    return {
+        _id: user._id.toString(),
+        email: user.email,
+        score: user.score,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        joinDate: user.joinDate,
+        avatar: user.avatar,
+        birthDay: user.birthDay,
+        isAdmin: user.isAdmin
+    };
+}
 
 // Routing for /users
 router.route('/')
@@ -37,15 +50,27 @@ router.route('/:id')
             if (err) {
                 return res.status(400).send(err);
             }
+            if (!token) {
+                User.findById(req.params.id, function (err, user) {
+                    if (err) {
+                        return res.status(400).send(err);
+                    }
+                    if (!user) {
+                        return res.status(400).send('User not found');
+                    }
 
-            var userId = token.userId;
-            User.findById(userId, function (err, user) {
-                if (err) {
-                    return res.status(400).send(err);
-                }
+                    res.json(getUserPublicInfo(user));
+                });
+            } else {
+                var userId = token.userId;
+                User.findById(userId, function (err, user) {
+                    if (err) {
+                        return res.status(400).send(err);
+                    }
 
-                res.json(user);
-            });
+                    res.json(getUserPublicInfo(user));
+                });
+            }
         });
     })
     // Update user info.
@@ -58,7 +83,7 @@ router.route('/:id')
                 if (err) {
                     return res.status(400).send(err);
                 }
-                Quiz.find({'creator.id': updatedUser._id}).exec(function (err, results) {
+                Quiz.find({'creator._id': req.params.id}).exec(function (err, results) {
                     if (err) {
                         return res.status(400).send(err);
                     }
@@ -69,7 +94,6 @@ router.route('/:id')
 
                     res.json({message: 'User modified!'});
                 });
-
             }
         );
     })

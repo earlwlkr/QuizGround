@@ -4,13 +4,35 @@
     angular.module('app')
         .controller('QuizListController', QuizListController);
 
-    function QuizListController($scope, $mdToast, QuizService, AuthenticationService, socket) {
-        socket.on('quizzes:new', function (data) {
-            $scope.quizzes.splice(0, 0, data);
+    function QuizListController($rootScope, $scope, $mdToast, QuizService, AuthenticationService, socket) {
+
+        socket.on('quizzes:new', function (quiz) {
+            $scope.quizzes.splice(0, 0, quiz);
         });
+
+        socket.on('quizzes:delete', function (id) {
+            $scope.quizzes = $scope.quizzes.filter(function (item) {
+                return item._id !== id;
+            });
+        });
+
         QuizService.getAllQuizzes().then(function (response) {
             $scope.quizzes = response.data;
         });
+
+        QuizService.getAllCategories().then(function (response) {
+            $scope.categories = response.data;
+        });
+
+        $scope.selectCategory = function (category) {
+            $scope.quizzes = [];
+            $scope.loading = true;
+
+            QuizService.getAllQuizzes(category).then(function (response) {
+                $scope.quizzes = response.data;
+                $scope.loading = false;
+            });
+        };
 
         $scope.updateQuizSubmitButtonStatus = function (quiz) {
             quiz.showSubmitButton = false;
@@ -34,6 +56,12 @@
             });
         };
 
+        $scope.deleteQuiz = function (quiz) {
+            QuizService.deleteQuiz(quiz).then(function (response) {
+                showToast('Deleted successfully');
+            });
+        };
+
         function showToast(msg) {
             var toast = $mdToast.simple()
                 .textContent(msg)
@@ -41,19 +69,5 @@
                 .action('OK');
             $mdToast.show(toast);
         }
-
-        QuizService.getAllCategories().then(function (response) {
-            $scope.categories = response.data;
-        });
-
-        $scope.selectCategory = function (category) {
-            $scope.quizzes = [];
-            $scope.loading = true;
-
-            QuizService.getAllQuizzes(category).then(function (response) {
-                $scope.quizzes = response.data;
-                $scope.loading = false;
-            });
-        };
     }
 }());

@@ -36,7 +36,7 @@ quizGroundApp.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'components/quiz-edit/quiz-edit.html',
                 controller: 'QuizEditController'
             })
-            .when('/profile', {
+            .when('/profile/:userId', {
                 templateUrl: 'components/profile/profile.html',
                 controller: 'ProfileController'
             })

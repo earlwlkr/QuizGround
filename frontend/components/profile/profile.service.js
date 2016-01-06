@@ -4,7 +4,7 @@
     angular.module('app')
         .factory('ProfileService', ProfileService);
 
-    function ProfileService($http, $cookies, ServerInfo, AuthenticationService) {
+    function ProfileService($http, ServerInfo, AuthenticationService) {
         var updateUrl = ServerInfo.baseUrl + '/api/users/',
             ProfileService = {};
 
@@ -19,5 +19,4 @@
 
         return ProfileService;
     }
-
 }());
