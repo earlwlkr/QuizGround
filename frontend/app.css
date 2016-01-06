@@ -74,3 +74,8 @@ ul.rating {
     margin-top:20px;
     color: yellow;
 }
+
+.quiz-question {
+    text-decoration: none;
+    color: gray;
+}
