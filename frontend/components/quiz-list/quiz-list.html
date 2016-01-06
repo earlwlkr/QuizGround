@@ -54,7 +54,7 @@
                             <div class="md-list-item-text">
                                 <div layout="row">
                                     <div layout="column" flex="80">
-                                        <h2>{{ quiz.question }}</h2>
+                                        <h2><a style="text-decoration: none;" ng-href="/#/quiz-detail/{{quiz._id}}">{{ quiz.question }}</a></h2>
                                         <div google-plus="quiz.url"></div>
                                     </div>
                                     <div star-rating rating-value="quiz.rating" max="5" flex
