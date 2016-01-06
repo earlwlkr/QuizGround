@@ -56,7 +56,7 @@
                 });
             }
         }
-        
+
         $scope.update = function (user) {
             if ($scope.userImage) {
                 uploadImage($scope.userImage).then(function (res) {

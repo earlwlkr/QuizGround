@@ -59,8 +59,8 @@
                              class="md-avatar"
                              alt="{{comment.creator.firstName + ' ' + comment.creator.lastName}}"/>
                         <div class="md-list-item-text" layout="column" flex="80">
-                            <h3>{{ comment.creator.firstName + ' ' + comment.creator.lastName }}</h3>
-                            <h4>{{ comment.createdAt | date: 'hh:mm dd/MM/yyyy' }}</h4>
+                            <h3><b>{{ comment.creator.firstName + ' ' + comment.creator.lastName }}</b></h3>
+                            <h4 style="color: lightslategray">{{ comment.createdAt | date: 'hh:mm dd/MM/yyyy' }}</h4>
                             <p>{{ comment.content }}</p>
                         </div>
                     </div>
