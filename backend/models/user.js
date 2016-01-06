@@ -13,7 +13,8 @@ var schema = new Schema({
     lastName: String,
     joinDate: Date,
     avatar: String,
-    birthDay: Date
+    birthDay: Date,
+    isAdmin: Boolean
 });
 
 schema.static('create', function (user, errorOnDuplicate, callback) {
@@ -48,7 +49,8 @@ schema.static('createFromRequest', function (request) {
             + request.body.lastName.replace(' ', '') + '.png',
         joinDate: new Date(),
         birthDay: new Date(request.body.birthDay),
-        score: 0
+        score: 0,
+        isAdmin: false
     });
 });
 

@@ -69,7 +69,7 @@ module.exports = function (io) {
         });
 
     // Routing for /quizzes/:id
-    router.route('/:id')
+    router.route('/:id/:userId')
         // Get quiz info by id.
         .get(function (req, res) {
             Quiz.findOne({_id: req.params.id}, function (err, quiz) {
@@ -149,11 +149,23 @@ module.exports = function (io) {
         })
         // Delete quiz.
         .delete(oauth2.isAuthenticated, function (req, res) {
-            Quiz.findOneAndRemove({_id: req.params.id}, function (err) {
+            Quiz.findOne({_id: req.params.id}, function (err, quiz) {
                 if (err) {
                     return res.status(400).send(err);
                 }
-                res.json({message: 'Quiz deleted!'});
+                User.findOne({_id: req.params.userId}, function (err, user) {
+                    if (err) {
+                        return res.status(400).send(err);
+                    }
+                    if (!user.isAdmin && user._id != quiz.creator._id) {
+                        return res.status(401).json({message: 'You can\'t delete this quiz!'});
+                    }
+
+                    quiz.remove();
+                    io.emit('quizzes:delete', quiz._id);
+                    res.json({message: 'Quiz deleted!'});
+                });
+
             });
         });
     return router;

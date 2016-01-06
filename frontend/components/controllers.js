@@ -7,7 +7,7 @@
     function MainController($rootScope, $location, $scope, $mdDialog, AuthenticationService) {
 
         function updateCurrentUserInfo() {
-            $scope.user = AuthenticationService.currentUser;
+            $rootScope.user = AuthenticationService.currentUser;
             $scope.isLoggedIn = true;
         }
 
@@ -17,7 +17,7 @@
             if ($scope.isLoggedIn) {
                 AuthenticationService.logout();
                 $scope.isLoggedIn = false;
-                $scope.user = null;
+                $rootScope.user = null;
             }
         };
 
@@ -45,7 +45,7 @@
 
         $scope.goToProfile = function() {
             $location.path('/profile');
-        }
+        };
     }
 
 })();

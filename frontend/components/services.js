@@ -36,6 +36,16 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
         return $http.post(baseUrl, quiz, AuthenticationService.getBearerHeader());
     };
 
+    QuizService.deleteQuiz = function (quiz) {
+        var url = baseUrl + '/';
+        if (AuthenticationService.currentUser.isAdmin
+            || quiz.creator._id == AuthenticationService.currentUser._id) {
+            url += quiz._id + '/' + AuthenticationService.currentUser._id;
+        }
+
+        return $http.delete(url, AuthenticationService.getBearerHeader());
+    };
+
     QuizService.submitQuiz = function (quiz) {
         quiz.userId = AuthenticationService.currentUser._id;
         console.log(quiz);

@@ -62,7 +62,8 @@
                 avatar: user.avatar,
                 joinDate: user.joinDate,
                 birthDay: user.birthDay,
-                score: user.score
+                score: user.score,
+                isAdmin: user.isAdmin
             };
         }
 
