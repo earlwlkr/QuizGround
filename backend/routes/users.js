@@ -92,7 +92,22 @@ router.route('/:id')
                         results[i].save();
                     }
 
-                    res.json({message: 'User modified!'});
+                    Quiz.find({'comments.creator._id': req.params.id}).exec(function (err, results) {
+                        if (err) {
+                            return res.status(400).send(err);
+                        }
+                        for (var i = 0; i < results.length; i++) {
+                            var quiz = results[i];
+                            for (var j = 0; j < quiz.comments.length; j++) {
+                                if (quiz.comments[j].creator._id === req.params.id) {
+                                    quiz.comments[j].creator = updatedUser;
+                                }
+                            }
+                            quiz.save();
+                        }
+
+                        res.json({message: 'User modified!'});
+                    });
                 });
             }
         );

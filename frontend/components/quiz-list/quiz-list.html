@@ -36,7 +36,8 @@
                             </md-card-avatar>
                             <md-card-header-text layout="row">
                                 <div layout="column" flex="95">
-                                    <a class="md-title" style="cursor: pointer;" ng-click="goToProfile(quiz.creator._id)">
+                                    <a class="md-title" style="cursor: pointer;"
+                                       ng-click="goToProfile(quiz.creator._id)">
                                         {{ quiz.creator.firstName + ' ' + quiz.creator.lastName }}
                                     </a>
                                     <span class="md-subhead">{{ quiz.createdAt | date: 'dd-MM-yyyy' }}</span>
@@ -53,9 +54,7 @@
                             <div class="md-list-item-text">
                                 <div layout="row">
                                     <h2>{{ quiz.question }}</h2>
-                                        <p>{{quiz.rating}} /
-                                            {{rating.max}}</p>
-                                        <div star-rating rating-value="quiz.rating" max="rating.max" on-rating-selected="ratingQuiz(rating)"></div>
+                                    <div google-plus="quiz.url"></div>
                                 </div>
                                 <div layout="row">
                                     <img ng-src="{{ quiz.imageSource }}" mg-show="quiz.imageSource != null"
@@ -66,7 +65,6 @@
                                     <input ng-model="quiz.userAnswer" name="answer">
                                 </md-input-container>
                                 <md-list>
-                                    </md-checkbox>
                                     <md-list-item ng-repeat="choice in quiz.choices" layout="row"
                                                   layout-wrap>
                                         <div class="md-item-text" flex="50">
@@ -77,6 +75,11 @@
                                         </div>
                                     </md-list-item>
                                 </md-list>
+                                <md-chips>
+                                    <md-chip ng-repeat="category in quiz.categories">
+                                        {{ category }}
+                                    </md-chip>
+                                </md-chips>
                             </div>
                         </md-card-content>
 
@@ -86,22 +89,8 @@
                                 {{quiz.comments.length}} comments
                             </md-button>
 
-                            <div google-plus="quiz.url"></div>
-
-                            <md-button class="md-accent" ng-click="thumbUp(quiz)" style="font-size: 12px;">
-                                <md-icon>thumb_up</md-icon>
-                                <span>{{quiz.votes}}</span>
-                            </md-button>
-
-                            <md-button class="md-icon-button md-warn" ng-click="thumbDown(quiz)" style="font-size: 12px;">
-                                <md-icon>thumb_down</md-icon>
-                            </md-button>
-
-                            <md-card-icon-actions>
-                                <md-button class="md-icon-button" ng-click="share()">
-                                    <md-icon>share</md-icon>
-                                </md-button>
-                            </md-card-icon-actions>
+                            <div star-rating rating-value="quiz.rating" max="rating.max"
+                                 on-rating-selected="ratingQuiz(rating)"></div>
 
                             <md-button class="md-raised md-accent"
                                        ng-show="quiz.userAnswer.length > 0 || quiz.showSubmitButton"
