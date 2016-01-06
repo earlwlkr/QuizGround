@@ -97,7 +97,7 @@ module.exports = function (io) {
                         userId: userId,
                         quizId: quizId,
                         rating: rating,
-                        createdAt: newDate()
+                        createdAt: new Date()
                     });
                 }
                 item.save();
