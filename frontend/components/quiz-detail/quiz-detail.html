@@ -3,9 +3,9 @@
         <md-card-header>
             <h2>{{ quiz.question }}</h2>
         </md-card-header>
-        <md-card-content layout="row" layout-align="space-between">
-            <div class="md-list-item-text" layout="row">
-                <div layout="row" flex="20">
+        <md-card-content layout="row">
+            <div class="md-list-item-text" layout="column">
+                <div flex="20">
                     <img ng-src="{{ quiz.imageSource }}" mg-show="quiz.imageSource != null"
                          class="card-media quiz-image"/>
                 </div>
@@ -13,7 +13,7 @@
                     <label>Answer</label>
                     <input ng-model="quiz.userAnswer" name="answer">
                 </md-input-container>
-                <md-list flex="80">
+                <md-list flex>
                     </md-checkbox>
                     <md-list-item ng-repeat="choice in quiz.choices" layout="row"
                                   layout-wrap>

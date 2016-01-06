@@ -56,7 +56,6 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
     };
 
     QuizService.votes = function (quiz) {
-        // console.log(quiz);
         return $http.put(submitUrl + quiz._id, quiz, AuthenticationService.getBearerHeader());
     };
 

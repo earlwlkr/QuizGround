@@ -42,6 +42,10 @@ md-card md-card-header md-card-header-text .md-subhead {
     position: fixed;
 }
 
+.admin-title {
+    color: yellow;
+}
+
 .votes {
     display: table-cell;
     vertical-align: middle;

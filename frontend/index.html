@@ -33,7 +33,7 @@
                     <div layout="row">
                         <md-button ng-show="isLoggedIn" ng-click="goToProfile(user._id)">
                             <img ng-src="{{ user.avatar }}" class="toolbar-avatar" title="user avatar"/>
-                            {{ user.firstName + ' ' + user.score }}
+                            <span ng-class="{'admin-title': user.isAdmin}">{{ user.firstName + ' ' + user.score }}</span>
                         </md-button>
                     </div>
 
