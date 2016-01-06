@@ -10,7 +10,9 @@
                 content: 'Choice 1',
                 correct: false
             }],
-            categories: []
+            categories: [],
+            rating: 5,
+            votes: 0
         };
 
         QuizService.getAllCategories().then(function (response) {
