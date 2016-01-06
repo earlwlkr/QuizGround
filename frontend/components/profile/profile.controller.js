@@ -38,6 +38,9 @@
                         $location.path('/');
                     } else {
                         $scope.user.birthDay = new Date($scope.user.birthDay);
+                        QuizService.getAllQuizzes(null, $scope.user._id).then(function (res) {
+                            $scope.quizzes = res.data;
+                        });
                     }
                 });
         } else {
@@ -48,13 +51,12 @@
                 $location.path('/');
             } else {
                 $scope.user.birthDay = new Date($scope.user.birthDay);
+                QuizService.getAllQuizzes(null, $scope.user._id).then(function (res) {
+                    $scope.quizzes = res.data;
+                });
             }
         }
-
-        QuizService.getAllQuizzes(null, $scope.user._id).then(function (res) {
-            $scope.quizzes = res.data;
-        });
-
+        
         $scope.update = function (user) {
             if ($scope.userImage) {
                 uploadImage($scope.userImage).then(function (res) {
