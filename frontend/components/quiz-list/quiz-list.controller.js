@@ -16,6 +16,14 @@
             });
         });
 
+        socket.on('quizzes:update', function (quiz) {
+            angular.forEach($scope.quizzes, function (item, key) {
+                if (item._id === quiz._id) {
+                    $scope.quizzes[key] = quiz;
+                }
+            });
+        });
+
         QuizService.getAllQuizzes().then(function (response) {
             $scope.quizzes = response.data.map(function (item) {
                 item.url = 'http://quiz-ground.herokuapp.com/#/quiz-detail/' + item._id;
@@ -29,10 +37,14 @@
         });
 
         // Rating
-
-        $scope.ratingQuiz = function (rating) {
-            //console.log(rating);
-        }
+        $scope.rateQuiz = function (quiz, rating) {
+            QuizService.rateQuiz(quiz._id, rating).then(function (res) {
+                showToast(res.data.message);
+                if (res.data.rating) {
+                    quiz.rating = res.data.rating;
+                }
+            });
+        };
 
         $scope.selectCategory = function (category) {
             $scope.quizzes = [];
@@ -79,29 +91,6 @@
                 .action('OK');
             $mdToast.show(toast);
         }
-
-        $scope.thumbDown = function(quiz) {
-            if (!AuthenticationService.currentUser) {
-                showLoginNotificationToast();
-                return;
-            }
-
-            if (quiz.votes == null)
-                quiz.votes = 0;
-            quiz.votes = quiz.votes - 1;
-            QuizService.votes(quiz);
-        };
-
-        $scope.thumbUp = function(quiz) {
-            if (!AuthenticationService.currentUser) {
-                showLoginNotificationToast();
-                return;
-            }
-            if (quiz.votes == null)
-                quiz.votes = 0;
-            quiz.votes = quiz.votes + 1;
-            QuizService.votes(quiz);
-        };
 
         $scope.share = function() {
             /*FB.ui({

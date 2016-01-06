@@ -33,6 +33,7 @@ module.exports = function (io) {
 
                     comment.quizId = quiz._id;
                     io.emit('comments:new', comment);
+                    io.emit('quizzes:update', quiz);
                     return res.json({message: 'Comment saved!'});
                 });
             });

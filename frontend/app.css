@@ -62,6 +62,10 @@ ul.rating {
     font-size:20px;
 }
 
+.disabled.rating li {
+    cursor: default;
+}
+
 .rating .filled {
     color: orangered;
 }

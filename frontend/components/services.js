@@ -5,6 +5,7 @@ var quizGroundServices = angular.module('app');
 quizGroundServices.factory('QuizService', function ($http, AuthenticationService, ServerInfo) {
     var baseUrl = ServerInfo.baseUrl + '/api/quizzes',
         submitUrl = ServerInfo.baseUrl + '/api/quizzes/',
+        votesUrl = ServerInfo.baseUrl + '/api/users/',
         categoriesUrl = ServerInfo.baseUrl + '/api/categories/',
         QuizService = {};
 
@@ -55,8 +56,11 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
         return $http.get(submitUrl + quizId);
     };
 
-    QuizService.votes = function (quiz) {
-        return $http.put(submitUrl + quiz._id, quiz, AuthenticationService.getBearerHeader());
+    QuizService.rateQuiz = function (quizId, rating) {
+        return $http.post(submitUrl + quizId + '/rating', {
+            userId: AuthenticationService.currentUser._id,
+            rating: rating
+        }, AuthenticationService.getBearerHeader());
     };
 
     return QuizService;

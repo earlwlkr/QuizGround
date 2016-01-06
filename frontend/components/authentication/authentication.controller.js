@@ -4,7 +4,7 @@
     angular.module('app')
         .controller('AuthenticationController', AuthenticationController);
 
-    function AuthenticationController($scope, $mdDialog, $timeout, AuthenticationService) {
+    function AuthenticationController($scope, $mdDialog, AuthenticationService) {
         $scope.selectedIndex = 0;
         initClient();
 

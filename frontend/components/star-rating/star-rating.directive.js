@@ -14,7 +14,7 @@
 	            onRatingSelected: '&'
 	        },
 	        link: startRatingLink
-    	}
+    	};
 	}
 	function startRatingLink (scope, elem, attrs) {
         if (scope.max == undefined) {

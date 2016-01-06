@@ -17,6 +17,12 @@
 
         });
 
+        socket.on('quizzes:update', function (quiz) {
+            if ($scope.quiz._id == quiz._id) {
+                $scope.quiz = quiz;
+            }
+        });
+
         QuizService.getQuizDetail($routeParams.quizId).then(function (response) {
             $scope.quiz = response.data;
         });

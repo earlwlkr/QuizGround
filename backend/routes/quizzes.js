@@ -4,6 +4,7 @@ var oauth2 = require('../oauth2');
 
 var Quiz = require('../models/quiz');
 var User = require('../models/user');
+var UserRateQuiz = require('../models/user-rate-quiz');
 
 function getQuizFromRequestBody(requestBody, done) {
     var quiz = requestBody;
@@ -67,6 +68,45 @@ module.exports = function (io) {
                 });
             });
         });
+
+    router.post('/:id/rating', function (req, res) {
+        var quizId = req.params.id;
+        var userId = req.body.userId;
+        var rating = req.body.rating;
+        UserRateQuiz.findOne({userId: userId, quizId: quizId}, function (err, item) {
+            if (err) {
+                return res.status(400).send(err);
+            }
+            var message = 'Vote saved!';
+            var voted = false;
+            if (item) {
+                voted = true;
+                message = 'You already voted on this quiz!';
+            }
+
+            Quiz.findOne({_id: quizId}, function (err, quiz) {
+                if (err) {
+                    return res.status(400).send(err);
+                }
+                if (!quiz) {
+                    return res.send({message: 'Quiz not found!'});
+                }
+
+                quiz.votes += !voted;
+                if (item) {
+                    quiz.rating -= item.rating;
+                    item.rating = rating;
+                    item.createdAt = new Date();
+                    item.save();
+                }
+                quiz.rating = (quiz.rating + rating) / quiz.votes;
+                quiz.save();
+
+                io.emit('quizzes:update', quiz);
+                res.send({message: message, rating: quiz.rating});
+            });
+        });
+    });
 
     // Routing for /quizzes/:id
     router.route('/:id')
