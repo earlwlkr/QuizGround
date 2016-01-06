@@ -28,6 +28,12 @@
             $scope.categories = response.data;
         });
 
+        // Rating
+
+        $scope.ratingQuiz = function (rating) {
+            //console.log(rating);
+        }
+
         $scope.selectCategory = function (category) {
             $scope.quizzes = [];
             $scope.loading = true;

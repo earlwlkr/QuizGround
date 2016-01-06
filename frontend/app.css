@@ -42,11 +42,31 @@ md-card md-card-header md-card-header-text .md-subhead {
     position: fixed;
 }
 
-.admin-title {
-    color: yellow;
+.rating {
+    color: #a9a9a9;
+    margin: 0;
+    padding: 0;
 }
 
-.votes {
-    display: table-cell;
-    vertical-align: middle;
+ul.rating {
+    display: inline-block;
+}
+
+.rating li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 1px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    font-size:20px;
+}
+
+.rating .filled {
+    color: orangered;
+}
+
+.clear{
+    margin-top:20px;
+    color: yellow;
 }
