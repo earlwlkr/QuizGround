@@ -38,8 +38,12 @@
 
         // Rating
         $scope.rateQuiz = function (quiz, rating) {
+            if (!AuthenticationService.currentUser) {
+                showLoginNotificationToast();
+                return;
+            }
             QuizService.rateQuiz(quiz._id, rating).then(function (res) {
-                showToast(res.data.message);
+                //showToast(res.data.message);
                 if (res.data.rating) {
                     quiz.rating = res.data.rating;
                 }
@@ -66,6 +70,10 @@
         };
 
         $scope.submitAnswer = function (quiz) {
+            if (!AuthenticationService.currentUser) {
+                showLoginNotificationToast();
+                return;
+            }
             QuizService.submitQuiz(quiz).then(function (res) {
                 if (res.data.error) {
                     showToast(res.data.message);
@@ -79,6 +87,10 @@
         };
 
         $scope.deleteQuiz = function (quiz) {
+            if (!AuthenticationService.currentUser) {
+                showLoginNotificationToast();
+                return;
+            }
             QuizService.deleteQuiz(quiz).then(function (response) {
                 showToast('Deleted successfully');
             });
@@ -94,7 +106,7 @@
 
         function showLoginNotificationToast() {
             $rootScope.showLoginSignUpDialog();
-            showToast('Please log in before vote quiz!');
+            showToast('Please log in before doing this!');
         }
     }
 }());
