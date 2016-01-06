@@ -39,17 +39,17 @@
             <h2>Comments</h2>
         </md-card-header>
         <md-card-content>
-            <form name="commentField" ng-show="user">
-                <md-input-container>
+            <form name="commentField" ng-show="user" layout="column">
+                <md-input-container flex="100">
                     <label>Comment</label>
-                    <input ng-model="commentContent" md-maxlength="30" name="commentContent" />
+                    <input ng-model="commentContent" md-maxlength="120" name="commentContent" />
                     <div ng-messages="commentField.commentContent.$error" ng-if="commentField.commentContent.$dirty" role="alert"
                          multiple>
                         <div ng-message="required">This field is required.</div>
                         <div ng-message="md-maxlength">The answer has to be less than 30 characters long.</div>
                     </div>
                 </md-input-container>
-                <md-button class="md-raised md-primary" ng-show="commentContent.length > 0" ng-click="submitComment()">Submit</md-button>
+                <md-button flex class="md-raised md-primary" ng-show="commentContent.length > 0" ng-click="submitComment()">Submit</md-button>
             </form>
             <md-list>
                 <md-list-item class="md-3-line" ng-repeat="comment in quiz.comments" layout="row">

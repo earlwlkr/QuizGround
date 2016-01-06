@@ -55,9 +55,10 @@
                                 <div layout="row">
                                     <div layout="column" flex="80">
                                         <h2>{{ quiz.question }}</h2>
-
                                         <div google-plus="quiz.url"></div>
                                     </div>
+                                    <div star-rating rating-value="quiz.rating" max="5" flex
+                                         on-rating-selected="rateQuiz(quiz, rating)"></div>
                                 </div>
                                 <div layout="row">
                                     <img ng-src="{{ quiz.imageSource }}" mg-show="quiz.imageSource != null"
@@ -92,8 +93,7 @@
                                 {{quiz.comments.length}} comments
                             </md-button>
 
-                            <div star-rating rating-value="quiz.rating" max="5"
-                                 on-rating-selected="rateQuiz(quiz, rating)"></div>
+
 
                             <md-button class="md-raised md-accent"
                                        ng-show="quiz.userAnswer.length > 0 || quiz.showSubmitButton"
