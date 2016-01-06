@@ -28,12 +28,6 @@
             $scope.categories = response.data;
         });
 
-        // Rating
-
-        $scope.ratingQuiz = function (rating) {
-            //console.log(rating);
-        }
-
         $scope.selectCategory = function (category) {
             $scope.quizzes = [];
             $scope.loading = true;
@@ -103,14 +97,17 @@
             QuizService.votes(quiz);
         };
 
-        $scope.share = function() {
-            /*FB.ui({
-                method: 'share',
-                href: 'https://developers.facebook.com/docs/',
-            }, function(response){
-                console.log(response.error_message);
-            });*/
-        };
+        // Rating
+        $scope.ratingQuiz = function (quiz, rating) {
+            console.log(rating);
+            if (!AuthenticationService.currentUser) {
+                showLoginNotificationToast();
+                return;
+            }
+            quiz.rating = parseInt((quiz.rating + rating)/2);
+            //rating = quiz.rating;
+            QuizService.rating(quiz);
+        }
 
         function showLoginNotificationToast() {
             $rootScope.showLoginSignUpDialog();

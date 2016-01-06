@@ -52,10 +52,11 @@
                         <md-card-content layout="row" layout-align="space-between">
                             <div class="md-list-item-text">
                                 <div layout="row">
+                                <div layout="column" flex="80">
                                     <h2>{{ quiz.question }}</h2>
-                                        <p>{{quiz.rating}} /
-                                            {{rating.max}}</p>
-                                        <div star-rating rating-value="quiz.rating" max="rating.max" on-rating-selected="ratingQuiz(rating)"></div>
+                                    </div>
+                                    <div layout="column" ng-model="quiz.rating" star-rating rating-value="rating" max="5" on-rating-selected="ratingQuiz(quiz, rating)">
+                                    </div>
                                 </div>
                                 <div layout="row">
                                     <img ng-src="{{ quiz.imageSource }}" mg-show="quiz.imageSource != null"

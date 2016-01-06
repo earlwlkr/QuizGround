@@ -59,6 +59,9 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
         return $http.put(submitUrl + quiz._id, quiz, AuthenticationService.getBearerHeader());
     };
 
+    QuizService.rating = function (quiz) {
+        return $http.put(submitUrl + quiz._id, quiz, AuthenticationService.getBearerHeader());
+    }
     return QuizService;
 });
 
