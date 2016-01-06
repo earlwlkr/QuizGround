@@ -80,13 +80,17 @@
             });
         };
 
-        AuthenticationService.getUserInfo = function () {
-            getUserInfo();
+        AuthenticationService.getUserInfo = function (id) {
+            return getUserInfo(id);
         };
 
         // Helpers
-        function getUserInfo() {
+        function getUserInfo(id) {
             if (!AuthenticationService.token) return;
+
+            if (id) {
+                return $http.get(userInfoUrl + id, AuthenticationService.getBearerHeader());
+            }
 
             $http.get(userInfoUrl + AuthenticationService.token, AuthenticationService.getBearerHeader())
                 .then(function (response) {

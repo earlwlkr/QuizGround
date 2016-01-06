@@ -43,9 +43,8 @@
             });
         }
 
-        $scope.goToProfile = function() {
-            $location.path('/profile');
+        $rootScope.goToProfile = function(userId) {
+            $location.path('/profile/' + userId);
         };
     }
-
 })();

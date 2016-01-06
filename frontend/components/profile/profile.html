@@ -5,7 +5,7 @@
                 <span class="md-headline">{{ user.firstName + ' ' + user.lastName }}</span>
                 <span class="md-subhead"><b>Join Date:</b> {{ user.joinDate | date: 'dd-MM-yyyy' }}</span>
 
-                <md-switch ng-model="isEdit">
+                <md-switch ng-model="isEdit" ng-show="canEdit">
                     Edit
                 </md-switch>
             </md-card-title-text>

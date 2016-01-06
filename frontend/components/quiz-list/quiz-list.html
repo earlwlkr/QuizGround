@@ -36,7 +36,9 @@
                             </md-card-avatar>
                             <md-card-header-text layout="row">
                                 <div layout="column" flex="95">
-                                    <span class="md-title">{{ quiz.creator.firstName + ' ' + quiz.creator.lastName }}</span>
+                                    <a class="md-title" style="cursor: pointer;" ng-click="goToProfile(quiz.creator._id)">
+                                        {{ quiz.creator.firstName + ' ' + quiz.creator.lastName }}
+                                    </a>
                                     <span class="md-subhead">{{ quiz.createdAt | date: 'dd-MM-yyyy' }}</span>
                                 </div>
                                 <div flex>
