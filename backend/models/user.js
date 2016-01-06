@@ -69,7 +69,6 @@ schema.static('updateFromRequest', function (request) {
     if (request.body.birthDay) {
         user.birthDay = request.body.birthDay;
     }
-    console.log(user);
     return user;
 });
 

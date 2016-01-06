@@ -4,40 +4,44 @@
     angular.module('app')
         .controller('ProfileController', ProfileController);
 
-    function ProfileController($scope, $location, $mdToast, AuthenticationService, ProfileService, Upload) {
+    function ProfileController($scope, $location, $mdToast, AuthenticationService, ProfileService, QuizService, Upload) {
         $scope.user = copyUser(AuthenticationService.currentUser);
         if (!$scope.user) {
-        	$location.path('/');
+            $location.path('/');
         } else {
-        	$scope.user.birthDay = new Date($scope.user.birthDay);
+            $scope.user.birthDay = new Date($scope.user.birthDay);
         }
 
+        QuizService.getAllQuizzes(null, $scope.user._id).then(function (res) {
+            $scope.quizzes = res.data;
+        });
+
         $scope.isEdit = false;
-        
-        $scope.edit = function() {
-        	$scope.isEdit = true;
+
+        $scope.edit = function () {
+            $scope.isEdit = true;
         };
 
         $scope.update = function (user) {
-        	if ($scope.userImage) {
-        		uploadImage($scope.userImage).then(function (res) {
+            if ($scope.userImage) {
+                uploadImage($scope.userImage).then(function (res) {
                     user.avatar = res.data.data.link;
                     ProfileService.updateInfo(user).then(function (res) {
-	        			showToast('Updated successfully!');
-	        			AuthenticationService.getUserInfo();
-	        		});
+                        showToast('Updated successfully!');
+                        AuthenticationService.getUserInfo();
+                    });
                 });
-        	} else {
-        		ProfileService.updateInfo(user).then(function (res) {
-	        		showToast('Updated successfully!');
-	        		AuthenticationService.getUserInfo();
-	        	});
-        	}
+            } else {
+                ProfileService.updateInfo(user).then(function (res) {
+                    showToast('Updated successfully!');
+                    AuthenticationService.getUserInfo();
+                });
+            }
         };
 
         $scope.cancel = function () {
-        	$scope.user = copyUser(AuthenticationService.currentUser);
-        	$scope.isEdit = false;
+            $scope.user = copyUser(AuthenticationService.currentUser);
+            $scope.isEdit = false;
         };
 
         function showToast(msg) {
@@ -49,17 +53,17 @@
         }
 
         function copyUser(user) {
-        	return {
-        		_id: user._id,
-		        firstName: user.firstName,
-		        lastName: user.lastName,
-		        email: user.email,
-		        password: user.password,
-		        avatar: user.avatar,
-		        joinDate: user.joinDate,
-		        birthDay: user.birthDay,
+            return {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                password: user.password,
+                avatar: user.avatar,
+                joinDate: user.joinDate,
+                birthDay: user.birthDay,
                 score: user.score
-		    };
+            };
         }
 
         function uploadImage(image) {

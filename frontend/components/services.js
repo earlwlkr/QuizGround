@@ -8,10 +8,12 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
         categoriesUrl = ServerInfo.baseUrl + '/api/categories/',
         QuizService = {};
 
-    QuizService.getAllQuizzes = function (category) {
+    QuizService.getAllQuizzes = function (category, userId) {
         var url = baseUrl;
         if (category) {
             url += '?categories=' + category;
+        } else if (userId) {
+            url += '?userId=' + userId;
         }
         return $http.get(url);
     };

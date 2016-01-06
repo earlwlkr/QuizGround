@@ -34,6 +34,8 @@ module.exports = function (io) {
                 if (req.query.categories !== 'Tất cả') {
                     params.categories = req.query.categories;
                 }
+            } else if (req.query.userId) {
+                params['creator._id'] = req.query.userId;
             }
 
             Quiz.find(params).sort({createdAt: -1}).exec(function (err, results) {
