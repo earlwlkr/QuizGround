@@ -33,3 +33,11 @@ md-card md-card-header md-card-header-text .md-subhead {
     height: 44px;
     border: solid 1px black;
 }
+
+.fixed-right-bottom {
+    top: auto;
+    right: 20px;
+    bottom: 20px;
+    left: auto;
+    position: fixed;
+}
