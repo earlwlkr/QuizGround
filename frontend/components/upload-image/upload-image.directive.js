@@ -10,7 +10,7 @@
             scope: {
                 ngModel: '='
             },
-            templateUrl: 'components/upload.file.template.html',
+            templateUrl: 'components/upload-image/upload-image.html',
             link: uploadImageLink
         };
         return directive;
