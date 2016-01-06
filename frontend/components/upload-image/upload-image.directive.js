@@ -8,7 +8,9 @@
         var directive = {
             restrict: 'E',
             scope: {
-                ngModel: '='
+                ngModel: '=',
+                imageWidth: '=',
+                imageHeight: '='
             },
             templateUrl: 'components/upload-image/upload-image.html',
             link: uploadImageLink

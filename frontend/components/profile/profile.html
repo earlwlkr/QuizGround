@@ -50,10 +50,10 @@
                 </div>
                 <div flex></div>
                 <div class="md-media-lg card-media">
-                    <img ng-hide="isEdit" ng-src="{{ user.avatar }}" width="60px" height="60px"
-                         class="md-user-avatar" title="user avatar"/>
+                    <img ng-hide="isEdit" ng-src="{{ user.avatar }}" width="200px" height="200px"
+                         class="md-user-avatar quiz-image" title="user avatar"/>
                     <div>
-                        <upload-image ng-show="isEdit" ng-model="userImage"></upload-image>
+                        <upload-image ng-show="isEdit" ng-model="userImage" image-width="200" image-height="200"></upload-image>
                     </div>
                 </div>
             </md-content>

@@ -42,7 +42,7 @@ schema.static('createFromRequest', function (request) {
         lastName: request.body.lastName,
         email: request.body.email,
         password: request.body.password,
-        avatar: 'http://api.adorable.io/avatars/250/'
+        avatar: 'http://api.adorable.io/avatars/200/'
             + request.body.firstName.replace(' ', '')
             + '@'
             + request.body.lastName.replace(' ', '') + '.png',

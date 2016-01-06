@@ -42,11 +42,12 @@
                             <label>Content</label>
                             <input ng-model="choice.content" name="content">
                         </md-input-container>
-                        <upload-image ng-model="choice.anwserImage"></upload-image>
                         <md-icon class="md-secondary" ng-click="removeChoice(choice.index)" flex="5">clear</md-icon>
                     </div>
                 </md-list>
-                <upload-image ng-model="quizImage"></upload-image>
+                <div>
+                    <upload-image ng-model="quizImage" image-width="500" image-height="350"></upload-image>
+                </div>
                 <div layout="row" layout-align="start center" layout-padding>
                     <label>Categories</label>
                     <div></div>
