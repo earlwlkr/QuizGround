@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var User = require('../models/user');
+var Quiz = require('../models/quiz');
 var AccessToken = require('../models/access-token');
 var oauth2 = require('../oauth2');
 
@@ -49,13 +50,26 @@ router.route('/:id')
     })
     // Update user info.
     .put(function (req, res) {
+        var updatedUser = User.updateFromRequest(req);
         User.findOneAndUpdate(
             {_id: req.params.id},
-            User.updateFromRequest(req),
+            updatedUser,
             function (err) {
-                if (err)
+                if (err) {
                     return res.status(400).send(err);
-                res.json({message: 'User modified!'});
+                }
+                Quiz.find({'creator.id': updatedUser._id}).exec(function (err, results) {
+                    if (err) {
+                        return res.status(400).send(err);
+                    }
+                    for (var i = 0; i < results.length; i++) {
+                        results[i].creator = updatedUser;
+                        results[i].save();
+                    }
+
+                    res.json({message: 'User modified!'});
+                });
+
             }
         );
     })
