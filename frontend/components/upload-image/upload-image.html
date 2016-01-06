@@ -1,8 +1,8 @@
 <div layout="row" layout-align="start center" layout-padding>
     <img ngf-src="ngModel" class="img-preview"
          ng-style="width:imageWidth; height: imageHeight;"
-         ngf-resize="{width: imageWidth, height: imageHeight, quality: 0.9}" />
-    <div id="fileInput" ngf-resize="{width: imageWidth, height: imageHeight, quality: 0.9}"
+         ngf-resize="{width: imageWidth, height: imageHeight, quality: 0.9, centerCrop: true}" />
+    <div id="fileInput" ngf-resize="{width: imageWidth, height: imageHeight, quality: 0.9, centerCrop: true}"
          ngf-select ng-model="ngModel" name="file" ngf-pattern="'image/*'"
          ngf-resize-if="$width > imageWidth || $height > imageHeight"
          ngf-accept="'image/*'" ngf-max-size="1MB" ng-hide="true">
