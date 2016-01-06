@@ -76,14 +76,15 @@
                         </md-card-content>
                         <md-card-actions layout="row" layout-align="start center">
                             <md-card-icon-actions>
-                                <md-button class="md-icon-button" aria-label="Favorite">
-                                  <md-icon>thumb_up</md-icon>
+                                <md-button class="md-raised" layout-align="start" ng-click="thumbUp(quiz)">
+                                    Upvote <label ng-hide="quiz.votes == null"> | {{quiz.votes}}</label>
                                 </md-button>
-                                <md-button class="md-icon-button" aria-label="Favorite">
-                                  <md-icon>thumb_down</md-icon>
+                                <!-- <label>{{quiz.votes}}</label> -->
+                                <md-button class="md-raised" layout-align="end" ng-click="thumbDown(quiz)">
+                                    Downvote
                                 </md-button>
-                                <md-button class="md-icon-button" aria-label="Favorite">
-                                  <md-icon>share</md-icon>
+                                <md-button class="md-icon-button" ng-click="share()">
+                                    <md-icon>share</md-icon>
                                 </md-button>
                             </md-card-icon-actions>
                             <md-button class="md-raised md-accent"

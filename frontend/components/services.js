@@ -52,6 +52,10 @@ quizGroundServices.factory('QuizService', function ($http, AuthenticationService
         return $http.post(submitUrl + quiz._id, quiz, AuthenticationService.getBearerHeader());
     };
 
+    QuizService.votes = function (quiz) {
+        // console.log(quiz);
+        return $http.put(submitUrl + quiz._id, quiz, AuthenticationService.getBearerHeader());
+    };
     return QuizService;
 });
 
