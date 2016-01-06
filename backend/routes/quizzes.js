@@ -97,8 +97,16 @@ module.exports = function (io) {
                     quiz.rating -= item.rating;
                     item.rating = rating;
                     item.createdAt = new Date();
-                    item.save();
+                } else {
+                    item = new UserRateQuiz({
+                        userId: userId,
+                        quizId: quizId,
+                        rating: rating,
+                        createdAt: newDate()
+                    });
                 }
+                item.save();
+
                 quiz.rating = (quiz.rating + rating) / quiz.votes;
                 quiz.save();
 
@@ -136,6 +144,9 @@ module.exports = function (io) {
                         return res.send(false);
                     }
                     for (var i = 0; i < quiz.choices.length; i++) {
+                        if (req.body.choices[i].userChoice === undefined && !quiz.choices[i].correct) {
+                            continue;
+                        }
                         if (quiz.choices[i].correct !== req.body.choices[i].userChoice) {
                             return res.send(false);
                         }
