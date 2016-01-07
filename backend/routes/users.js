@@ -4,6 +4,7 @@ var router = express.Router();
 var User = require('../models/user');
 var Quiz = require('../models/quiz');
 var AccessToken = require('../models/access-token');
+var UserAnswerQuiz = require('../models/user-answer-quiz');
 var oauth2 = require('../oauth2');
 
 function getUserPublicInfo(user) {
@@ -59,7 +60,11 @@ router.route('/:id')
                         return res.status(400).send('User not found');
                     }
 
-                    res.json(getUserPublicInfo(user));
+                    var userInfo = getUserPublicInfo(user);
+                    UserAnswerQuiz.find({userId: req.params.id}, function (err, items) {
+                        userInfo.answeredQuizzes = items;
+                        res.json(userInfo);
+                    });
                 });
             } else {
                 var userId = token.userId;
@@ -68,7 +73,11 @@ router.route('/:id')
                         return res.status(400).send(err);
                     }
 
-                    res.json(getUserPublicInfo(user));
+                    var userInfo = getUserPublicInfo(user);
+                    UserAnswerQuiz.find({userId: userId}, function (err, items) {
+                        userInfo.answeredQuizzes = items;
+                        res.json(userInfo);
+                    });
                 });
             }
         });

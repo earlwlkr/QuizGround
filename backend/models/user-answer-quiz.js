@@ -6,6 +6,7 @@ var schema = new Schema({
     quizId: String,
     count: Number,
     correct: Boolean,
+    question: String,
     userAnswer: String,
     userChoices: [Boolean],
     createdAt: Date

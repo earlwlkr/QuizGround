@@ -53,7 +53,8 @@
                     <img ng-hide="isEdit" ng-src="{{ user.avatar }}" width="200px" height="200px"
                          class="md-user-avatar quiz-image" title="user avatar"/>
                     <div>
-                        <upload-image ng-show="isEdit" ng-model="userImage" image-width="200" image-height="200"></upload-image>
+                        <upload-image ng-show="isEdit" ng-model="userImage" image-width="200"
+                                      image-height="200"></upload-image>
                     </div>
                 </div>
             </md-content>
@@ -64,23 +65,41 @@
         </md-card-actions>
     </md-card>
     <div flex="100" layout="row">
-    <md-card flex="50">
-        <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">Recent quizzes created</span>
-            </md-card-title-text>
-        </md-card-title>
-        <md-card-content layout-padding>
-            <md-content>
-                <md-list>
-                    <md-list-item ng-repeat="quiz in quizzes">
-                        <span class="md-headline"><b>{{ quiz.question }}</b></span>
-                        <div flex></div>
-                        <span class="md-subhead"><b>Date:</b> {{ quiz.createdAt | date: 'dd-MM-yyyy' }}</span>
-                    </md-list-item>
-                </md-list>
-            </md-content>
-        </md-card-content>
-    </md-card>
+        <md-card flex="50">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Recent quizzes created</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content layout-padding>
+                <md-content>
+                    <md-list>
+                        <md-list-item ng-repeat="quiz in quizzes">
+                            <span class="md-headline"><b>{{ quiz.question }}</b></span>
+                            <div flex></div>
+                            <span class="md-subhead"><b>Date:</b> {{ quiz.createdAt | date: 'dd-MM-yyyy' }}</span>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-card-content>
+        </md-card>
+        <md-card flex="50">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Recent quizzes answered</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content layout-padding>
+                <md-content>
+                    <md-list>
+                        <md-list-item ng-repeat="quiz in user.answeredQuizzes">
+                            <span class="md-headline"><b>{{ quiz.question }}</b></span>
+                            <div flex></div>
+                            <span class="md-subhead"><b>Date:</b> {{ quiz.createdAt | date: 'dd-MM-yyyy' }}</span>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-card-content>
+        </md-card>
     </div>
 </md-content>

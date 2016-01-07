@@ -158,6 +158,7 @@ module.exports = function (io) {
                             userId: userId,
                             quizId: quizId,
                             count: 1,
+                            question: quiz.question,
                             userAnswer: req.body.userAnswer,
                             userChoices: req.body.choices.map(function (item) {
                                 return item.userChoice || true;

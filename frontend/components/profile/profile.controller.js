@@ -46,7 +46,7 @@
         } else {
             $scope.user = copyUser(AuthenticationService.currentUser);
             $scope.canEdit = true;
-
+            
             if (!$scope.user) {
                 $location.path('/');
             } else {
@@ -97,7 +97,8 @@
                 avatar: user.avatar,
                 joinDate: user.joinDate,
                 birthDay: user.birthDay,
-                score: user.score
+                score: user.score,
+                answeredQuizzes: user.answeredQuizzes
             };
         }
 
