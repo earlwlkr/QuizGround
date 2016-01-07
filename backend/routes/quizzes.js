@@ -5,6 +5,7 @@ var oauth2 = require('../oauth2');
 var Quiz = require('../models/quiz');
 var User = require('../models/user');
 var UserRateQuiz = require('../models/user-rate-quiz');
+var UserAnswerQuiz = require('../models/user-answer-quiz');
 
 function getQuizFromRequestBody(requestBody, done) {
     var quiz = requestBody;
@@ -123,7 +124,9 @@ module.exports = function (io) {
             });
         })
         .post(oauth2.isAuthenticated, function (req, res) {
-            Quiz.findOne({_id: req.params.id}, function (err, quiz) {
+            var userId = req.body.userId;
+            var quizId = req.params.id;
+            Quiz.findOne({_id: quizId}, function (err, quiz) {
                 if (err) {
                     return res.status(400).send(err);
                 }
@@ -134,42 +137,69 @@ module.exports = function (io) {
                     return res.json({error: true, message: 'You cannot answer your own quiz!'});
                 }
 
-                if (quiz.choices && quiz.choices.length > 0) {
-                    if (quiz.choices.length !== req.body.choices.length) {
-                        return res.send(false);
-                    }
-                    for (var i = 0; i < quiz.choices.length; i++) {
-                        if (req.body.choices[i].userChoice === undefined && !quiz.choices[i].correct) {
-                            continue;
-                        }
-                        if (quiz.choices[i].correct !== req.body.choices[i].userChoice) {
-                            return res.send(false);
-                        }
-                    }
-                } else {
-                    if (quiz.answer !== req.body.userAnswer) {
-                        return res.send(false);
-                    }
-                }
-
-                User.findOne({_id: req.body.userId}, function (err, user) {
+                UserAnswerQuiz.findOne({userId: userId, quizId: quizId}, function (err, item) {
                     if (err) {
                         return res.status(400).send(err);
                     }
-                    if (!user) {
-                        return res.status(400).send(err);
+                    if (item) {
+                        if (item.count >= 3) {
+                            return res.json({error: true, message: 'You have already answered this quiz 3 times!'});
+                        }
+                        if (item.correct) {
+                            return res.json({error: true, message: 'You have already answered this quiz correctly!'});
+                        }
+                        item.count += 1;
+                        item.userAnswer = req.body.userAnswer;
+                        item.userChoices = req.body.choices.map(function (item) {
+                            return item.userChoice || true;
+                        });
+                    } else {
+                        item = new UserAnswerQuiz({
+                            userId: userId,
+                            quizId: quizId,
+                            count: 1,
+                            userAnswer: req.body.userAnswer,
+                            userChoices: req.body.choices.map(function (item) {
+                                return item.userChoice || true;
+                            })
+                        });
+                    }
+                    item.correct = false;
+                    item.createdAt = new Date();
+                    item.save();
+
+                    if (quiz.choices && quiz.choices.length > 0) {
+                        if (quiz.choices.length !== req.body.choices.length) {
+                            return res.send(false);
+                        }
+                        for (var i = 0; i < quiz.choices.length; i++) {
+                            if (req.body.choices[i].userChoice === undefined && !quiz.choices[i].correct) {
+                                continue;
+                            }
+                            if (quiz.choices[i].correct !== req.body.choices[i].userChoice) {
+                                return res.send(false);
+                            }
+                        }
+                    } else {
+                        if (quiz.answer.toLowerCase() !== req.body.userAnswer.toLowerCase()) {
+                            return res.send(false);
+                        }
                     }
 
-                    user.score++;
-                    User.findOneAndUpdate(
-                        {_id: user._id},
-                        user,
-                        function (err) {
-                            if (err)
-                                return res.status(400).send(err);
-                            return res.send(true);
+                    User.findOne({_id: userId}, function (err, user) {
+                        if (err) {
+                            return res.status(400).send(err);
                         }
-                    );
+                        if (!user) {
+                            return res.status(400).send('User not found');
+                        }
+
+                        user.score++;
+                        user.save();
+                        item.correct = true;
+                        item.save();
+                        return res.send(true);
+                    });
                 });
             });
         })
