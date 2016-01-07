@@ -22,11 +22,11 @@
                 <div ng-hide="quiz.isMultiChoice" layout="row">
                     <md-input-container flex="60">
                         <label>Answer</label>
-                        <input ng-model="quiz.answer" md-maxlength="30" name="answer" required>
+                        <input ng-model="quiz.answer" md-maxlength="50" name="answer" required>
                         <div ng-messages="headerFields.answer.$error" ng-if="headerFields.answer.$dirty" role="alert"
                              multiple>
                             <div ng-message="required">This field is required.</div>
-                            <div ng-message="md-maxlength">The answer has to be less than 30 characters long.</div>
+                            <div ng-message="md-maxlength">The answer has to be less than 50 characters long.</div>
                         </div>
                     </md-input-container>
                 </div>

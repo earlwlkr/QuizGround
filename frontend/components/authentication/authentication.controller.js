@@ -87,6 +87,10 @@
                 $scope.loginError = 'Passwords don\'t match.';
                 return;
             }
+            if (!$scope.user.firstName || !$scope.user.lastName) {
+                $scope.loginError = 'Please enter first name and last name.';
+                return;
+            }
             $scope.loading = true;
             AuthenticationService.signup($scope.user)
                 .then(function (response) {
