@@ -50,7 +50,10 @@
                         <div ng-message="md-maxlength">The answer has to be less than 30 characters long.</div>
                     </div>
                 </md-input-container>
-                <md-button flex class="md-raised md-primary" ng-show="commentContent.length > 0" ng-click="submitComment()">Submit</md-button>
+                <md-button flex class="md-raised md-primary" ng-show="commentContent.length > 0" ng-click="submitComment()">
+                    <md-icon>insert_comment</md-icon>
+                    Submit
+                </md-button>
             </form>
             <md-list>
                 <md-list-item class="md-3-line" ng-repeat="comment in quiz.comments" layout="row">

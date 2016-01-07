@@ -4,7 +4,7 @@
     angular.module('app')
         .controller('QuizDetailController', QuizDetailController);
 
-    function QuizDetailController($routeParams, $scope, $mdToast, $rootScope,
+    function QuizDetailController($routeParams, $scope, $mdToast, SweetAlert, $rootScope,
                                   QuizService, CommentService, AuthenticationService, socket) {
 
         function updateCurrentUserInfo() {
@@ -33,11 +33,11 @@
             }
             QuizService.submitQuiz(quiz).then(function (res) {
                 if (res.data.error) {
-                    showToast(res.data.message);
+                    alert(res.data.message);
                 } else if (res.data === false) {
-                    showToast('Wrong answer!');
+                    alert('Wrong answer!');
                 } else {
-                    showToast('Right answer!');
+                    alert('Right answer!');
                     AuthenticationService.getUserInfo();
                 }
             });
@@ -61,7 +61,7 @@
                 $scope.commentContent = '';
                 showToast(res.data.message);
             }, function (res) {
-                showToast(res.data);
+                alert(res.data);
             });
         };
 
@@ -73,7 +73,7 @@
             CommentService.deleteComment($scope.quiz._id, commentId).then(function (res) {
                 showToast('Comment deleted!');
             }, function (res) {
-                showToast(res.data);
+                alert(res.data);
             });
         };
 
@@ -85,7 +85,7 @@
             QuizService.deleteQuiz(quiz).then(function (response) {
                 showToast('Deleted successfully');
             }, function (res) {
-                showToast(res.data);
+                alert(res.data);
             });
         };
 
@@ -100,6 +100,10 @@
                 .position('top right')
                 .action('OK');
             $mdToast.show(toast);
+        }
+        
+        function alert(msg) {
+            SweetAlert.swal(msg);
         }
     }
 }());

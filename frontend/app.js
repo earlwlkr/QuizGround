@@ -10,7 +10,8 @@ var quizGroundApp = angular.module('app', [
     'ngFileUpload',
     'ngAnimate',
     'md.chips.select',
-    'angulike'
+    'angulike',
+    'oitozero.ngSweetAlert'
 ]);
 
 quizGroundApp.constant('ServerInfo', {

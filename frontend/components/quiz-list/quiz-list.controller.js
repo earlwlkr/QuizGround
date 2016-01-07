@@ -4,7 +4,7 @@
     angular.module('app')
         .controller('QuizListController', QuizListController);
 
-    function QuizListController($rootScope, $scope, $mdToast, QuizService, AuthenticationService, socket) {
+    function QuizListController($rootScope, $scope, QuizService, AuthenticationService, socket, SweetAlert) {
 
         socket.on('quizzes:new', function (quiz) {
             $scope.quizzes.splice(0, 0, quiz);
@@ -97,11 +97,7 @@
         };
 
         function showToast(msg) {
-            var toast = $mdToast.simple()
-                .textContent(msg)
-                .position('top right')
-                .action('OK');
-            $mdToast.show(toast);
+            SweetAlert.swal(msg);
         }
 
         function showLoginNotificationToast() {

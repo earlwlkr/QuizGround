@@ -32,7 +32,10 @@
                 </div>
 
                 <div ng-show="quiz.isMultiChoice" layout="row" layout-align="start center" layout-padding>
-                    <md-button class="md-primary" ng-click="addChoice()">Add choice</md-button>
+                    <md-button class="md-primary" ng-click="addChoice()">
+                        <md-icon>add</md-icon>
+                        Add choice
+                    </md-button>
                 </div>
 
                 <md-list ng-show="quiz.isMultiChoice" flex="70">
