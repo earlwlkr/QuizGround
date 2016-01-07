@@ -79,3 +79,7 @@ ul.rating {
     text-decoration: none;
     color: gray;
 }
+
+.admin-title {
+    color: yellow;
+}
