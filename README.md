@@ -1,5 +1,7 @@
-# QuizGround
-Create and answer quizzes with ease
+# QuizGround 
+Create and answer quizzes with ease.
+
+http://quiz-ground.herokuapp.com/
 
 ## Run
 
@@ -13,7 +15,7 @@ Create and answer quizzes with ease
 
 - Navigate inside **frontend** folder
 - `npm install`
-- Copy all contents to your web server or use node module http-server
+- Copy all contents to your web server or use node module *http-server*
 
 ## Config
 
