@@ -1,0 +1,1 @@
+db.clients.update({_id: ObjectId('5648048f62bd961100878525'), name: 'new client', secret: 'very secure'}, {_id: ObjectId('5648048f62bd961100878525'), name: 'new client', secret: 'very secure'}, {upsert: true})
